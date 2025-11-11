@@ -62,7 +62,7 @@ function onClickNavLink(e) {
   right: 0px;
   bottom: 0px;
   overflow: hidden;
-  z-index: 200;
+  z-index: 50;
 
   &.menu-enter-active,
   &.menu-leave-active {
