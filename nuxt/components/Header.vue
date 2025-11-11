@@ -135,13 +135,15 @@ watch(route, () => {
     position: relative;
     height: 100%;
     display: flex;
-    align-items: center;
-    justify-content: center;
 
     .logo {
-      position: relative;
+      position: absolute;
+      top: 50%;
+      left: 50%;
       color: $midnight;
       display: flex;
+      white-space: nowrap;
+      transform: translateX(-50%) translateY(-50%);
       transition: color $speed-666 $ease-out;
     }
 
