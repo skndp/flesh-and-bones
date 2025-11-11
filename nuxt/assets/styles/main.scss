@@ -1,0 +1,140 @@
+:root {
+  --scrollbar-width: 0px;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  color: $midnight;
+  background-color: $midnight;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+::selection {
+  background: $bone;
+  color: $midnight;
+}
+
+::-moz-selection {
+  background: $bone;
+  color: $midnight;
+}
+
+// --------------------------------------------
+// Page
+// --------------------------------------------
+
+.page {
+  min-height: 100svh;
+  background-color: $bone;
+  display: flex;
+  flex-direction: column;
+
+  &.fade-out {
+    pointer-events: none;
+  }
+
+  &.fade-out,
+  &.page-enter-active,
+  &.page-leave-active {
+    transition: opacity $speed-666 $evil-ease;
+  }
+
+  &.fade-out,
+  &.page-enter-from,
+  &.page-leave-to {
+    opacity: 0;
+  }
+
+  #footer {
+    margin-top: auto;
+  }
+}
+
+// --------------------------------------------
+// Links
+// --------------------------------------------
+
+a {
+  color: inherit;
+  text-decoration: none;
+  outline: 0;
+}
+
+// --------------------------------------------
+// Colors
+// --------------------------------------------
+
+.bone {
+  color: $bone;
+}
+
+.flesh {
+  color: $flesh;
+}
+
+.midnight {
+  color: $midnight;
+}
+
+.bg-bone {
+  background-color: $bone;
+}
+
+.bg-flesh {
+  background-color: $flesh;
+}
+
+.bg-midnight {
+  color: $flesh;
+  background-color: $midnight;
+}
+
+// --------------------------------------------
+// Margins + Paddings
+// --------------------------------------------
+
+.gutter {
+  margin: 0 span(1);
+}
+
+.pad-t {
+  padding-top: span(2);
+
+  @include respond-to($tablet) {
+    padding-top: span(1);
+  }
+}
+
+.pad-b {
+  padding-bottom: span(2);
+
+  @include respond-to($tablet) {
+    padding-bottom: span(1);
+  }
+}
+
+// --------------------------------------------
+// Button
+// --------------------------------------------
+
+button {
+  margin: 0;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  text-transform: inherit;
+  background: none;
+  border: none;
+  border-radius: 0;
+  outline: 0;
+  appearance: none;
+}

@@ -1,0 +1,31 @@
+{
+  "name": "flesh-and-bones",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@nuxtjs/dotenv": "^1.4.2",
+    "@nuxtjs/sanity": "^2.0.0",
+    "@nuxtjs/sitemap": "^7.4.3",
+    "@pinia/nuxt": "^0.11.2",
+    "@portabletext/to-html": "^2.0.14",
+    "body-scroll-lock": "3.1.5",
+    "lodash": "^4.17.21",
+    "nuxt": "3.17.7",
+    "nuxt-swiper": "^2.0.1",
+    "pinia": "^3.0.3",
+    "vue": "^3.5.18",
+    "vue-router": "^4.5.1",
+    "vue-vimeo-player": "^1.1.2"
+  },
+  "devDependencies": {
+    "sass": "1.58.3"
+  }
+}
