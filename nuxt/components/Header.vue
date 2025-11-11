@@ -135,15 +135,13 @@ watch(route, () => {
     position: relative;
     height: 100%;
     display: flex;
+    align-items: center;
+    justify-content: center;
 
     .logo {
-      position: absolute;
-      top: 50%;
-      left: 50%;
+      position: relative;
       color: $midnight;
       display: flex;
-      white-space: nowrap;
-      transform: translateX(-50%) translateY(-50%);
       transition: color $speed-666 $ease-out;
     }
 
@@ -186,14 +184,6 @@ watch(route, () => {
           width: 3px;
           height: 12px;
         }
-      }
-    }
-  }
-
-  @include respond-to($tablet) {
-    nav {
-      .logo {
-        margin-left: span(0.5);
       }
     }
   }
