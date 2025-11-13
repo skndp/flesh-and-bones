@@ -9,12 +9,8 @@
 
 <script setup>
 const footerQuery = groq`*[(_type == "footer")][0]{
-  locations[] {
-    name
-  },
-  socials[] {
-    link
-  }
+  locations[],
+  socials[]
 }`
 
 // Async data
