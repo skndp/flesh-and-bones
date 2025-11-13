@@ -79,11 +79,11 @@ function onClickNavLink(e) {
     opacity: 0.999;
 
     #menu-inner {
-      transform: translateY(-100%);
+      transform: translateX(-100%);
     }
 
     #menu-mask {
-      transform: translateY(100%);
+      transform: translateX(100%);
     }
   }
 
