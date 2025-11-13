@@ -18,12 +18,12 @@ body {
 }
 
 ::selection {
-  background: $bone;
+  background: $flesh;
   color: $midnight;
 }
 
 ::-moz-selection {
-  background: $bone;
+  background: $flesh;
   color: $midnight;
 }
 
@@ -90,6 +90,16 @@ a {
 
 .bg-flesh {
   background-color: $flesh;
+
+  ::selection {
+    background: $midnight;
+    color: $flesh;
+  }
+
+  ::-moz-selection {
+    background: $midnight;
+    color: $flesh;
+  }
 }
 
 .bg-midnight {
