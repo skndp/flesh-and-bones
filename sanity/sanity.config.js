@@ -8,7 +8,7 @@ import { simplerColorInput } from 'sanity-plugin-simpler-color-input';
 // import { vimeoField } from 'sanity-plugin-vimeo-field';
 
 import "./styles/custom.css";
-// import { CompanyLogo } from './components/company-logo';
+import { CompanyLogo } from './components/company-logo';
 
 // Singletons...
 const singletonTypes = new Set(schemaTypes.reduce((filtered, schemaType) => {
@@ -32,7 +32,7 @@ const defaultDocumentNode = (S, { schemaType }) => {
 export default defineConfig({
   name: 'default',
   title: 'Flesh and Bones',
-  // icon: CompanyLogo,
+  icon: CompanyLogo,
   projectId: process.env.SANITY_STUDIO_PROJECT_ID,
   dataset: 'production',
   document: {
