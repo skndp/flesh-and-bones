@@ -13,7 +13,7 @@ export default defineType({
       name: 'title',
       title: 'Title',
       type: 'string',
-      hidden: false
+      hidden: true
     }),
     defineField({
       name: 'siteName',

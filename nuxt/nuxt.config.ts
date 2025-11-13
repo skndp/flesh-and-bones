@@ -110,17 +110,17 @@ export default defineNuxtConfig({
   //
   // Sanity
   //
-  // sanity: {
-  //   projectId: process.env.SANITY_STUDIO_PROJECT_ID,
-  //   dataset: process.env.SANITY_STUDIO_DATASET,
-  //   apiVersion: process.env.SANITY_STUDIO_API_VERSION,
-  //   useCdn: false,
-  //   visualEditing: {
-  //     token: process.env.SANITY_STUDIO_PREVIEW_TOKEN,
-  //     studioUrl: process.env.SANITY_STUDIO_URL,
-  //     stega: false
-  //   }
-  // },
+  sanity: {
+    projectId: process.env.SANITY_STUDIO_PROJECT_ID,
+    dataset: process.env.SANITY_STUDIO_DATASET,
+    apiVersion: process.env.SANITY_STUDIO_API_VERSION,
+    useCdn: false,
+    visualEditing: {
+      token: process.env.SANITY_STUDIO_PREVIEW_TOKEN,
+      studioUrl: process.env.SANITY_STUDIO_URL,
+      stega: false
+    }
+  },
   //
   // Generate
   //

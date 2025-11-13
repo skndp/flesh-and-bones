@@ -2,28 +2,29 @@
   <footer id="footer" class="bg-midnight pad-t pad-b">
     <div class="gutter">
       <p>FOOTER</p>
+      <p>© {{ new Date().getFullYear() }} Flesh and Bones</p>
     </div>
   </footer>
 </template>
 
 <script setup>
-import { smoothScrollTo } from '~/utils/smooth-scroll-to';
-
-// const route = useRoute();
+const footerQuery = groq`*[(_type == "footer")][0]{
+  locations[] {
+    name
+  },
+  socials[] {
+    link
+  }
+}`
 
 // Async data
-// const uniqKey = 'footer';
-// const { data } = await useAsyncData(uniqKey, () => useSanity().fetch(footerQuery));
-// const footer = data.value;
+const uniqKey = 'footer';
+const { data } = await useAsyncData(uniqKey, () => useSanity().fetch(footerQuery));
+const footer = data.value;
 
-// Methods
-// function onClickNavLink(e) {
-//   let path = new URL(e.currentTarget.href).pathname;
-
-//   if (route.path === path) {
-//     smoothScrollTo(0);
-//   }
-// }
+onMounted(() => {
+  console.log('Footer:', footer);
+});
 </script>
 
 <style lang='scss'>
@@ -35,6 +36,7 @@ import { smoothScrollTo } from '~/utils/smooth-scroll-to';
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
   }
 }
 
