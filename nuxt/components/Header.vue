@@ -104,7 +104,7 @@ watch(route, () => {
 
     nav {
       .logo {
-        color: $flesh;
+        background-color: $bone;
       }
     }
   }
@@ -112,7 +112,7 @@ watch(route, () => {
   &.--menu {
     nav {
       .logo {
-        color: $flesh;
+        background-color: $flesh;
       }
 
       #menu-btn {
@@ -140,9 +140,14 @@ watch(route, () => {
 
     .logo {
       position: relative;
-      color: $midnight;
-      display: flex;
-      transition: color $speed-666 $ease-out;
+      color: transparent;
+      width: 200px;
+      aspect-ratio: 100/27;
+      background-color: $midnight;
+      mask-image: url('./images/logo.png');
+      mask-size: contain;
+      mask-repeat: no-repeat;
+      transition: background-color $speed-666 $ease-out;
     }
 
     #menu-btn {
