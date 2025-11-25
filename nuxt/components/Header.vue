@@ -8,7 +8,10 @@
           <span @transitionend="onMenuOpenEnd" />
         </span>
       </button>
-      <div v-if="stage2" class="animated circle" :style="{'mask-image': stage2 ? `url('./images/circle.png?${Date.now()})'` : 'none'}" intert></div>
+      <div class="circle-the-button">
+        <Animated :autoplay="false" type="circle" :loop="false" ref="circleTheButton" />
+        <!-- NOTE: this is just an example for later <Animated :autoplay="store.menuOpen" type="circle" :loop="false" ref="circleTheButton" /> -->
+      </div>
     </nav>
   </header>
 </template>
@@ -23,7 +26,9 @@ const store = useSiteStore();
 const show_header = ref(true);
 const fill_header = ref(false);
 const stage2 = ref(false);
+const circleTheButton = ref(null);
 let prev_scroll = 0;
+let circle_to = 0;
 
 // Mounted
 onMounted(() => {
@@ -50,8 +55,14 @@ function onClickLogo() {
 function toggleMenu() {
   if (store.menuOpen) {
     store.setMenu(false);
+    clearTimeout(circle_to);
+    circleTheButton.value.stop();
   } else {
     store.setMenu(true);
+
+    circle_to = setTimeout(() => {
+      circleTheButton.value.play();
+    }, 1000);
   }
 }
 
@@ -122,7 +133,7 @@ watch(route, () => {
     &.--stage2 {
       nav {
         #menu-btn {
-          background-color: transparent;
+          //background-color: transparent;
 
           .menu-btn__open {
             span {
@@ -153,6 +164,8 @@ watch(route, () => {
       }
 
       #menu-btn {
+        background-color: transparent;
+
         .menu-btn__open {
           span {
             transition: transform $speed-666 cubic-bezier(0.600, 0.040, 0.980, 0.335) 200ms, visibility 0ms linear $speed-666 + 200ms;
@@ -314,16 +327,12 @@ watch(route, () => {
       }
     }
 
-    .animated.circle {
+    .circle-the-button {
       position: absolute;
-      top: 10px;
+      top: 10%;
       right: span(1);
-      margin-right: -40px;
       width: 100px;
-      aspect-ratio: 286/251;
-      background-color: $flesh;
-      mask-size: contain;
-      mask-repeat: no-repeat;
+      margin-right: -30px;
       pointer-events: none;
     }
   }
