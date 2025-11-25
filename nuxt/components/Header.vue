@@ -49,14 +49,18 @@ function onClickLogo() {
     smoothScrollTo(0);
   }
 
+  closeMenu();
+}
+
+function closeMenu() {
   store.setMenu(false);
+  clearTimeout(circle_to);
+  circleTheButton.value.stop();
 }
 
 function toggleMenu() {
   if (store.menuOpen) {
-    store.setMenu(false);
-    clearTimeout(circle_to);
-    circleTheButton.value.stop();
+    closeMenu();
   } else {
     store.setMenu(true);
 
@@ -96,7 +100,7 @@ function onMenuOpenEnd(e) {
 
 // Watchers
 watch(route, () => {
-  store.setMenu(false);
+  closeMenu();
 });
 </script>
 
