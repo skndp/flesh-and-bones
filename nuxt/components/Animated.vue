@@ -23,7 +23,7 @@ const props = defineProps({
 });
 
 const mask = computed(() => {
-  return `url('./images/animated/${props.type}${props.loop ? '-loop' : ''}.png?${stamp.value}')`;
+  return `url('/images/animated/${props.type}${props.loop ? '-loop' : ''}.png?${stamp.value}')`;
 });
 
 const play = () => {

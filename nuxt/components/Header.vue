@@ -72,7 +72,7 @@ function toggleMenu() {
 
 function onResize() {
   if (window.innerWidth >= 768 && store.menuOpen) {
-    store.setMenu(false);
+    closeMenu();
   }
 };
 
@@ -137,8 +137,6 @@ watch(route, () => {
     &.--stage2 {
       nav {
         #menu-btn {
-          //background-color: transparent;
-
           .menu-btn__open {
             span {
               transition: transform 0ms linear;
@@ -248,7 +246,7 @@ watch(route, () => {
       width: 160px;
       aspect-ratio: 100/27;
       background-color: $midnight;
-      mask-image: url('./images/logo.png');
+      mask-image: url('/images/logo.png');
       mask-size: contain;
       mask-repeat: no-repeat;
       transition: background-color $speed-666 $ease-out;
@@ -283,7 +281,7 @@ watch(route, () => {
           width: 50%;
           aspect-ratio: 47/10;
           background-color: $bone;
-          mask-image: url('./images/bone.png');
+          mask-image: url('/images/bone.png');
           mask-size: contain;
           mask-repeat: no-repeat;
         }
