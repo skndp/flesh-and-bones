@@ -40,7 +40,7 @@ const props = defineProps({
   .card {
     position: relative;
     padding: span(4) 0;
-    box-shadow: inset 0px 0px 0px 1px $midnight;
+    box-shadow: inset 0px 0px 0px 1px $flesh;
     display: flex;
     flex-direction: column;
     align-items: center;

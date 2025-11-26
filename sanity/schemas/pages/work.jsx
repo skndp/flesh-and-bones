@@ -1,22 +1,22 @@
 import { defineField, defineType } from 'sanity';
 import { ArrayMaxItems } from '../../components/array-max-items';
-import { DashboardIcon, HomeIcon, ProjectsIcon, AccessDeniedIcon } from '@sanity/icons';
+import { DashboardIcon, ProjectsIcon, AccessDeniedIcon } from '@sanity/icons';
 // Sanity Icon Set: https://icons.sanity.build/all
 
 export default defineType({
-  name: 'home',
-  title: 'Home',
+  name: 'work',
+  title: 'Work',
   type: 'document',
   singleton: true,
-  icon: HomeIcon,
+  icon: DashboardIcon,
   fieldsets: [
     {
       name: 'hero',
       title: 'HERO'
     },
     {
-      name: 'featured',
-      title: 'FEATURED'
+      name: 'work',
+      title: 'WORK'
     }
   ],
   fields: [
@@ -46,26 +46,23 @@ export default defineType({
       ]
     }),
     defineField({
-      fieldset: 'featured',
-      name: 'sketchnoteLeft',
-      title: 'Sketchnote (left gutter)',
-      type: 'string',
+      fieldset: 'work',
+      name: 'filters',
+      title: 'Filters',
+      type: 'array',
       validation: [
-        Rule => Rule.required()
+        Rule => Rule.required().unique()
+      ],
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'workFilter' }]
+        }
       ]
     }),
     defineField({
-      fieldset: 'featured',
-      name: 'sketchnoteRight',
-      title: 'Sketchnote (right gutter)',
-      type: 'string',
-      validation: [
-        Rule => Rule.required()
-      ]
-    }),
-    defineField({
-      fieldset: 'featured',
-      name: 'featuredProjects',
+      fieldset: 'work',
+      name: 'projects',
       title: 'Projects',
       type: 'array',
       validation: [
@@ -130,39 +127,40 @@ export default defineType({
                               };
                             }
                           }
-                        },
-                        {
-                          name: 'articleItem',
-                          title: 'Article',
-                          type: 'object',
-                          icon: ProjectsIcon,
-                          fields: [
-                            {
-                              name: 'article',
-                              title: 'Select a Zine Article',
-                              type: 'reference',
-                              to: [{ type: 'article' }],
-                              validation: [
-                                Rule => Rule.required()
-                              ]
-                            }
-                          ],
-                          preview: {
-                            select: {
-                              title: 'article.title',
-                              slug: 'article.slug',
-                              image: 'article.ctaCardImages.landscapeImage.asset'
-                            },
-                            prepare(selection) {
-                              const { title, slug, image } = selection;
-                              return {
-                                title: title ? title : 'Untitled',
-                                subtitle: slug ? `/zine/${slug.current}` : '/zine/untitled',
-                                media: image ? image : AccessDeniedIcon
-                              };
-                            }
-                          }
                         }
+                        // NOTE: Are we maybe adding a random graphic grid items like "Always Walking the Line"hippoe skater?
+                        // {
+                        //   name: 'articleItem',
+                        //   title: 'Article',
+                        //   type: 'object',
+                        //   icon: ProjectsIcon,
+                        //   fields: [
+                        //     {
+                        //       name: 'article',
+                        //       title: 'Select a Zine Article',
+                        //       type: 'reference',
+                        //       to: [{ type: 'article' }],
+                        //       validation: [
+                        //         Rule => Rule.required()
+                        //       ]
+                        //     }
+                        //   ],
+                        //   preview: {
+                        //     select: {
+                        //       title: 'article.title',
+                        //       slug: 'article.slug',
+                        //       image: 'article.ctaCardImages.landscapeImage.asset'
+                        //     },
+                        //     prepare(selection) {
+                        //       const { title, slug, image } = selection;
+                        //       return {
+                        //         title: title ? title : 'Untitled',
+                        //         subtitle: slug ? `/zine/${slug.current}` : '/zine/untitled',
+                        //         media: image ? image : AccessDeniedIcon
+                        //       };
+                        //     }
+                        //   }
+                        // }
                       ]
                     }
                   ],
@@ -170,18 +168,18 @@ export default defineType({
                     select: {
                       type0: 'type.0._type',
                       projectTitle: 'type.0.project.title',
-                      projectImage: 'type.0.project.ctaCardImages.landscapeImage.asset',
-                      articleTitle: 'type.0.article.title',
-                      articleSlug: 'type.0.article.slug.current',
-                      articleImage: 'type.0.article.ctaCardImages.landscapeImage.asset'
+                      projectImage: 'type.0.project.ctaCardImages.landscapeImage.asset'
+                      // articleTitle: 'type.0.article.title',
+                      // articleSlug: 'type.0.article.slug.current',
+                      // articleImage: 'type.0.article.ctaCardImages.landscapeImage.asset'
                     },
                     prepare({
                       type0,
                       projectTitle,
-                      projectImage,
-                      articleTitle,
-                      articleSlug,
-                      articleImage
+                      projectImage
+                      // articleTitle,
+                      // articleSlug,
+                      // articleImage
                     }) {
                       let title = 'No items selected';
                       let subtitle = '';
@@ -192,11 +190,11 @@ export default defineType({
                           title = projectTitle || '';
                           media = projectImage ? projectImage : ProjectsIcon;
                           break;
-                        case 'articleItem':
-                          title = articleTitle || '';
-                          subtitle = `/zine/${articleSlug || 'untitled'}`;
-                          media = articleImage ? articleImage : ProjectsIcon;
-                          break;
+                        // case 'articleItem':
+                        //   title = articleTitle || '';
+                        //   subtitle = `/zine/${articleSlug || 'untitled'}`;
+                        //   media = articleImage ? articleImage : ProjectsIcon;
+                        //   break;
                       }
 
                       return {
@@ -216,14 +214,14 @@ export default defineType({
               type1: 'items.0.type.0._type',
               projectTitle1: 'items.0.type.0.project.title',
               projectImage1: 'items.0.type.0.project.ctaCardImages.landscapeImage.asset',
-              articleTitle1: 'items.0.type.0.article.title',
-              articleImage1: 'items.0.type.0.article.ctaCardImages.landscapeImage.asset',
+              // articleTitle1: 'items.0.type.0.article.title',
+              // articleImage1: 'items.0.type.0.article.ctaCardImages.landscapeImage.asset',
               // Item 2
               type2: 'items.1.type.0._type',
               projectTitle2: 'items.1.type.0.project.title',
-              projectImage2: 'items.1.type.0.project.ctaCardImages.landscapeImage.asset',
-              articleTitle2: 'items.1.type.0.article.title',
-              articleImage2: 'items.1.type.0.article.ctaCardImages.landscapeImage.asset'
+              projectImage2: 'items.1.type.0.project.ctaCardImages.landscapeImage.asset'
+              // articleTitle2: 'items.1.type.0.article.title',
+              // articleImage2: 'items.1.type.0.article.ctaCardImages.landscapeImage.asset'
             },
             prepare(selection) {
               const parseItem = (type, data) => {
@@ -237,10 +235,10 @@ export default defineType({
                     title = data.projectTitle ? `[Project] ${data.projectTitle}` : 'Project';
                     media = data.projectImage || ProjectsIcon;
                     break;
-                  case 'articleItem':
-                    title = data.articleTitle ? `[Article] ${data.articleTitle}` : 'Article';
-                    media = data.articleImage || ProjectsIcon;
-                    break;
+                  // case 'articleItem':
+                  //   title = data.articleTitle ? `[Article] ${data.articleTitle}` : 'Article';
+                  //   media = data.articleImage || ProjectsIcon;
+                  //   break;
                 }
 
                 return {
@@ -253,22 +251,22 @@ export default defineType({
               // Add item 1 has type selected...
               const item1 = parseItem(selection.type1, {
                 projectTitle: selection.projectTitle1,
-                projectImage: selection.projectImage1,
-                articleTitle: selection.articleTitle1,
-                articleImage: selection.articleImage1
+                projectImage: selection.projectImage1
+                // articleTitle: selection.articleTitle1,
+                // articleImage: selection.articleImage1
               });
               if (item1) items.push(item1);
 
               // Add item 2 has type selected...
               const item2 = parseItem(selection.type2, {
                 projectTitle: selection.projectTitle2,
-                projectImage: selection.projectImage2,
-                articleTitle: selection.articleTitle2,
-                articleImage: selection.articleImage2
+                projectImage: selection.projectImage2
+                // articleTitle: selection.articleTitle2,
+                // articleImage: selection.articleImage2
               });
               if (item2) items.push(item2);
 
-              // No items yet, fallback
+              // No items yet → fallback
               if (items.length === 0) {
                 return {
                   title: 'No items selected',

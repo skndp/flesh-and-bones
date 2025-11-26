@@ -1,12 +1,12 @@
 <template>
-  <footer id="footer" class="bg-midnight pad-t pad-b">
+  <footer id="footer" class="bg-bone pad-t pad-b">
     <div class="gutter">
       <ul class="locations">
-        <li v-for="location in footer.locations">
+        <li v-for="location in store.locations">
           <p>{{ location }}</p>
         </li>
       </ul>
-      <nav class="pages">
+      <nav class="pages midnight">
         <NuxtLink to="/work" @click.native="onClickNavLink"><span>Work</span></NuxtLink>
         <NuxtLink to="/directors" @click.native="onClickNavLink"><span>Directors</span></NuxtLink>
         <NuxtLink to="/manifesto" @click.native="onClickNavLink"><span>Manifesto</span></NuxtLink>
@@ -14,7 +14,7 @@
         <NuxtLink to="/contact" @click.native="onClickNavLink"><span>Contact</span></NuxtLink>
       </nav>
       <ul class="socials">
-        <li v-for="link in footer.socials">
+        <li v-for="link in store.socials">
           <NuxtLink :to="link" target="_blank" />
         </li>
       </ul>
@@ -24,23 +24,11 @@
 </template>
 
 <script setup>
+import { useSiteStore } from '~/stores/store';
 import { smoothScrollTo } from '~/utils/smooth-scroll-to';
 
 const route = useRoute();
-const footerQuery = groq`*[(_type == "footer")][0]{
-  locations[],
-  socials[]
-}`
-
-// Async data
-const uniqKey = 'footer';
-const { data } = await useAsyncData(uniqKey, () => useSanity().fetch(footerQuery));
-const footer = data.value;
-
-// Mounted
-onMounted(() => {
-  console.log('Footer:', footer);
-});
+const store = useSiteStore();
 
 // Methods
 function onClickNavLink(e) {
@@ -96,7 +84,7 @@ function onClickNavLink(e) {
       display: inline-flex;
       flex-direction: column;
       justify-content: center;
-      
+
       a {
         padding: $space-8 0;
         display: inline-flex;
@@ -124,7 +112,7 @@ function onClickNavLink(e) {
           justify-content: center;
 
           &:after {
-            color: $midnight;
+            color: $bone;
             font-size: 12px;
             font-weight: 600;
             display: inline-flex;

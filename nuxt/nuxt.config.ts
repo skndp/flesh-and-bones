@@ -55,16 +55,16 @@ export default defineNuxtConfig({
         { hid: 'og:title', property: 'og:title', content: site_name },
         { hid: 'og:description', property: 'og:description', content: site_description },
         { hid: 'og:url', property: 'og:url', content: site_url },
-        // { name: 'twitter:card', content: 'summary_large_image' },
-        // { name: 'apple-mobile-web-app-title', content: site_name }
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'apple-mobile-web-app-title', content: site_name }
       ],
-      // link: [
-      //   { rel: 'icon', type: 'image/png', sizes: '96x96', href: '/favicon-96x96.png' },
-      //   { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
-      //   { rel: 'shortcut icon', href: '/favicon.ico' },
-      //   { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
-      //   { rel: 'manifest', href: '/site.webmanifest' }
-      // ]
+      link: [
+        { rel: 'icon', type: 'image/png', sizes: '96x96', href: '/favicon-96x96.png' },
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+        { rel: 'shortcut icon', href: '/favicon.ico' },
+        { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
+        { rel: 'manifest', href: '/site.webmanifest' }
+      ]
     },
     pageTransition: {
       name: 'page',
