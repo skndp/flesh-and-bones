@@ -3,22 +3,38 @@ import settings from './settings/settings';
 
 // Pages
 import home from './pages/home';
+import work from './pages/work';
+import directors from './pages/directors';
+import manifesto from './pages/manifesto';
+import zine from './pages/zine';
+import contact from './pages/contact';
 
 // Collections
-import caseStudy from './collections/case-study';
+import project from './collections/project';
 import director from './collections/director';
-import post from './collections/post';
+import article from './collections/article';
+import workFilter from './collections/work-filter';
+import anatomyTag from './collections/anatomy-tag';
 
 // Shared
-import footer from './shared/footer';
 import seoSocial from './shared/seo-social';
+import singleImage from './shared/single-image';
+import richTextSketch from './shared/rich-text-sketch';
 
 export const schemaTypes = [
   settings,
-  footer,
   home,
-  caseStudy,
+  work,
+  directors,
+  manifesto,
+  zine,
+  contact,
+  project,
   director,
-  post,
-  seoSocial
+  article,
+  workFilter,
+  anatomyTag,
+  seoSocial,
+  singleImage,
+  richTextSketch
 ];

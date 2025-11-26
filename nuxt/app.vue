@@ -48,21 +48,32 @@ nuxtApp.hook('page:finish', () => {
   isFading.value = false;
 });
 
-// const settingsQuery = groq`*[(_type == "settings")][0]{
-//   siteName,
-//   siteTitle,
-//   seoSocial {
-//     description,
-//     image ${imageProps}
-//   }
-// }`
-
 // Async data
-// const uniqKey = 'appSettings';
-// const { data } = await useAsyncData(uniqKey, () => useSanity().fetch(settingsQuery));
-// const settings = data.value;
+const settingsQuery = groq`*[(_type == "settings")][0]{
+  siteName,
+  seoSocial {
+    description,
+    image ${imageProps}
+  },
+  locations[],
+  socials[]
+}`;
 
-// store.setGlobalSeo(settings);
+const { data } = await useAsyncData('settings', () => useSanity().fetch(settingsQuery));
+const settings = data.value;
+
+// Set store settings
+store.setSettings(settings);
+
+// Now, set default SEO
+useSeoMeta({
+  title: store.siteName,
+  description: store.siteDescription,
+  ogTitle: store.siteName,
+  ogDescription: store.siteDescription,
+  ogImage: store.ogImage,
+  ogUrl: store.ogUrl
+})
 
 // Mounted
 onMounted(() => {

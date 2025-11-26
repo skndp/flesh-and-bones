@@ -1,3 +1,32 @@
 [data-testid="field-groups"] > [data-testid="field-group-root"] > [data-testid="field-group-tabs"] div:has(button#all-fields-tab) {
   display: none;
 }
+
+[data-testid="Media"]:has(> .media-item) {
+  width: calc(4.125rem + 4px);
+}
+
+[data-testid="Media"]:has(> .media-item) > .media-item {
+  position: relative;
+  height: 100%;
+  aspect-ratio: 1/1;
+  display: flex;
+  overflow: clip;
+}
+
+[data-testid="Media"]:has(> .media-item.--empty) > .media-item.--empty {
+  align-items: center;
+  justify-content: center;
+}
+
+[data-testid="Media"]:has(> .media-item.--empty) > .media-item.--empty:after {
+  content: '';
+  width: 100%;
+  aspect-ratio: 3/2;
+  background-color: #ccc;
+  display: flex;
+}
+
+[data-testid="Media"]:has(> .media-item) > .media-item:nth-child(2) {
+  margin-left: 4px;
+}

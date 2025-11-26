@@ -27,6 +27,62 @@ export default defineType({
       name: 'seoSocial',
       title: 'SEO / Social Sharing',
       type: 'seoSocial'
+    }),
+    defineField({
+      name: 'locations',
+      title: 'LOCATIONS',
+      type: 'array',
+      validation: [
+        Rule => Rule.required()
+      ],
+      of: [
+        {
+          name: 'name',
+          title: 'Name',
+          type: 'string',
+          validation: [
+            (Rule) => Rule.required()
+          ]
+        }
+      ]
+    }),
+    defineField({
+      name: 'socials',
+      title: 'SOCIALS',
+      type: 'array',
+      validation: [
+        Rule => Rule.required()
+      ],
+      of: [
+        {
+          name: 'link',
+          title: 'Link',
+          type: 'url',
+          validation: [
+            (Rule) => Rule.required().uri({ scheme: ['http', 'https'] })
+          ]
+        }
+      ]
+    }),
+    defineField({
+      name: 'pageTexture',
+      title: 'PAGE TEXTURE',
+      type: 'image'
+    }),
+    defineField({
+      name: 'menuTexture',
+      title: 'MENU TEXTURE',
+      type: 'image'
+    }),
+    defineField({
+      name: 'menuButton',
+      title: 'MENU BUTTON',
+      type: 'image'
+    }),
+    defineField({
+      name: 'playButton',
+      title: 'PLAY BUTTON',
+      type: 'image'
     })
   ]
 });

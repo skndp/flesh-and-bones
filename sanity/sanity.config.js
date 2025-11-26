@@ -61,7 +61,7 @@ export default defineConfig({
 
         // Add divider after the first item (if there's more than 1)
         if (singletonListItems.length > 1) {
-          singletonListItems.splice(2, 0, S.divider().title('PAGES'));
+          singletonListItems.splice(1, 0, S.divider().title('PAGES'));
         }
 
         return S.list()

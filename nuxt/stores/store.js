@@ -5,10 +5,11 @@ export const useSiteStore = defineStore('site', {
     loading: true,
     menuOpen: false,
     siteName: '',
-    siteTitle: '',
     siteDescription: '',
     ogImage: '',
-    ogUrl: ''
+    ogUrl: '',
+    locations: [],
+    socials: []
   }),
   actions: {
     setLoaderComplete() {
@@ -17,12 +18,13 @@ export const useSiteStore = defineStore('site', {
     setMenu(bool) {
       this.menuOpen = bool;
     },
-    setGlobalSeo(settings) {
+    setSettings(settings) {
       this.siteName = settings.siteName,
-      this.siteTitle = settings.siteTitle;
-      this.siteDescription = settings.seoSocial.description;
-      this.ogImage = settings.seoSocial.image.src;
+      this.siteDescription = settings.seoSocial?.description || '';
+      this.ogImage = settings.seoSocial?.image?.src || '';
       this.ogUrl = 'https://www.wearefleshandbones.com';
+      this.locations = settings.locations;
+      this.socials = settings.socials;
     }
   }
-})
+});

@@ -12,6 +12,10 @@ export default defineType({
     {
       name: 'hero',
       title: 'HERO'
+    },
+    {
+      name: 'anatomy',
+      title: 'ANATOMY'
     }
   ],
   fields: [
@@ -19,9 +23,7 @@ export default defineType({
       fieldset: 'hero',
       name: 'title',
       title: 'Name',
-      type: 'text',
-      rows: 2,
-      description: 'This is also the page title for SEO and seen in the browser tab.',
+      type: 'string',
       validation: [
         Rule => Rule.required()
       ]
@@ -49,6 +51,57 @@ export default defineType({
             return 'Invalid slug: Only lowercase letters, numbers, and dashes are allowed.'
           }
         })
+      ]
+    }),
+    defineField({
+      fieldset: 'hero',
+      name: 'tagline',
+      title: 'Tagline',
+      type: 'text',
+      rows: 2
+    }),
+    defineField({
+      fieldset: 'anatomy',
+      name: 'anatomyLabel',
+      title: 'Label',
+      type: 'string',
+      initialValue: 'Artist Anatomy',
+      validation: [
+        Rule => Rule.required()
+      ]
+    }),
+    defineField({
+      fieldset: 'anatomy',
+      name: 'anatomyBio',
+      title: 'Bio',
+      type: 'text',
+      rows: 10,
+      validation: [
+        Rule => Rule.required()
+      ]
+    }),
+    defineField({
+      fieldset: 'anatomy',
+      name: 'anatomyLocation',
+      title: 'Location',
+      type: 'string',
+      validation: [
+        Rule => Rule.required()
+      ]
+    }),
+    defineField({
+      fieldset: 'anatomy',
+      name: 'anatomyTags',
+      title: 'Tags',
+      type: 'array',
+      validation: [
+        Rule => Rule.required().unique()
+      ],
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'anatomyTag' }]
+        }
       ]
     })
   ],

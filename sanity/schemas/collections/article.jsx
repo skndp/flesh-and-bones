@@ -1,17 +1,21 @@
 import { defineField, defineType } from 'sanity';
 import { SlugInput } from 'sanity-plugin-prefixed-slug';
-import { ProjectsIcon } from '@sanity/icons';
+import { ProjectsIcon, ImageIcon } from '@sanity/icons';
 // Sanity Icon Set: https://icons.sanity.build/all
 
 export default defineType({
-  name: 'post',
-  title: 'Post',
+  name: 'article',
+  title: 'Zine Article',
   type: 'document',
   icon: ProjectsIcon,
   fieldsets: [
     {
       name: 'hero',
       title: 'HERO'
+    },
+    {
+      name: 'cta-card',
+      title: 'CTA CARD'
     }
   ],
   fields: [
@@ -20,7 +24,6 @@ export default defineType({
       name: 'title',
       title: 'Title',
       type: 'string',
-      description: 'This is also the page title for SEO and seen in the browser tab.',
       validation: [
         Rule => Rule.required()
       ]
@@ -49,17 +52,50 @@ export default defineType({
           }
         })
       ]
+    }),
+    defineField({
+      fieldset: 'cta-card',
+      name: 'ctaCardImages',
+      title: 'Images',
+      type: 'object',
+      fields: [
+        {
+          name: 'landscapeImage',
+          title: 'Landscape (16:9)',
+          type: 'singleImage'
+        },
+        {
+          name: 'squareImage',
+          title: 'Square (1:1)',
+          type: 'singleImage'
+        }
+      ]
+    }),
+    defineField({
+      fieldset: 'cta-card',
+      name: 'ctaCardLabel',
+      title: 'CTA Label',
+      type: 'string',
+      initialValue: 'Read About It'
+    }),
+    defineField({
+      fieldset: 'cta-card',
+      name: 'ctaCardSummary',
+      title: 'Summary',
+      type: 'string'
     })
   ],
   preview: {
     select: {
       title: 'title',
-      slug: 'slug'
+      slug: 'slug',
+      image: 'ctaCardImages.landscapeImage.asset'
     },
-    prepare({ title, slug }) {
+    prepare({ title, slug, image }) {
       return {
         title: title ? title : 'Untitled',
-        subtitle: slug ? `/zine/${slug.current}` : '/zine/untitled'
+        subtitle: slug ? `/zine/${slug.current}` : '/zine/untitled',
+        media: image ? image : ImageIcon
       };
     }
   }
