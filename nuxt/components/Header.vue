@@ -125,12 +125,6 @@ watch(route, () => {
     &:before {
       opacity: 1;
     }
-
-    nav {
-      .logo {
-        background-color: $bone;
-      }
-    }
   }
 
   &.--menu {
@@ -161,10 +155,6 @@ watch(route, () => {
     }
 
     nav {
-      .logo {
-        background-color: $flesh;
-      }
-
       #menu-btn {
         background-color: transparent;
 
@@ -245,7 +235,7 @@ watch(route, () => {
       color: transparent;
       width: 160px;
       aspect-ratio: 100/27;
-      background-color: $midnight;
+      background-color: $bone;
       mask-image: url('/images/logo.png');
       mask-size: contain;
       mask-repeat: no-repeat;
