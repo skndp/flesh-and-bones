@@ -65,8 +65,8 @@ export default defineType({
     }),
     defineField({
       fieldset: 'featured',
-      name: 'featuredProjects',
-      title: 'Projects',
+      name: 'featuredGrid',
+      title: 'Projects & Articles',
       type: 'array',
       validation: [
         Rule => Rule.required()

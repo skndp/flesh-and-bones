@@ -6,11 +6,33 @@
 </template>
 
 <script setup>
-// const query = groq`*[(_type == "contact")][0]{
-// }`;
+const contactQuery = groq`*[(_type == "contact")][0]{
+  heroHeading,
+  directory[] {
+    sketchnote,
+    lists[] {
+      label,
+      items[] {
+        label,
+        link
+      }
+    }
+  },
+  foundersSketchnote,
+  founders[] {
+    name,
+    role,
+    email,
+    bio
+  }
+}`;
 
-// Async data
-// const { data } = await useAsyncData('contact', () => useSanity().fetch(query));
-// const page = data.value;
+// Async
+const { data } = await useAsyncData('contact', () => useSanity().fetch(contactQuery));
+const page = data.value;
 
+// Mounted
+onMounted(() => {
+  console.log('Contact:', page);
+});
 </script>

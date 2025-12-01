@@ -1,16 +1,21 @@
 <template>
   <div class="page">
-    <Placeholder title="ZINE" />
+    <Placeholder :title="page.heroHeading" />
     <Footer />
   </div>
 </template>
 
 <script setup>
-// const query = groq`*[(_type == "zine")][0]{
-// }`;
+const zineQuery = groq`*[(_type == "zine")][0]{
+  heroHeading
+}`;
 
-// Async data
-// const { data } = await useAsyncData('zine', () => useSanity().fetch(query));
-// const page = data.value;
+// Async
+const { data } = await useAsyncData('zine', () => useSanity().fetch(zineQuery));
+const page = data.value;
 
+// Mounted
+onMounted(() => {
+  console.log('Zine:', page);
+});
 </script>

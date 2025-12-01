@@ -6,11 +6,42 @@
 </template>
 
 <script setup>
-// const query = groq`*[(_type == "work")][0]{
-// }`;
+const workQuery = groq`*[(_type == "work")][0]{
+  heroHeading,
+  heroCopy,
+  filters[]->{
+    filter,
+    id
+  },
+  projects[] {
+    items[] {
+      type[] {
+        _type == 'projectItem' => {
+          'type': _type,
+          project->{
+            title,
+            director,
+            ctaCardImages {
+              landscapeImage {
+                image ${imageProps}
+              },
+              squareImage {
+                image ${imageProps}
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}`;
 
-// Async data
-// const { data } = await useAsyncData('work', () => useSanity().fetch(query));
-// const page = data.value;
+// Async
+const { data } = await useAsyncData('work', () => useSanity().fetch(workQuery));
+const page = data.value;
 
+// Mounted
+onMounted(() => {
+  console.log('Work:', page);
+});
 </script>

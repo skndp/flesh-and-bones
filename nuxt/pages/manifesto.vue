@@ -6,11 +6,19 @@
 </template>
 
 <script setup>
-// const query = groq`*[(_type == "manifesto")][0]{
-// }`;
+const manifestoQuery = groq`*[(_type == "manifesto")][0]{
+  heroKicker,
+  heroHeading,
+  heroCopy,
+  heroEndMark
+}`;
 
-// Async data
-// const { data } = await useAsyncData('manifesto', () => useSanity().fetch(query));
-// const page = data.value;
+// Async
+const { data } = await useAsyncData('manifesto', () => useSanity().fetch(manifestoQuery));
+const page = data.value;
 
+// Mounted
+onMounted(() => {
+  console.log('Manifesto:', page);
+});
 </script>
