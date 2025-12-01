@@ -9,7 +9,47 @@
 <script setup>
 const homeQuery = groq`*[(_type == "home")][0]{
   heroHeading,
-  heroCopy
+  heroCopy,
+  sketchnoteLeft,
+  sketchnoteRight,
+  featuredGrid[] {
+    items[] {
+      type[] {
+        _type == 'projectItem' => {
+          'type': _type,
+          project->{
+            title,
+            director,
+            ctaCardImages {
+              landscapeImage {
+                image ${imageProps}
+              },
+              squareImage {
+                image ${imageProps}
+              }
+            }
+          }
+        },
+        _type == 'articleItem' => {
+          'type': _type,
+          article->{
+            title,
+            slug,
+            ctaCardImages {
+              landscapeImage {
+                image ${imageProps}
+              },
+              squareImage {
+                image ${imageProps}
+              }
+            },
+            ctaCardLabel,
+            ctaCardSummary
+          }
+        }
+      }
+    }
+  }
 }`;
 
 // Async
