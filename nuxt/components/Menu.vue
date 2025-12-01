@@ -4,7 +4,7 @@
       <div id="menu-mask">
         <div id="menu-content" ref="contentRef">
           <nav class="nav --mobile">
-            <ul class="bg-midnight">
+            <ul class="bg-bone">
               <li><NuxtLink to="/work" @click.native="onClickNavLink"><span>Work</span></NuxtLink></li>
               <li><NuxtLink to="/directors" @click.native="onClickNavLink"><span>Directors</span></NuxtLink></li>
               <li><NuxtLink to="/manifesto" @click.native="onClickNavLink"><span>Manifesto</span></NuxtLink></li>

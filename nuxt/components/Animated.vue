@@ -1,5 +1,5 @@
 <template>
-  <div :class="['animated', type, {'hidden': autoplay === false && playing === false}]" :style="{'mask-image': mask}" intert></div>
+  <div :class="['animated', type, background, {'hidden': autoplay === false && playing === false}]" :style="{'mask-image': mask}" intert></div>
 </template>
 
 <script setup>
@@ -19,6 +19,10 @@ const props = defineProps({
   autoplay: {
     type: Boolean,
     default: true
+  },
+  background: {
+    type: String,
+    required: true
   }
 });
 
@@ -48,7 +52,6 @@ watch(() => props.autoplay, (newVal) => {
 <style lang='scss'>
 .animated {
   width: 100%;
-  background-color: $flesh;
 
   &.hidden {
     display: none;

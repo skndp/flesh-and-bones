@@ -9,7 +9,7 @@
         </span>
       </button>
       <div class="circle-the-button">
-        <Animated :autoplay="false" type="circle" :loop="false" ref="circleTheButton" />
+        <Animated :autoplay="false" type="circle" :loop="false" background="bg-flesh" ref="circleTheButton" />
         <!-- NOTE: this is just an example for later <Animated :autoplay="store.menuOpen" type="circle" :loop="false" ref="circleTheButton" /> -->
       </div>
     </nav>
@@ -155,26 +155,31 @@ watch(route, () => {
     }
 
     nav {
+      .logo {
+        background-color: $midnight;
+      }
+
       #menu-btn {
         background-color: transparent;
 
         .menu-btn__open {
+          span, &:before, &:after {
+            visibility: hidden;
+          }
+
           span {
             transition: transform $speed-666 cubic-bezier(0.600, 0.040, 0.980, 0.335) 200ms, visibility 0ms linear $speed-666 + 200ms;
             transform: translate(-50%, 500%);
-            visibility: hidden;
           }
 
           &:before {
             transition: transform $speed-666 cubic-bezier(0.600, 0.040, 0.980, 0.335) 100ms, visibility 0ms linear $speed-666 + 100ms;
             transform: translate(-50%, 650%) rotate(180deg);
-            visibility: hidden;
           }
 
           &:after {
             transition: transform $speed-666 cubic-bezier(0.600, 0.040, 0.980, 0.335), visibility 0ms linear $speed-666;
             transform: translate(-50%, 800%);
-            visibility: hidden;
           }
         }
 
@@ -283,48 +288,50 @@ watch(route, () => {
       }
 
       .menu-btn__open {
+        span, &:before, &:after {
+          visibility: visible;
+        }
+
         span {
           transition: transform $speed-666 $ease-out $speed-666 + 200ms, visibility 0ms linear;
           transform: translate(-50%, -200%);
-          visibility: visible;
         }
 
         &:before {
           transition: transform $speed-666 $ease-out $speed-666 + 100ms, visibility 0ms linear;
           transform: translate(-50%, -50%) rotate(180deg);
-          visibility: visible;
         }
 
         &:after {
           transition: transform $speed-666 $speed-666, visibility 0ms linear;
           transform: translate(-50%, 100%);
-          visibility: visible;
         }
       }
 
       .menu-btn__close {
-        &:before {
+        &:before, &:after {
           width: 66%;
           transition: transform 0ms linear;
-          transform: translateY(-50%) rotate(45deg) translateX(-200%);
           visibility: hidden;
+          background-color: $midnight;
+        }
+
+        &:before {
+          transform: translateY(-50%) rotate(45deg) translateX(-200%);
         }
 
         &:after {
-          width: 66%;
-          transition: transform 0ms linear;
           transform: translateY(-50%) rotate(-45deg) translateX(200%);
-          visibility: hidden;
         }
       }
     }
 
     .circle-the-button {
       position: absolute;
-      top: 10%;
+      top: 10px;
       right: span(1);
-      width: 100px;
-      margin-right: -30px;
+      width: 60px;
+      margin-right: -15px;
       pointer-events: none;
     }
   }
@@ -335,6 +342,12 @@ watch(route, () => {
     nav {
       .logo {
         width: 180px;
+      }
+
+      .circle-the-button {
+        top: 15px;
+        width: 80px;
+        margin-right: -25px;
       }
     }
   }
@@ -350,6 +363,12 @@ watch(route, () => {
       #menu-btn {
         width: $space-56;
         height: $space-56;
+      }
+
+      .circle-the-button {
+        top: 15px;
+        width: 100px;
+        margin-right: -30px;
       }
     }
   }
