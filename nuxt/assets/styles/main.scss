@@ -53,6 +53,12 @@ body {
     opacity: 0;
   }
 
+  &:before {
+    content: '';
+    @include header-ht;
+    display: flex;
+  }
+
   #footer {
     margin-top: auto;
   }

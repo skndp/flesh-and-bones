@@ -32,14 +32,15 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
 }
 
-body,
-.p3 {
+body {
   font-family: $helvetica;
-  font-size: 14px;
-  line-height: 18px;
+  @include fluid-type($min, $max, 12px, 16px);
+  line-height: 1.25em;
+}
 
-  @include respond-to($tablet) {
-    font-size: 16px;
-    line-height: 22px;
-  }
+.h1 {
+  @include fluid-type($min, $max, 32px, 64px);
+  line-height: 1.13em;
+  font-weight: 900;
+  text-transform: uppercase;
 }

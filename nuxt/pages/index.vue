@@ -1,7 +1,9 @@
 <template>
   <div class="page">
-    <Placeholder title="HOME - HERO" />
-    <Placeholder title="HOME - FEATURED WORK" />
+    <Placeholder :title="page.heroHeading">
+      <p>{{ page.heroCopy }}</p>
+    </Placeholder>
+    <Grid :grid="page.featuredGrid" />
     <Footer />
   </div>
 </template>
@@ -17,6 +19,7 @@ const homeQuery = groq`*[(_type == "home")][0]{
       type[] {
         _type == 'projectItem' => {
           'type': _type,
+          'slug': null,
           project->{
             title,
             director,
@@ -32,9 +35,9 @@ const homeQuery = groq`*[(_type == "home")][0]{
         },
         _type == 'articleItem' => {
           'type': _type,
+          'slug': '/zine/' + article->slug.current,
           article->{
             title,
-            slug,
             ctaCardImages {
               landscapeImage {
                 image ${imageProps}

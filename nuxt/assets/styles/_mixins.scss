@@ -24,6 +24,18 @@
   height: 100%;
 }
 
+@mixin header-ht {
+  height: 80px;
+
+  @include respond-to($tablet) {
+    height: 100px;
+  }
+
+  @include respond-to($average-desktop) {
+    height: 120px;
+  }
+}
+
 // --------------------------------------------
 // Keyframes
 // --------------------------------------------
