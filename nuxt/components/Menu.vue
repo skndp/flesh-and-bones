@@ -93,7 +93,7 @@ function onClickNavLink(e) {
     left: 0px;
     width: 100%;
     height: 100%;
-    background-color: rgba($bone, 0.5);
+    background-color: rgba($midnight, 0.5);
     overflow: hidden;
   }
 
