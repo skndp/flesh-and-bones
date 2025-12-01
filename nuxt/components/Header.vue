@@ -66,7 +66,7 @@ function toggleMenu() {
 
     circle_to = setTimeout(() => {
       circleTheButton.value.play();
-    }, 1000);
+    }, 1332);
   }
 }
 
@@ -123,7 +123,15 @@ watch(route, () => {
 
   &.--fill {
     &:before {
+      transition: opacity $speed-666 $ease-out $speed-666;
       opacity: 1;
+    }
+
+    nav {
+      .logo {
+        transition: background-color $speed-666 $ease-out $speed-666;
+        background-color: $midnight;
+      }
     }
   }
 
@@ -131,6 +139,8 @@ watch(route, () => {
     &.--stage2 {
       nav {
         #menu-btn {
+          background-color: transparent;
+
           .menu-btn__open {
             span {
               transition: transform 0ms linear;
@@ -160,8 +170,6 @@ watch(route, () => {
       }
 
       #menu-btn {
-        background-color: transparent;
-
         .menu-btn__open {
           span, &:before, &:after {
             visibility: hidden;
@@ -223,7 +231,7 @@ watch(route, () => {
   &:before {
     content: '';
     @include abs-fill;
-    background-color: $midnight;
+    background-color: $bone;
     opacity: 0;
     transition: opacity $speed-666 $ease-out;
   }

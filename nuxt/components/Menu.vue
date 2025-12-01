@@ -1,18 +1,16 @@
 <template>
-  <div id="menu">
+  <div id="menu" :class="{'offset': offset}">
     <div id="menu-inner">
-      <div id="menu-mask">
-        <div id="menu-content" ref="contentRef">
-          <nav class="nav --mobile">
-            <ul class="bg-bone">
-              <li><NuxtLink to="/work" @click.native="onClickNavLink"><span>Work</span></NuxtLink></li>
-              <li><NuxtLink to="/directors" @click.native="onClickNavLink"><span>Directors</span></NuxtLink></li>
-              <li><NuxtLink to="/manifesto" @click.native="onClickNavLink"><span>Manifesto</span></NuxtLink></li>
-              <li><NuxtLink to="/zine" @click.native="onClickNavLink"><span>Zine</span></NuxtLink></li>
-              <li><NuxtLink to="/contact" @click.native="onClickNavLink"><span>Contact</span></NuxtLink></li>
-            </ul>
-          </nav>
-        </div>
+      <div id="menu-content" ref="contentRef">
+        <nav class="nav --mobile">
+          <ul class="bg-bone">
+            <li><NuxtLink to="/work" @click.native="onClickNavLink"><span>Work</span></NuxtLink></li>
+            <li><NuxtLink to="/directors" @click.native="onClickNavLink"><span>Directors</span></NuxtLink></li>
+            <li><NuxtLink to="/manifesto" @click.native="onClickNavLink"><span>Manifesto</span></NuxtLink></li>
+            <li><NuxtLink to="/zine" @click.native="onClickNavLink"><span>Zine</span></NuxtLink></li>
+            <li><NuxtLink to="/contact" @click.native="onClickNavLink"><span>Contact</span></NuxtLink></li>
+          </ul>
+        </nav>
       </div>
     </div>
   </div>
@@ -26,9 +24,12 @@ import { smoothScrollTo } from '~/utils/smooth-scroll-to';
 const route = useRoute();
 const store = useSiteStore();
 const contentRef = ref(null);
+const offset = ref(false);
 
 // Mounted
 onMounted(() => {
+  offset.value = window.pageYOffset > 0;
+
   if (contentRef.value) {
     disableBodyScroll(contentRef.value);
   }
@@ -68,9 +69,14 @@ function onClickNavLink(e) {
   &.menu-leave-active {
     transition: opacity $speed-666 $evil-ease;
 
-    #menu-inner,
-    #menu-mask {
-      transition: transform $speed-666 $evil-ease;
+    #menu-inner {
+      &:before {
+        transition: opacity $speed-666 $evil-ease;
+      }
+
+      #menu-content {
+        transition: transform $speed-666 $evil-ease;
+      }
     }
   }
 
@@ -79,65 +85,77 @@ function onClickNavLink(e) {
     opacity: 0.999;
 
     #menu-inner {
-      transform: translateX(-100%);
-    }
+      &:before {
+        opacity: 0;
+      }
 
-    #menu-mask {
-      transform: translateX(100%);
+      #menu-content {
+        transform: translateY(-100%);
+      }
+    }
+  }
+
+  &.offset {
+    #menu-inner {
+      top: $header-ht;
+
+      #menu-content {
+        nav {
+          ul {
+            padding: 0 0 $header-ht;
+          }
+        }
+      }
     }
   }
 
   #menu-inner {
     position: absolute;
     top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    background-color: rgba($midnight, 0.5);
-    overflow: hidden;
-  }
-
-  #menu-mask {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
-
-  #menu-content {
-    position: absolute;
-    top: 0px;
-    left: 0px;
     right: 0px;
     bottom: 0px;
-    display: flex;
-    flex-direction: column;
+    left: 0px;
     overflow: hidden;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
 
-    nav {
+    &:before {
+      content: "";
+      @include abs-fill;
+      opacity: 1;
+      background-color: rgba($midnight, 0.5);
+    }
+
+    #menu-content {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      width: 100%;
       display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
 
-      ul {
-        padding: $header-ht 0;
-        width: 100%;
+      nav {
         display: flex;
-        flex-direction: column;
 
-        li {
+        ul {
+          padding: $header-ht 0;
           width: 100%;
           display: flex;
+          flex-direction: column;
 
-          a {
-            position: relative;
-            height: $header-ht;
-            padding: 0 span(1);
+          li {
+            width: 100%;
             display: flex;
-            align-items: center;
-            justify-content: center;
+
+            a {
+              position: relative;
+              height: $header-ht;
+              padding: 0 span(1);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
           }
         }
       }
