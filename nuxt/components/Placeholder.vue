@@ -1,8 +1,9 @@
 <template>
-  <section class="placeholder" :class="{ 'pad-b': !noPad}">
+  <section class="placeholder pad-b">
     <div class="gutter">
       <div class="card">
-        <p>{{ title }}</p>
+        <h1 class="h1 flesh">{{ title }}</h1>
+        <slot />
       </div>
     </div>
   </section>
@@ -11,13 +12,9 @@
 <script setup>
 // Props
 const props = defineProps({
-  noPad: {
-    type: Boolean,
-    default: false
-  },
   title: {
     type: String,
-    required: false
+    required: true
   }
 });
 </script>
@@ -27,35 +24,33 @@ const props = defineProps({
   position: relative;
   display: flex;
   flex-direction: column;
-
-  &:first-of-type {
-    &:before {
-      content: '';
-      height: $header-ht;
-      margin-top: span(1);
+  
+  .gutter {
+    .card {
+      position: relative;
+      padding: span(4) $space-16;
+      box-shadow: inset 0px 0px 0px 1px $flesh;
       display: flex;
-    }
-  }
+      text-align: center;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
 
-  .card {
-    position: relative;
-    padding: span(4) 0;
-    box-shadow: inset 0px 0px 0px 1px $flesh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+      .h1 {
+        white-space: pre-line;
+      }
+
+      p {
+        margin-top: 1em;
+      }
+    }
   }
 
   @include respond-to($tablet) {
-    &:first-of-type {
-      &:before {
-        margin-top: span(0.5);
+    .gutter {
+      .card {
+        padding: span(2) 0;
       }
-    }
-
-    .card {
-      padding: span(2) 0;
     }
   }
 }
