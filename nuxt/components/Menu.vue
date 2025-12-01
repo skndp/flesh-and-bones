@@ -2,7 +2,7 @@
   <div id="menu" :class="{'offset': offset}">
     <div id="menu-inner">
       <div id="menu-content" ref="contentRef">
-        <nav class="nav --mobile">
+        <nav class="nav">
           <ul class="bg-bone">
             <li><NuxtLink to="/work" @click.native="onClickNavLink"><span>Work</span></NuxtLink></li>
             <li><NuxtLink to="/directors" @click.native="onClickNavLink"><span>Directors</span></NuxtLink></li>
@@ -97,12 +97,13 @@ function onClickNavLink(e) {
 
   &.offset {
     #menu-inner {
-      top: $header-ht;
+      @include header-ht(top);
 
       #menu-content {
         nav {
           ul {
-            padding: 0 0 $header-ht;
+            padding-top: 0px;
+            @include header-ht(padding-bottom);
           }
         }
       }
@@ -139,18 +140,20 @@ function onClickNavLink(e) {
         display: flex;
 
         ul {
-          padding: $header-ht 0;
           width: 100%;
+          @include header-ht(padding-top);
+          @include header-ht(padding-bottom);
           display: flex;
           flex-direction: column;
 
           li {
             width: 100%;
             display: flex;
+            justify-content: center;
 
             a {
               position: relative;
-              height: $header-ht;
+              height: $space-64;
               padding: 0 span(1);
               display: flex;
               align-items: center;

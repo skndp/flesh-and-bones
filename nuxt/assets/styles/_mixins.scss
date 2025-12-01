@@ -24,15 +24,15 @@
   height: 100%;
 }
 
-@mixin header-ht {
-  height: 80px;
+@mixin header-ht($property) {
+  #{$property}: 80px;
 
   @include respond-to($tablet) {
-    height: 100px;
+    #{$property}: 100px;
   }
 
   @include respond-to($average-desktop) {
-    height: 120px;
+    #{$property}: 120px;
   }
 }
 

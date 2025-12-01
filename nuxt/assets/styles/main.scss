@@ -55,7 +55,7 @@ body {
 
   &:before {
     content: '';
-    @include header-ht;
+    @include header-ht(height);
     display: flex;
   }
 
