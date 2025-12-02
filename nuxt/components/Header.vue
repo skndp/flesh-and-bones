@@ -111,7 +111,7 @@ watch(route, () => {
   top: 0px;
   left: 0px;
   width: 100%;
-  height: 80px;
+  @include header-ht(height);
   box-sizing: border-box;
   z-index: 100;
   transform: translateY(0%);
@@ -345,8 +345,6 @@ watch(route, () => {
   }
 
   @include respond-to($tablet) {
-    height: 100px;
-
     nav {
       .logo {
         width: 180px;
@@ -361,8 +359,6 @@ watch(route, () => {
   }
 
   @include respond-to($average-desktop) {
-    height: 120px;
-
     nav {
       .logo {
         width: 210px;

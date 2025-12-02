@@ -8,7 +8,7 @@
 <script setup>
 const route = useRoute();
 const params = { slug: route.params.slug };
-const query = groq`*[_type == 'director' && slug.current == $slug][0]{
+const directorQuery = groq`*[_type == 'director' && slug.current == $slug][0]{
   title,
   slug,
   tagline,
@@ -22,7 +22,7 @@ const query = groq`*[_type == 'director' && slug.current == $slug][0]{
 }`;
 
 // Async data
-const { data } = await useSanityQuery(query, { slug: params.slug });
+const { data } = await useSanityQuery(directorQuery, { slug: params.slug });
 const page = data.value;
 
 // Mounted

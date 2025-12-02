@@ -1,6 +1,9 @@
 <template>
   <div class="page">
-    <Placeholder title="WORK" />
+    <Placeholder :title="page.heroHeading">
+      <p>{{ page.heroCopy }}</p>
+    </Placeholder>
+    <Grid :filters="page.filters" :grid="page.projects" />
     <Footer />
   </div>
 </template>
@@ -20,7 +23,9 @@ const workQuery = groq`*[(_type == "work")][0]{
           'type': _type,
           project->{
             title,
-            director,
+            director->{
+              title
+            },
             ctaCardImages {
               landscapeImage {
                 image ${imageProps}

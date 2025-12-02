@@ -24,11 +24,11 @@ const props = defineProps({
   position: relative;
   display: flex;
   flex-direction: column;
-  
+
   .gutter {
     .card {
       position: relative;
-      padding: span(4) $space-16;
+      padding: span(4) span(1);
       box-shadow: inset 0px 0px 0px 1px $flesh;
       display: flex;
       text-align: center;
@@ -49,7 +49,15 @@ const props = defineProps({
   @include respond-to($tablet) {
     .gutter {
       .card {
-        padding: span(2) 0;
+        padding: span(2) span(1);
+      }
+    }
+  }
+
+  @include respond-to($macbook) {
+    .gutter {
+      .card {
+        padding: span(1.5) span(1);
       }
     }
   }

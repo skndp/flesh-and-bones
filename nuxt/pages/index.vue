@@ -19,10 +19,11 @@ const homeQuery = groq`*[(_type == "home")][0]{
       type[] {
         _type == 'projectItem' => {
           'type': _type,
-          'slug': null,
           project->{
             title,
-            director,
+            director->{
+              title
+            },
             ctaCardImages {
               landscapeImage {
                 image ${imageProps}
@@ -35,9 +36,9 @@ const homeQuery = groq`*[(_type == "home")][0]{
         },
         _type == 'articleItem' => {
           'type': _type,
-          'slug': '/zine/' + article->slug.current,
           article->{
             title,
+            'slug': '/zine/' + article->slug.current,
             ctaCardImages {
               landscapeImage {
                 image ${imageProps}
