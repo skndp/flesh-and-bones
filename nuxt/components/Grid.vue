@@ -94,7 +94,7 @@ section.grid {
 
         .item {
           position: relative;
-          aspect-ratio: 4/3;
+          aspect-ratio: 16/9;
           box-shadow: inset 0px 0px 0px 1px $flesh;
           padding: $space-16;
           text-align: center;

@@ -1,7 +1,14 @@
 <template>
   <div class="page">
-    <Hero
+    <DirectorHero
+      :tagline="page.tagline"
       :title="page.title"
+    />
+    <DirectorAnatomy
+      :label="page.anatomyLabel"
+      :bio="page.anatomyBio"
+      :location="page.anatomyLocation"
+      :tags="page.anatomyTags"
     />
     <Footer />
   </div>
