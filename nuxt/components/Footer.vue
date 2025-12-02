@@ -6,13 +6,13 @@
           <p>{{ location }}</p>
         </li>
       </ul>
-      <nav class="pages midnight">
-        <NuxtLink to="/work" @click.native="onClickNavLink"><span>Work</span></NuxtLink>
-        <NuxtLink to="/directors" @click.native="onClickNavLink"><span>Directors</span></NuxtLink>
-        <NuxtLink to="/manifesto" @click.native="onClickNavLink"><span>Manifesto</span></NuxtLink>
-        <NuxtLink to="/zine" @click.native="onClickNavLink"><span>Zine</span></NuxtLink>
-        <NuxtLink to="/contact" @click.native="onClickNavLink"><span>Contact</span></NuxtLink>
-      </nav>
+      <ul class="pages midnight fs-lg">
+        <li><NuxtLink to="/work" @click.native="onClickNavLink"><span>Work</span></NuxtLink></li>
+        <li><NuxtLink to="/directors" @click.native="onClickNavLink"><span>Directors</span></NuxtLink></li>
+        <li><NuxtLink to="/manifesto" @click.native="onClickNavLink"><span>Manifesto</span></NuxtLink></li>
+        <li><NuxtLink to="/zine" @click.native="onClickNavLink"><span>Zine</span></NuxtLink></li>
+        <li><NuxtLink to="/contact" @click.native="onClickNavLink"><span>Contact</span></NuxtLink></li>
+      </ul>
       <ul class="socials">
         <li v-for="link in store.socials">
           <NuxtLink :to="link" target="_blank" />
@@ -79,16 +79,32 @@ function onClickNavLink(e) {
       }
     }
 
-    nav.pages {
-      margin-bottom: $space-64;
+    ul.pages {
+      margin-bottom: $space-48;
       display: inline-flex;
       flex-direction: column;
       justify-content: center;
 
-      a {
-        padding: $space-8 0;
+      li {
         display: inline-flex;
         justify-content: center;
+
+        a {
+          margin: 0 0.5em;
+          padding: 0.4em 0.2em;
+          display: inline-flex;
+          justify-content: center;
+
+          &.router-link-exact-active {
+            background-color: $flesh;
+          }
+
+          @include can-hover {
+            &:hover {
+              background-color: $flesh;
+            }
+          }
+        }
       }
     }
 
@@ -148,12 +164,8 @@ function onClickNavLink(e) {
 
   @include respond-to($tablet) {
     .gutter {
-      nav.pages {
+      ul.pages {
         flex-direction: row;
-
-        a {
-          padding: $space-8 $space-16;
-        }
       }
     }
   }

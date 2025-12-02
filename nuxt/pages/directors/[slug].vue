@@ -1,6 +1,8 @@
 <template>
   <div class="page">
-    <Placeholder :title="page.title" />
+    <Hero
+      :title="page.title"
+    />
     <Footer />
   </div>
 </template>

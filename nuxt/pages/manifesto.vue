@@ -1,6 +1,11 @@
 <template>
   <div class="page">
-    <Placeholder title="MANIFESTO" />
+    <ManifestoHero
+      :kicker="page.heroKicker"
+      :title="page.heroHeading"
+      :copy="page.heroCopy"
+      :endMark="page.heroEndMark"
+    />
     <Footer />
   </div>
 </template>

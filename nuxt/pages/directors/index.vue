@@ -1,6 +1,10 @@
 <template>
   <div class="page">
-    <Placeholder title="DIRECTORS" />
+    <DirectorsHero
+      :sketchnoteLeft="page.sketchnoteLeft"
+      :sketchHeading="page.heroHeading"
+      :directors="page.directors"
+    />
     <Footer />
   </div>
 </template>
@@ -11,7 +15,7 @@ const directorsQuery = groq`*[(_type == "directors")][0]{
   sketchnoteLeft,
   directors[]->{
     title,
-    slug
+    'slug': '/directors/' + slug.current
   }
 }`;
 

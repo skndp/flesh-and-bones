@@ -208,6 +208,14 @@ export default defineType({
               ]
             },
             {
+              name: 'location',
+              title: 'Location',
+              type: 'string',
+              validation: [
+                Rule => Rule.required()
+              ]
+            },
+            {
               name: 'bio',
               title: 'Bio',
               type: 'text',

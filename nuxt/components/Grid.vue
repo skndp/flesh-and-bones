@@ -1,8 +1,10 @@
 <template>
   <section class="grid pad-b">
+    <span v-if="sketchnoteLeft" class="sketchnote" inert :data-label="sketchnoteLeft" />
+    <span v-if="sketchnoteRight" class="sketchnote right" inert :data-label="sketchnoteRight" />
     <div class="gutter">
-      <ul v-if="filters" class="filter-bar pad-b">
-        <li data-id="all">
+      <ul v-if="filters" class="filters pad-b">
+        <li class="selected" data-id="all">
           <strong>All</strong>
         </li>
         <li v-for="item in filters" :data-id="item.id.current" class="flesh">
@@ -31,6 +33,14 @@ const props = defineProps({
   grid: {
     type: Array,
     required: true
+  },
+  sketchnoteLeft: {
+    type: String,
+    required: false
+  },
+  sketchnoteRight: {
+    type: String,
+    required: false
   }
 });
 </script>
@@ -39,13 +49,32 @@ const props = defineProps({
 section.grid {
   position: relative;
 
+  .sketchnote {
+    display: none;
+  }
+
   .gutter {
-    ul.filter-bar {
+    ul.filters {
       display: flex;
       justify-content: center;
 
       li {
-        padding: 0 1em;
+        margin: 0 0.5em;
+        padding: 0.25em;
+        cursor: default;
+
+        &.selected {
+          color: $bone;
+          background-color: $flesh;
+          pointer-events: none;
+        }
+
+        @include can-hover {
+          &:hover {
+            color: $bone;
+            background-color: $flesh;
+          }
+        }
       }
     }
 
@@ -122,6 +151,37 @@ section.grid {
   }
 
   @include respond-to($tablet) {
+    .sketchnote {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      width: span(1);
+      height: 100%;
+      display: flex;
+      
+      &:after {
+        content: attr(data-label);
+        position: absolute;
+        top: 0px;
+        left: 50%;
+        white-space: nowrap;
+        transform-origin: 0% 0%;
+        transform: rotate(-90deg) translateX(-100%) translateY(-50%);
+      }
+
+      &.right {
+        left: auto;
+        right: 0px;
+
+        &:after {
+          left: auto;
+          right: 50%;
+          transform-origin: 100% 0%;
+          transform: rotate(90deg) translateX(237%) translateY(-50%);
+        }
+      }
+    }
+
     .gutter {
       .rows {
         .row {

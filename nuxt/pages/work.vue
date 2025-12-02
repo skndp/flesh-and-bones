@@ -1,8 +1,9 @@
 <template>
   <div class="page">
-    <Placeholder :title="page.heroHeading">
-      <p>{{ page.heroCopy }}</p>
-    </Placeholder>
+    <Hero
+      :title="page.heroHeading"
+      :copy="page.heroCopy"
+    />
     <Grid :filters="page.filters" :grid="page.projects" />
     <Footer />
   </div>

@@ -1,6 +1,15 @@
 <template>
   <div class="page">
-    <Placeholder title="CONTACT" />
+    <ContactHero
+      :title="page.heroHeading"
+    />
+    <ContactDirectory
+      :directory="page.directory"
+    />
+    <ContactFounders
+      :cutoutTitle="page.foundersSketchnote"
+      :founders="page.founders"
+    />
     <Footer />
   </div>
 </template>
@@ -23,6 +32,7 @@ const contactQuery = groq`*[(_type == "contact")][0]{
     name,
     role,
     email,
+    location,
     bio
   }
 }`;
