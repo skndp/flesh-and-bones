@@ -14,7 +14,7 @@
       <div class="rows">
         <div v-for="row in grid" class="row">
           <template v-for="(item, index) in row.items" :key="index">
-            <GridItemWork v-if="item.type[0].type === 'projectItem'" :item="item.type[0].project" />
+            <GridItemProject v-if="item.type[0].type === 'projectItem'" :item="item.type[0].project" />
             <GridItemArticle v-if="item.type[0].type === 'articleItem'" :item="item.type[0].article" />
           </template>
         </div>
@@ -158,7 +158,7 @@ section.grid {
       width: span(1);
       height: 100%;
       display: flex;
-      
+
       &:after {
         content: attr(data-label);
         position: absolute;
