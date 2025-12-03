@@ -83,7 +83,7 @@ export default defineType({
               type: 'array',
               components: { input: ArrayMaxItems },
               validation: [
-                Rule => Rule.required().max(2).error('Please inlcude 1-2 items per row')
+                Rule => Rule.required().max(2).error('Please include 1-2 items per row')
               ],
               of: [
                 {
@@ -97,7 +97,7 @@ export default defineType({
                       type: 'array',
                       components: { input: ArrayMaxItems },
                       validation: [
-                        Rule => Rule.required().max(1).error('Please add one item type')
+                        Rule => Rule.required().max(1).error('Please add an item type')
                       ],
                       of: [
                         {

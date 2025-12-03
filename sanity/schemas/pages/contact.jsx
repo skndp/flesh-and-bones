@@ -71,8 +71,9 @@ export default defineType({
               name: 'lists',
               title: 'Lists',
               type: 'array',
+              components: { input: ArrayMaxItems },
               validation: [
-                Rule => Rule.required().min(1).error('Please include at least 1 list')
+                Rule => Rule.required().max(2).error('Please include 1 or 2 lists')
               ],
               of: [
                 {
