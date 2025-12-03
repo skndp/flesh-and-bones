@@ -10,6 +10,10 @@
       :location="page.anatomyLocation"
       :tags="page.anatomyTags"
     />
+    <ProjectsGrid
+      v-if="page.projects"
+      :grid="page.projects"
+    />
     <Footer />
   </div>
 </template>
@@ -27,6 +31,22 @@ const directorQuery = groq`*[_type == 'director' && slug.current == $slug][0]{
   anatomyTags[]->{
     tag,
     id
+  },
+  projects[] {
+    items[]->{
+      title,
+      director->{
+        title
+      },
+      ctaCardImages {
+        landscapeImage {
+          image ${imageProps}
+        },
+        squareImage {
+          image ${imageProps}
+        }
+      }
+    }
   }
 }`;
 

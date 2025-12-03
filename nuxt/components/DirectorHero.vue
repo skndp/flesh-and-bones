@@ -2,7 +2,7 @@
   <section class="director-hero pad-b">
     <div class="cutout pad-t pad-b bg-bone flesh">
       <div class="gutter">
-        <p class="pad-b">{{ tagline }}</p>
+        <p v-if="tagline" class="pad-b">{{ tagline }}</p>
         <h1 class="h1">
           <span class="bg-midnight">{{ title }}</span>
         </h1>
@@ -21,7 +21,7 @@
 const props = defineProps({
   tagline: {
     type: String,
-    required: true
+    required: false
   },
   title: {
     type: String,
