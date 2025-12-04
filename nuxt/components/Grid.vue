@@ -12,10 +12,17 @@
         </li>
       </ul>
       <div class="rows">
-        <div v-for="row in grid" class="row">
+        <div v-for="(row, rowIndex) in grid" class="row" :key="rowIndex">
           <template v-for="(item, index) in row.items" :key="index">
-            <GridItemProject v-if="item.type[0].type === 'projectItem'" :item="item.type[0].project" />
-            <GridItemArticle v-if="item.type[0].type === 'articleItem'" :item="item.type[0].article" />
+            <GridItemProject
+              v-if="item.type[0].type === 'projectItem'"
+              :item="item.type[0].project"
+              @click="onClickProjectItem(item.type[0])"
+            />
+            <GridItemArticle
+              v-if="item.type[0].type === 'articleItem'"
+              :item="item.type[0].article"
+            />
           </template>
         </div>
       </div>
@@ -43,6 +50,18 @@ const props = defineProps({
     required: false
   }
 });
+
+const projectItems = computed(() => {
+  return props.grid
+    .flatMap(row => row.items)
+    .map(item => item.type[0])
+    .filter(t => t.type === 'projectItem')
+});
+
+function onClickProjectItem(item) {
+  const index = projectItems.value.indexOf(item);
+  console.log(index + 1, projectItems.value.length);
+};
 </script>
 
 <style lang='scss'>
@@ -86,7 +105,6 @@ section.grid {
         width: 100%;
         display: grid;
         grid-template-columns: 1fr;
-        overflow: hidden;
 
         &:not(:last-child) {
           margin-bottom: span(1);

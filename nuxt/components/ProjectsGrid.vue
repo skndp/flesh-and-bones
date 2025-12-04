@@ -2,8 +2,13 @@
   <section class="grid pad-b">
     <div class="gutter">
       <div class="rows">
-        <div v-for="row in grid" class="row">
-          <GridItemProject v-for="(item, index) in row.items" :item="item" :key="index" />
+        <div v-for="(row, rowIndex) in grid" class="row" :key="rowIndex">
+          <GridItemProject
+            v-for="(item, index) in row.items"
+            :item="item"
+            :key="index"
+            @click="onClickProjectItem(item)"
+          />
         </div>
       </div>
     </div>
@@ -18,4 +23,13 @@ const props = defineProps({
     required: true
   }
 });
+
+const projectItems = computed(() => {
+  return props.grid.flatMap(row => row.items)
+});
+
+function onClickProjectItem(item) {
+  const index = projectItems.value.indexOf(item);
+  console.log(index + 1, projectItems.value.length);
+}
 </script>

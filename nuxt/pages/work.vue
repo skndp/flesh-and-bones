@@ -24,6 +24,10 @@ const workQuery = groq`*[(_type == "work")][0]{
           'type': _type,
           project->{
             title,
+            filters[]->{
+              filter,
+              id
+            },
             director->{
               title
             },
