@@ -5,6 +5,7 @@
         <div v-for="(row, rowIndex) in grid" class="row" :key="rowIndex">
           <GridItemProject
             v-for="(item, index) in row.items"
+            :layout="row.items.length > 1 ? 'square' : 'landscape'"
             :item="item"
             :key="index"
             @click="onClickProjectItem(item)"

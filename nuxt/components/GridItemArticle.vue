@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink :to="item.slug" class="item flesh">
+  <NuxtLink :to="item.slug" class="item flesh" :class="[ layout ]">
     <h3 class="h3">{{ item.title }}</h3>
     <div class="meta">
       <p class="fs-sm">{{ item.ctaCardSummary }}</p>
@@ -13,6 +13,10 @@
 const props = defineProps({
   item: {
     type: Object,
+    required: true
+  },
+  layout: {
+    type: String,
     required: true
   }
 });

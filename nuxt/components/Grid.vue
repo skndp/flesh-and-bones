@@ -16,11 +16,13 @@
           <template v-for="(item, index) in row.items" :key="index">
             <GridItemProject
               v-if="item.type[0].type === 'projectItem'"
+              :layout="row.items.length > 1 ? 'square' : 'landscape'"
               :item="item.type[0].project"
               @click="onClickProjectItem(item.type[0])"
             />
             <GridItemArticle
               v-if="item.type[0].type === 'articleItem'"
+              :layout="row.items.length > 1 ? 'square' : 'landscape'"
               :item="item.type[0].article"
             />
           </template>
