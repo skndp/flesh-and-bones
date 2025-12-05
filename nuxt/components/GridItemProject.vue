@@ -22,9 +22,9 @@
 </template>
 
 <script setup>
-import { Noise } from 'noisejs';
+import NoiseModule from 'noisejs'
 
-const noise = new Noise(Math.random());
+const noise = new NoiseModule.Noise(Math.random());
 const imgTop = ref(null);
 const imgBottom = ref(null);
 const isSmallScreen = ref(false);
