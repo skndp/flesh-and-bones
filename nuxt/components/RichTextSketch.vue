@@ -47,8 +47,6 @@ const copyHtml = toHTML(props.copy, {components: customCopy});
 
   .sketch-bold {
     color: $flesh;
-    font-weight: 900;
-    text-transform: uppercase;
   }
 
   .sketch-note {

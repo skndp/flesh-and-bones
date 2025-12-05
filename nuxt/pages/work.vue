@@ -29,7 +29,8 @@ const workQuery = groq`*[(_type == "work")][0]{
               id
             },
             director->{
-              title
+              title,
+              slug
             },
             ctaCardImages {
               landscapeImage {

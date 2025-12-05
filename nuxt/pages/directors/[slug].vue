@@ -36,7 +36,8 @@ const directorQuery = groq`*[_type == 'director' && slug.current == $slug][0]{
     items[]->{
       title,
       director->{
-        title
+        title,
+        slug
       },
       ctaCardImages {
         landscapeImage {

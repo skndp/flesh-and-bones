@@ -81,7 +81,7 @@ function closeMenu(e) {
   right: 0px;
   bottom: 0px;
   overflow: hidden;
-  z-index: 50;
+  z-index: 27;
 
   &.menu-enter-active,
   &.menu-leave-active {
@@ -215,7 +215,6 @@ function closeMenu(e) {
               &:after {
                 color: $bone;
                 font-size: 12px;
-                font-weight: 600;
                 display: inline-flex;
               }
 
