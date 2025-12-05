@@ -39,7 +39,7 @@ body {
 }
 
 strong {
-  font-weight: 900;
+  font-family: $tomarik;
   text-transform: uppercase;
 }
 
@@ -49,9 +49,10 @@ strong {
 }
 
 .fs-lg {
+  font-family: $tomarik;
   @include fluid-type($min, $max, 16px, 20px);
   line-height: 1.1em;
-  font-weight: 900;
+  font-weight: normal;
   text-transform: uppercase;
 }
 

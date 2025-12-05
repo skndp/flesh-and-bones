@@ -113,7 +113,7 @@ watch(route, () => {
   width: 100%;
   @include header-ht(height);
   box-sizing: border-box;
-  z-index: 100;
+  z-index: 85;
   transform: translateY(0%);
   transition: transform $speed-666 $ease-out;
 

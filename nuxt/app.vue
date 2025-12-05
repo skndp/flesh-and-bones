@@ -9,6 +9,9 @@
     <DevOnly>
       <GridOverlay />
     </DevOnly>
+    <Transition name="modal" @after-leave="modalCleanup">
+      <Modal v-if="store.modalOpen" />
+    </Transition>
     <Header />
     <transition name="menu">
       <Menu v-if="store.menuOpen" />
@@ -100,4 +103,9 @@ function updateScrollbarWidth() {
   const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
   document.documentElement.style.setProperty('--scrollbar-width', `${scrollbarWidth}px`);
 };
+
+function modalCleanup() {
+  console.log('Modal: CLEANUP');
+  store.setModalCleanup();
+}
 </script>

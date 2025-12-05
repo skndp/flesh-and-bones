@@ -33,6 +33,10 @@
 </template>
 
 <script setup>
+import { useSiteStore } from '~/stores/store';
+
+const store = useSiteStore();
+
 // Props
 const props = defineProps({
   filters: {
@@ -62,7 +66,8 @@ const projectItems = computed(() => {
 
 function onClickProjectItem(item) {
   const index = projectItems.value.indexOf(item);
-  console.log(index + 1, projectItems.value.length);
+  const flatProjects = projectItems.value.map(item => item.project);
+  store.setModalOpen(flatProjects, index);
 };
 </script>
 

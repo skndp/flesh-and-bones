@@ -4,6 +4,9 @@ export const useSiteStore = defineStore('site', {
   state: () => ({
     loading: true,
     menuOpen: false,
+    modalOpen: false,
+    modalProjects: [],
+    modalIndex: 0,
     siteName: '',
     siteDescription: '',
     ogImage: '',
@@ -17,6 +20,21 @@ export const useSiteStore = defineStore('site', {
     },
     setMenu(bool) {
       this.menuOpen = bool;
+    },
+    setModalOpen(projects, index) {
+      this.modalProjects = projects;
+      this.modalIndex = index;
+      this.modalOpen = true;
+    },
+    setModalClose() {
+      this.modalOpen = false;
+    },
+    setModalCleanup() {
+      this.modalProjects = [];
+      this.modalIndex = 0;
+    },
+    setModalIndex(index) {
+      this.modalIndex = index;
     },
     setSettings(settings) {
       this.siteName = settings.siteName,

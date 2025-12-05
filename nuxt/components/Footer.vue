@@ -130,7 +130,6 @@ function onClickNavLink(e) {
           &:after {
             color: $bone;
             font-size: 12px;
-            font-weight: 600;
             display: inline-flex;
           }
 

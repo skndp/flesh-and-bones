@@ -27,7 +27,8 @@ const homeQuery = groq`*[(_type == "home")][0]{
           project->{
             title,
             director->{
-              title
+              title,
+              slug
             },
             ctaCardImages {
               landscapeImage {
