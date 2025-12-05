@@ -8,11 +8,13 @@
     </div>
     <div v-if="item.ctaCardImages" class="item-image">
       <template v-if="(layout === 'square' || isSmallScreen) && item.ctaCardImages.squareImage">
+        <div class="item-image-paper" ref="paper"></div>
         <ResponsiveImage v-bind="item.ctaCardImages.squareImage.image" ref="imgTop" />
         <ResponsiveImage v-bind="item.ctaCardImages.squareImage.image" ref="imgBottom" />
         <ResponsiveImage v-bind="item.ctaCardImages.squareImage.image" />
       </template>
       <template v-else>
+        <div class="item-image-paper" ref="paper"></div>
         <ResponsiveImage v-bind="item.ctaCardImages.landscapeImage.image" ref="imgTop" />
         <ResponsiveImage v-bind="item.ctaCardImages.landscapeImage.image" ref="imgBottom" />
         <ResponsiveImage v-bind="item.ctaCardImages.landscapeImage.image" />
@@ -25,6 +27,7 @@
 import NoiseModule from 'noisejs'
 
 const noise = new NoiseModule.Noise(Math.random());
+const paper = ref(null);
 const imgTop = ref(null);
 const imgBottom = ref(null);
 const isSmallScreen = ref(false);
@@ -116,11 +119,11 @@ function createTornEdge(startX, startY, endX, endY, amplitude, frequency) {
   ctx.lineTo(0, 0);
   ctx.lineTo(0, 400);
   ctx.fill();
-  //ctx.stroke();
 }
 
 function setMasks() {
   const dataURL = cnv.toDataURL('image/png');
+  paper.value.style.maskImage = `url(${dataURL})`;
   imgTop.value.$el.style.maskImage = `url(${dataURL})`;
   imgBottom.value.$el.style.maskImage = `url(${dataURL}), linear-gradient(#000 0 0)`;
 }
@@ -135,13 +138,13 @@ function setMasks() {
   &:hover {    
     .item-image {
       .responsive-image-wrapper {
-        &:nth-child(2) {
+        &:nth-child(3) {
           transition: transform 400ms cubic-bezier(0.550, 0.085, 0.680, 0.530), opacity 400ms cubic-bezier(0.550, 0.085, 0.680, 0.530);
           transform: translate(0, 10%) rotateZ(-7deg) rotateY(5deg);
           opacity: 0;
         }
 
-        &:nth-child(3) {
+        &:nth-child(4) {
           transition: visibility 0ms linear;
           visibility: hidden;
         }
@@ -171,6 +174,17 @@ function setMasks() {
     width: 100%;
     height: 100%;
 
+    .item-image-paper {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      width: 100%;
+      height: 100%;
+      background-color: rgba($bone, 0.65);
+      mask-size: cover;
+      transform: translate(0px, 3px);
+    }
+
     .responsive-image-wrapper {
       position: absolute;
       top: 0px;
@@ -179,16 +193,16 @@ function setMasks() {
       height: 100%;
       mask-size: cover;
 
-      &:nth-child(2) {
-        display: none;
-      }
-
       &:nth-child(3) {
         display: none;
       }
 
+      &:nth-child(4) {
+        display: none;
+      }
+
       @include can-hover {
-        &:nth-child(2) {
+        &:nth-child(3) {
           display: block;
           mask-composite: exclude;
           transform-origin: 100% 80%;
@@ -196,7 +210,7 @@ function setMasks() {
           pointer-events: none;
         }
 
-        &:nth-child(3) {
+        &:nth-child(4) {
           display: block;
           transition: visibility 0ms linear 400ms;
           pointer-events: none;
