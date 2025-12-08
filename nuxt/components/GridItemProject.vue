@@ -31,7 +31,7 @@ const paper = ref(null);
 const imgTop = ref(null);
 const imgBottom = ref(null);
 const isSmallScreen = ref(false);
-let mediaQueryList, cnv, ctx;
+let mqMobile, mqTablet, mqMacbook, cnv, ctx;
 
 // Props
 const props = defineProps({
@@ -46,13 +46,20 @@ const props = defineProps({
 });
 
 onMounted(() => {
-  mediaQueryList = window.matchMedia('(min-width: 540px)');
-  mediaQueryList.addEventListener('change', handleMediaChange);
+  mqMobile = window.matchMedia('(min-width: 540px)');
+  mqMobile.addEventListener('change', handleMqMobile);
 
-  handleMediaChange(mediaQueryList);
+  // TODO: y = 70%?
+  mqTablet = window.matchMedia('(min-width: 768px)');
+  mqTablet.addEventListener('change', reflow);
+
+  mqMacbook = window.matchMedia('(min-width: 1680px)');
+  mqMacbook.addEventListener('change', reflow);
+
+  handleMqMobile(mqMobile);
 });
 
-function handleMediaChange(e) {
+function handleMqMobile(e) {
   if(e.matches) isSmallScreen.value = false;
   else isSmallScreen.value = true;
 
@@ -62,6 +69,8 @@ function handleMediaChange(e) {
 }
 
 function reflow() {
+  console.log('reflow');
+
   if(imgTop.value && imgBottom.value) {
     const b = imgTop.value.$el.getBoundingClientRect(),
           w = b.width,
