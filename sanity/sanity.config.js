@@ -5,7 +5,7 @@ import { presentationTool, defineDocuments, defineLocations, } from 'sanity/pres
 
 import { media } from 'sanity-plugin-media';
 import { simplerColorInput } from 'sanity-plugin-simpler-color-input';
-// import { vimeoField } from 'sanity-plugin-vimeo-field';
+import { vimeoField } from 'sanity-plugin-vimeo-field';
 
 import "./styles/custom.css";
 import { CompanyLogo } from './components/company-logo';
@@ -76,10 +76,10 @@ export default defineConfig({
       }
     }),
     media(),
-    simplerColorInput()
-    // vimeoField({
-    //   accessToken: process.env.SANITY_STUDIO_VIMEO_ACCESS_TOKEN
-    // })
+    simplerColorInput(),
+    vimeoField({
+      accessToken: process.env.SANITY_STUDIO_VIMEO_ACCESS_TOKEN
+    })
   ],
   schema: {
     types: schemaTypes,
