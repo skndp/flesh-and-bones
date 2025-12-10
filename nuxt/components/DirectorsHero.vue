@@ -5,7 +5,7 @@
         <RichTextSketch :copy="sketchHeading" />
       </h1>
       <div class="directors">
-        <span v-if="sketchnoteLeft" class="sketchnote" inert :data-label="sketchnoteLeft" />
+        <span v-if="sketchnoteLeft" class="sketchnote" inert :data-label="sketchnoteLeft"></span>
         <ul>
           <li v-for="director in directors">
             <NuxtLink :to="director.slug">
@@ -60,7 +60,7 @@ section.directors-hero {
         width: span(1);
         height: 100%;
         display: flex;
-        
+
         &:after {
           content: attr(data-label);
           position: absolute;
@@ -85,7 +85,7 @@ section.directors-hero {
 
           a {
             display: inline-flex;
-            
+
             p {
               color: $bone;
               margin: 0.5em;

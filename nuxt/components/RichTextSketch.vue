@@ -1,5 +1,5 @@
 <template>
-  <div class="rich-text" v-html="copyHtml" />
+  <div class="rich-text" v-html="copyHtml"></div>
 </template>
 
 <script setup>

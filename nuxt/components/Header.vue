@@ -3,9 +3,9 @@
     <nav class="nav">
       <NuxtLink class="logo" to="/" @click.native="onClickLogo">Flesh and Bones</NuxtLink>
       <button id="menu-btn" aria-label="Menu" @click="toggleMenu">
-        <span class="menu-btn__close" />
+        <span class="menu-btn__close"></span>
         <span class="menu-btn__open">
-          <span @transitionend="onMenuOpenEnd" />
+          <span @transitionend="onMenuOpenEnd"></span>
         </span>
       </button>
       <div class="circle-the-button">

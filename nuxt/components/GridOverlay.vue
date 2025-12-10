@@ -1,10 +1,6 @@
 <template>
   <div id="grid-overlay" v-if="enabled">
-    <div
-      class="grid-line"
-      v-for="i in 15"
-      :key="i"
-    />
+    <div class="grid-line" v-for="i in 15" :key="i"></div>
   </div>
 </template>
 

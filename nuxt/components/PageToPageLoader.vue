@@ -1,6 +1,6 @@
 <template>
   <div id="page-to-page-loader">
-    <div id="spinner" />
+    <div id="spinner"></div>
   </div>
 </template>
 

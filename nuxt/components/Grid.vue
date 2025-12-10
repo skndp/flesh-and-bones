@@ -1,7 +1,7 @@
 <template>
   <section class="grid pad-b">
-    <span v-if="sketchnoteLeft" class="sketchnote" inert :data-label="sketchnoteLeft" />
-    <span v-if="sketchnoteRight" class="sketchnote right" inert :data-label="sketchnoteRight" />
+    <span v-if="sketchnoteLeft" class="sketchnote" inert :data-label="sketchnoteLeft"></span>
+    <span v-if="sketchnoteRight" class="sketchnote right" inert :data-label="sketchnoteRight"></span>
     <div class="gutter">
       <ul v-if="filters" class="filters pad-b">
         <li class="selected" data-id="all">
