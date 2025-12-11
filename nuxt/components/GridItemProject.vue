@@ -1,9 +1,9 @@
 <template>
-  <div class="item project flesh" :class="[ layout ]">
-    <div class="item-details">
+  <div ref="itemRef" class="item project flesh" :class="[ layout ]">
+    <div ref="infoRef" class="item-info">
       <h3 class="h3">{{ item.title }}</h3>
       <div class="meta">
-        <p class="fs-sm"><strong>Director - {{ item.director.title }}</strong></p>
+        <p class="brush xs"><strong>Director - {{ item.director.title }}</strong></p>
       </div>
     </div>
     <div v-if="item.ctaCardImages" class="item-image">
@@ -26,12 +26,16 @@
 <script setup>
 import NoiseModule from 'noisejs'
 
+const itemRef = ref(null);
+const infoRef = ref(null);
+const tearY = ref(0.8);
+
 const noise = new NoiseModule.Noise(Math.random());
 const paper = ref(null);
 const imgTop = ref(null);
 const imgBottom = ref(null);
 const isSmallScreen = ref(false);
-let mqMobile, mqTablet, mqMacbook, cnv, ctx;
+let cnv, ctx;
 
 // Props
 const props = defineProps({
@@ -46,22 +50,18 @@ const props = defineProps({
 });
 
 onMounted(() => {
-  mqMobile = window.matchMedia('(min-width: 540px)');
-  mqMobile.addEventListener('change', handleMqMobile);
-
-  // TODO: y = 70%?
-  mqTablet = window.matchMedia('(min-width: 768px)');
-  mqTablet.addEventListener('change', reflow);
-
-  mqMacbook = window.matchMedia('(min-width: 1680px)');
-  mqMacbook.addEventListener('change', reflow);
-
-  handleMqMobile(mqMobile);
+  window.addEventListener('resize', onResize);
+  nextTick(() => {
+    onResize();
+  });
 });
 
-function handleMqMobile(e) {
-  if(e.matches) isSmallScreen.value = false;
-  else isSmallScreen.value = true;
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', onResize);
+});
+
+function onResize() {
+  isSmallScreen.value = window.innerWidth < 540;
 
   nextTick(() => {
     reflow();
@@ -69,21 +69,20 @@ function handleMqMobile(e) {
 }
 
 function reflow() {
-  console.log('reflow');
-
   if(imgTop.value && imgBottom.value) {
     const b = imgTop.value.$el.getBoundingClientRect(),
           w = b.width,
           h = b.height;
     
     cnv = document.createElement('canvas');
-
     cnv.width = w;
     cnv.height = h;
-
     ctx = cnv.getContext('2d');
 
-    createTornEdge(0, h * 0.8, b.width, h * 0.8, 3, 0.5);
+    let y_percent = 1 - (infoRef.value.getBoundingClientRect().height / itemRef.value.getBoundingClientRect().height);
+    tearY.value = (Math.round(y_percent * 100) / 100) - 0.02;
+
+    createTornEdge(0, h * tearY.value, b.width, h * tearY.value, 3, 0.5);
     setMasks();
   }
 }
@@ -161,11 +160,7 @@ function setMasks() {
     }
   }
 
-  &:nth-child(2) {
-    margin-top: span(1);
-  }
-
-  .item-details {
+  .item-info {
     position: absolute;
     bottom: 0px;
     left: 0px;
@@ -186,8 +181,8 @@ function setMasks() {
     .item-image-paper {
       position: absolute;
       top: 0px;
-      left: 0px;
-      width: 100%;
+      left: 0.5px; // pixel rounding patch
+      width: calc(100% - 1px); // pixel rounding patch
       height: 100%;
       background-color: rgba($bone, 0.65);
       mask-size: cover;
@@ -240,17 +235,13 @@ function setMasks() {
   @include respond-to($small-tablet) {
     aspect-ratio: 1/1;
 
-    &:only-child {
+    &.landscape {
       aspect-ratio: 2/1;
-    }
-
-    &:nth-child(2) {
-      margin-top: 0px;
     }
   }
 
   @include respond-to($tablet) {
-    .item-details {
+    .item-info {
       padding: $space-16;
       width: calc(100% - $space-32);
 
@@ -263,7 +254,7 @@ function setMasks() {
   @include respond-to($macbook) {
     aspect-ratio: 4/3;
 
-    &:only-child {
+    &.landscape {
       aspect-ratio: 8/3;
     }
   }

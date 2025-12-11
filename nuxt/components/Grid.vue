@@ -182,6 +182,12 @@ section.grid {
         &:not(:last-child) {
           margin-bottom: span(1);
         }
+
+        .item {
+          &:nth-child(2) {
+            margin-top: span(1);
+          }
+        }
       }
     }
   }
@@ -203,6 +209,12 @@ section.grid {
 
           &:has(.item:only-child) {
             grid-template-columns: 1fr;
+          }
+
+          .item {
+            &:nth-child(2) {
+              margin-top: 0px;
+            }
           }
         }
       }

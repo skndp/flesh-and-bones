@@ -10,8 +10,8 @@
     </div>
     <div class="item-details">
       <div class="meta">
-        <p class="fs-sm">{{ item.ctaCardSummary }}</p>
-        <p class="fs-lg">{{ item.ctaCardLabel }}</p>
+        <p class="label">{{ item.ctaCardSummary }}</p>
+        <p class="brush">{{ item.ctaCardLabel }}<span class="rough-edges-light"></span></p>
       </div>
     </div>
   </NuxtLink>
@@ -38,34 +38,29 @@ const props = defineProps({
   display: flex;
   flex-direction: column;
 
-  &:nth-child(2) {
-    margin-top: span(1);
-  }
-
   .item-image {
     position: relative;
-    width: 80%;
+    width: 83.333%;
     aspect-ratio: 1/1;
     margin: 0 auto;
   }
 
   .item-details {
-    width: 80%;
+    width: 83.333%;
     margin: 0 auto;
 
     .meta {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: $space-16;
+      margin-top: 1em;
 
       p {
-        width: 48%;
+        display: flex;
+        margin-right: 2em;
 
         &:nth-child(2) {
-          text-align: right;
-          white-space: nowrap;
-          text-decoration: underline;
+          display: none;
         }
       }
     }
@@ -77,14 +72,34 @@ const props = defineProps({
     &:only-child {
       aspect-ratio: 2/1;
     }
-
-    &:nth-child(2) {
-      margin-top: 0px;
-    }
   }
 
-  @include respond-to($tablet) {
+  @include respond-to($desktop) {
+    .item-details {
+      .meta {
+        p {
+          &:nth-child(2) {
+            position: relative;
+            margin-right: 0px;
+            margin-top: -0.4em;
+            padding-bottom: 0.1em;
+            text-align: right;
+            white-space: nowrap;
+            display: flex;
+            flex-shrink: 0;
 
+            span.rough-edges-light {
+              position: absolute;
+              bottom: 0px;
+              left: 0px;
+              width: 100%;
+              height: 2.5px;
+              background-color: $flesh;
+            }
+          }
+        }
+      }
+    }
   }
 
   @include respond-to($macbook) {
@@ -100,23 +115,6 @@ const props = defineProps({
 
     .item-details {
       width: 66%;
-
-      // .meta {
-      //   display: flex;
-      //   justify-content: space-between;
-      //   align-items: center;
-      //   margin-top: $space-16;
-
-      //   p {
-      //     width: 48%;
-
-      //     &:nth-child(2) {
-      //       text-align: right;
-      //       white-space: nowrap;
-      //       text-decoration: underline;
-      //     }
-      //   }
-      // }
     }
   }
 }
