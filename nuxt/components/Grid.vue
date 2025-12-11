@@ -4,32 +4,51 @@
     <span v-if="sketchnoteRight" class="sketchnote right bone manic-alt-1" inert :data-label="sketchnoteRight"></span>
     <div class="gutter">
       <ul v-if="filters" class="filters pad-b brush sm">
-        <li class="selected" data-id="all">
+        <li class="flesh" :class="{ 'selected': selectedFilterId === 'all' }" @click="onClickFilter('all')">
           <span class="rough-edges-light bg"></span>
           <span>All</span>
         </li>
-        <li v-for="item in filters" :data-id="item.id.current" class="flesh">
+        <li
+          v-for="(item, index) in filters"
+          class="flesh"
+          :class="{ 'selected': selectedFilterId === item.id.current }"
+          @click="onClickFilter(item.id.current, item.filterLayout)"
+          :key="index"
+        >
           <span class="rough-edges-light bg"></span>
           <span>{{ item.filter }}</span>
         </li>
       </ul>
-      <div class="rows">
-        <div v-for="(row, rowIndex) in grid" class="row" :key="rowIndex">
-          <template v-for="(item, index) in row.items" :key="index">
-            <GridItemProject
-              v-if="item.type[0].type === 'projectItem'"
-              :layout="row.items.length > 1 ? 'square' : 'landscape'"
-              :item="item.type[0].project"
-              @click="onClickProjectItem(item.type[0])"
-            />
-            <GridItemArticle
-              v-if="item.type[0].type === 'articleItem'"
-              :layout="row.items.length > 1 ? 'square' : 'landscape'"
-              :item="item.type[0].article"
-            />
-          </template>
+      <template v-if="filters && selectedFilterId !== 'all'">
+        <div :class="[ 'filter-items', filterLayout ]">
+          <GridItemProject
+            v-for="(projectItem, index) in filteredProjects"
+            :layout="filterLayout"
+            :item="projectItem.project"
+            :key="index"
+            @click="onClickProjectItem(projectItem)"
+          />
         </div>
-      </div>
+      </template>
+      <template v-else>
+        <div class="rows">
+          <div v-for="(row, rowIndex) in grid" class="row" :key="rowIndex">
+            <template v-for="(item, index) in row.items" :key="index">
+              <GridItemProject
+                v-if="item.type[0].type === 'projectItem'"
+                :layout="row.items.length > 1 ? 'square' : 'landscape'"
+                :item="item.type[0].project"
+                @click="onClickProjectItem(item.type[0])"
+              />
+              <GridItemArticle
+                v-if="item.type[0].type === 'articleItem'"
+                :layout="row.items.length > 1 ? 'square' : 'landscape'"
+                :item="item.type[0].article"
+              />
+            </template>
+          </div>
+        </div>
+      </template>
     </div>
   </section>
 </template>
@@ -59,6 +78,9 @@ const props = defineProps({
   }
 });
 
+const selectedFilterId = ref('all');
+const filterLayout = ref('landscape');
+
 const projectItems = computed(() => {
   return props.grid
     .flatMap(row => row.items)
@@ -66,11 +88,31 @@ const projectItems = computed(() => {
     .filter(t => t.type === 'projectItem')
 });
 
+const filteredProjects = computed(() => {
+  if (selectedFilterId.value === 'all') {
+    return [];
+  }
+
+  return projectItems.value.filter(item => {
+    const filters = item.project?.filters || [];
+
+    return filters.some(f => {
+      return f.id.current === selectedFilterId.value;
+    });
+  });
+});
+
 function onClickProjectItem(item) {
   const index = projectItems.value.indexOf(item);
   const flatProjects = projectItems.value.map(item => item.project);
   store.setModalOpen(flatProjects, index);
 };
+
+function onClickFilter(id, layout) {
+  let fid = id === 'all' ? 'all' : id;
+  filterLayout.value = layout ? layout : 'landscape';
+  selectedFilterId.value = fid;
+}
 </script>
 
 <style lang='scss'>
@@ -124,6 +166,10 @@ section.grid {
       }
     }
 
+    .filter-items {
+      width: 100%;
+    }
+
     .rows {
       width: 100%;
       display: block;
@@ -142,6 +188,14 @@ section.grid {
 
   @include respond-to($small-tablet) {
     .gutter {
+      .filter-items {
+        &.square {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: span(1);
+        }
+      }
+
       .rows {
         .row {
           grid-template-columns: repeat(2, 1fr);
@@ -188,6 +242,18 @@ section.grid {
     }
 
     .gutter {
+      .filter-items {
+        &.square {
+          gap: span(0.75);
+        }
+
+        .item {
+          &:not(:last-child) {
+            margin-bottom: span(0.75);
+          }
+        }
+      }
+
       .rows {
         .row {
           gap: span(0.75);
@@ -202,6 +268,18 @@ section.grid {
 
   @include respond-to($macbook) {
     .gutter {
+      .filter-items {
+        &.square {
+          gap: span(0.5);
+        }
+
+        .item {
+          &:not(:last-child) {
+            margin-bottom: span(0.5);
+          }
+        }
+      }
+
       .rows {
         .row {
           gap: span(0.5);

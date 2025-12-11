@@ -15,7 +15,8 @@ const workQuery = groq`*[(_type == "work")][0]{
   heroCopy,
   filters[]->{
     filter,
-    id
+    id,
+    filterLayout
   },
   projects[] {
     items[] {
