@@ -9,6 +9,10 @@
       :sketchnoteLeft="page.sketchnoteLeft"
       :sketchnoteRight="page.sketchnoteRight"
     />
+    <BigCta
+      path="/work"
+      label="View All Work"
+    />
     <Footer />
   </div>
 </template>

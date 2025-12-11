@@ -27,7 +27,17 @@ const props = defineProps({
 
   a {
     position: relative;
+    padding-bottom: 0.3em;
     display: inline-flex;
+
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: 0px;
+      width: 100%;
+      height: 0.2em;
+      background-color: $flesh;
+    }
   }
 }
 </style>
