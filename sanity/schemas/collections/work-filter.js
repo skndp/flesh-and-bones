@@ -35,6 +35,22 @@ export default defineType({
           }
         })
       ]
+    }),
+    defineField({
+      name: 'filterLayout',
+      title: 'Filter Layout',
+      type: 'string',
+      validation: [
+        Rule => Rule.required()
+      ],
+      options: {
+        list: [
+          { title: 'Landscape', value: 'landscape' },
+          { title: 'Square', value: 'square' }
+        ],
+        layout: 'radio'
+      },
+      initialValue: 'landscape'
     })
   ]
 });
