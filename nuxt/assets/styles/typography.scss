@@ -44,7 +44,6 @@ strong {
   text-transform: uppercase;
 }
 
-.fs-sm,
 .label {
   @include fluid-type($min, $max, 11px, 14px);
   line-height: 1.2em;

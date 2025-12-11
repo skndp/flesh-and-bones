@@ -37,12 +37,12 @@ onBeforeUnmount(() => {
 
 function handleMediaChange(e) {
   if (e.matches) {
-    baseFrequency.value = 0.4;
-    numOctaves.value = 3;
-    scale.value = 2;
+    baseFrequency.value = 0.3;
+    numOctaves.value = 2;
+    scale.value = 1.5;
   } else {
     baseFrequency.value = 0.6;
-    numOctaves.value = 2;
+    numOctaves.value = 1;
     scale.value = 1.5;
   }
 }
