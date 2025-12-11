@@ -6,6 +6,10 @@
         <feTurbulence type="fractalNoise" :baseFrequency="baseFrequency" :numOctaves="numOctaves" result="noise" />
         <feDisplacementMap in="SourceGraphic" in2="noise" :scale="scale" xChannelSelector="R" yChannelSelector="G" />
       </filter>
+      <filter id="roughEdgesLight">
+        <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.5" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
     </defs>
   </svg>
 </template>
@@ -37,7 +41,7 @@ function handleMediaChange(e) {
     numOctaves.value = 3;
     scale.value = 2;
   } else {
-    baseFrequency.value = 0.8;
+    baseFrequency.value = 0.6;
     numOctaves.value = 2;
     scale.value = 1.5;
   }

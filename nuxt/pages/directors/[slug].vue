@@ -14,6 +14,10 @@
       v-if="page.projects"
       :grid="page.projects"
     />
+    <BigCta
+      path="/directors"
+      label="Back to Directors"
+    />
     <Footer />
   </div>
 </template>

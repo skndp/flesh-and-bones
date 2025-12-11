@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <Hero
+    <HomeHero
       :title="page.heroHeading"
       :copy="page.heroCopy"
     />

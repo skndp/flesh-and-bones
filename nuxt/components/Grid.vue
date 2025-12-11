@@ -3,12 +3,14 @@
     <span v-if="sketchnoteLeft" class="sketchnote manic md" inert :data-label="sketchnoteLeft"></span>
     <span v-if="sketchnoteRight" class="sketchnote right bone manic-alt-1" inert :data-label="sketchnoteRight"></span>
     <div class="gutter">
-      <ul v-if="filters" class="filters pad-b">
+      <ul v-if="filters" class="filters pad-b brush sm">
         <li class="selected" data-id="all">
-          <strong>All</strong>
+          <span class="rough-edges-light bg"></span>
+          <span>All</span>
         </li>
         <li v-for="item in filters" :data-id="item.id.current" class="flesh">
-          <strong>{{ item.filter }}</strong>
+          <span class="rough-edges-light bg"></span>
+          <span>{{ item.filter }}</span>
         </li>
       </ul>
       <div class="rows">
@@ -82,23 +84,41 @@ section.grid {
   .gutter {
     ul.filters {
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
 
       li {
+        position: relative;
         margin: 0 0.5em;
-        padding: 0.25em;
-        cursor: default;
+        padding: 0.1em 0.3em 0.3em;
+        cursor: pointer;
+
+        span {
+          position: relative;
+        }
+
+        span.bg {
+          @include abs-fill;
+          background-color: $flesh;
+          visibility: hidden;
+        }
 
         &.selected {
           color: $bone;
-          background-color: $flesh;
           pointer-events: none;
+
+          span.bg {
+            visibility: visible;
+          }
         }
 
         @include can-hover {
           &:hover {
             color: $bone;
-            background-color: $flesh;
+            
+            span.bg {
+              visibility: visible;
+            }
           }
         }
       }

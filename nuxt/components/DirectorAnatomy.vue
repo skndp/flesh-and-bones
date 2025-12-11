@@ -2,12 +2,12 @@
   <section class="director-anatomy pad-b">
     <div class="gutter cols">
       <div class="col">
-        <p class="fs-lg flesh">{{ label }}</p>
+        <p class="flesh manic md">{{ label }}</p>
         <p class="bio">{{ bio }}</p>
       </div>
       <div class="col">
-        <p class="fs-lg">{{ location }}</p>
-        <ul>
+        <p class="brush md">{{ location }}</p>
+        <ul class="brush xs">
           <li v-for="item in tags">{{ item.tag }}</li>
         </ul>
       </div>
@@ -59,10 +59,12 @@ section.director-anatomy {
 
         ul {
           margin-top: 0.5em;
+          margin-left: -0.2em;
           display: flex;
           flex-wrap: wrap;
 
           li {
+            padding: 0.2em;
             display: inline-flex;
 
             &:not(:last-child) {
@@ -89,19 +91,23 @@ section.director-anatomy {
 
         &:last-child {
           order: 2;
-          margin-top: 0.5em;
+          margin-top: 0.2em;
           margin-bottom: 0px;
-          width: 25%;
+          width: 33.333%;
           flex-shrink: 0;
 
-          .fs-lg {
-            margin-top: 1.1em;
+          .brush.md {
+            margin-top: 1em;
           }
 
           ul {
+            margin-top: 1em;
+            margin-left: 0px;
             flex-direction: column;
 
             li {
+              padding: 0.4em 0;
+
               &:not(:last-child) {
                 &:after {
                  display: none; 
@@ -109,16 +115,6 @@ section.director-anatomy {
               }
             }
           }
-        }
-      }
-    }
-  }
-
-  @include respond-to($desktop) {
-    .cols {
-      .col {
-        &:last-child {
-          width: 33.333%;
         }
       }
     }

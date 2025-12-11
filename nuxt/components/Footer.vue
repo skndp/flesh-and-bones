@@ -8,23 +8,23 @@
       </ul>
       <ul class="pages midnight brush">
         <li><NuxtLink to="/work" @click.native="onClickNavLink">
-          <span class="rough-edges"></span>
+          <span class="rough-edges-light"></span>
           <span>Work</span></NuxtLink>
         </li>
         <li><NuxtLink to="/directors" @click.native="onClickNavLink">
-          <span class="rough-edges"></span>
+          <span class="rough-edges-light"></span>
           <span>Directors</span></NuxtLink>
         </li>
         <li><NuxtLink to="/manifesto" @click.native="onClickNavLink">
-          <span class="rough-edges"></span>
+          <span class="rough-edges-light"></span>
           <span>Manifesto</span></NuxtLink>
         </li>
         <li><NuxtLink to="/zine" @click.native="onClickNavLink">
-          <span class="rough-edges"></span>
+          <span class="rough-edges-light"></span>
           <span>Zine</span></NuxtLink>
         </li>
         <li><NuxtLink to="/contact" @click.native="onClickNavLink">
-          <span class="rough-edges"></span>
+          <span class="rough-edges-light"></span>
           <span>Contact</span></NuxtLink>
         </li>
       </ul>
@@ -111,25 +111,25 @@ function onClickNavLink(e) {
           display: inline-flex;
           justify-content: center;
 
-          span.rough-edges {
+          span.rough-edges-light {
             @include abs-fill;
             background-color: $flesh;
             visibility: hidden;
           }
 
-          span:not(.rough-edges) {
+          span:not(.rough-edges-light) {
             position: relative;
           }
 
           &.router-link-exact-active {
-            span.rough-edges {
+            span.rough-edges-light {
               visibility: visible;
             }
           }
 
           @include can-hover {
             &:hover {
-              span.rough-edges {
+              span.rough-edges-light {
                 visibility: visible;
               }
             }

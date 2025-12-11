@@ -47,6 +47,7 @@ const copyHtml = toHTML(props.copy, {components: customCopy});
 
   .sketch-bold {
     position: relative;
+    font-family: $graphic-black;
     transform: rotate(-1.3deg);
     display: inline-flex;
   }

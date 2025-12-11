@@ -2,15 +2,16 @@
   <section class="director-hero pad-b">
     <div class="cutout pad-t pad-b bg-bone flesh">
       <div class="gutter">
-        <p v-if="tagline" class="pad-b">{{ tagline }}</p>
-        <h1 class="h1">
+        <p v-if="tagline" class="pad-t pad-b flesh manic md">{{ tagline }}</p>
+        <h1 class="h1 xs rough-edges-light">
           <span class="bg-midnight">{{ title }}</span>
         </h1>
       </div>
     </div>
     <div class="gutter pad-t">
       <div class="hero-video-wrapper">
-        <p class="h3">Reel / Video Player</p>
+        <span class="bg-flesh rough-edges"></span>
+        <p class="h5 bone">Reel / Video Player</p>
       </div>
     </div>
   </section>
@@ -35,6 +36,10 @@ section.director-hero {
   .cutout {
     text-align: center;
 
+    .manic {
+      white-space: pre-line;
+    }
+
     .h1 {
       span {
         padding: 0.125em 0.25em;
@@ -46,10 +51,18 @@ section.director-hero {
     position: relative;
     width: 100%;
     aspect-ratio: 16/9;
-    box-shadow: inset 0px 0px 0px 1px $flesh;
     display: flex;
     align-items: center;
     justify-content: center;
+
+    span.bg-flesh {
+      @include abs-fill;
+    }
+
+    p {
+      position: relative;
+      margin: 0 span(0.5);
+    }
   }
 
   @include respond-to($tablet) {

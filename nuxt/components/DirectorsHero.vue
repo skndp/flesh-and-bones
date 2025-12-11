@@ -1,15 +1,18 @@
 <template>
   <section class="directors-hero pad-t pad-b">
     <div class="gutter pad-b">
-      <h1 class="fs-lg flesh">
+      <h1 class="title h5 midnight">
         <RichTextSketch :copy="sketchHeading" />
       </h1>
       <div class="directors">
-        <span v-if="sketchnoteLeft" class="sketchnote" inert :data-label="sketchnoteLeft"></span>
+        <span v-if="sketchnoteLeft" class="sketchnote manic md" inert :data-label="sketchnoteLeft"></span>
         <ul>
           <li v-for="director in directors">
             <NuxtLink :to="director.slug">
-              <p class="h3">{{ director.title }}</p>
+              <p class="h4">
+                <span class="rough-edges-light bg"></span>
+                <span class="rough-edges-light">{{ director.title }}</span>
+              </p>
             </NuxtLink>
           </li>
         </ul>
@@ -39,14 +42,26 @@ const props = defineProps({
 <style lang='scss'>
 section.directors-hero {
   position: relative;
+  background-color: goldenrod;
   display: flex;
   flex-direction: column;
 
   .gutter {
     text-align: center;
 
-    .h1 {
-      white-space: pre-line;
+    .title {
+      .sketch-note {
+        color: $midnight;
+      }
+
+      .sketch-bold {
+        line-height: 1.2em;
+        transform: none;
+
+        .sketch-underline {
+          border-bottom-color: $midnight;
+        }
+      }
     }
 
     .directors {
@@ -86,18 +101,28 @@ section.directors-hero {
           a {
             display: inline-flex;
 
-            p {
+            .h4 {
+              position: relative;
               color: $bone;
-              margin: 0.5em;
-              padding: 0.2em 0.1em;
-              display: flex;
+              margin: 0 0.3em;
+              padding: 0.7em 0.3em;
+              display: inline-flex;
+
+              span.bg {
+                @include abs-fill;
+                background-color: $flesh;
+                visibility: hidden;
+              }
             }
 
             @include can-hover {
               &:hover {
-                p {
+                .h4 {
                   color: $midnight;
-                  background-color: $flesh;
+
+                  span.bg {
+                    visibility: visible;
+                  }
                 }
               }
             }
