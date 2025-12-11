@@ -1,12 +1,12 @@
 <template>
   <section class="contact-hero pad-t pad-b">
     <div class="gutter pad-b">
-      <ul class="locations flesh">
+      <ul class="locations flesh manic">
         <li v-for="location in store.locations">
           <p>{{ location }}</p>
         </li>
       </ul>
-      <h1 class="h1 flesh">{{ title }}</h1>
+      <h1 class="h1 flesh rough-edges">{{ title }}</h1>
     </div>
   </section>
 </template>

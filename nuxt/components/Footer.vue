@@ -1,24 +1,39 @@
 <template>
   <footer id="footer" class="bg-bone pad-t pad-b">
     <div class="gutter">
-      <ul class="locations">
+      <ul class="locations manic md">
         <li v-for="location in store.locations">
           <p>{{ location }}</p>
         </li>
       </ul>
-      <ul class="pages midnight fs-lg">
-        <li><NuxtLink to="/work" @click.native="onClickNavLink"><span>Work</span></NuxtLink></li>
-        <li><NuxtLink to="/directors" @click.native="onClickNavLink"><span>Directors</span></NuxtLink></li>
-        <li><NuxtLink to="/manifesto" @click.native="onClickNavLink"><span>Manifesto</span></NuxtLink></li>
-        <li><NuxtLink to="/zine" @click.native="onClickNavLink"><span>Zine</span></NuxtLink></li>
-        <li><NuxtLink to="/contact" @click.native="onClickNavLink"><span>Contact</span></NuxtLink></li>
+      <ul class="pages midnight brush">
+        <li><NuxtLink to="/work" @click.native="onClickNavLink">
+          <span class="rough-edges"></span>
+          <span>Work</span></NuxtLink>
+        </li>
+        <li><NuxtLink to="/directors" @click.native="onClickNavLink">
+          <span class="rough-edges"></span>
+          <span>Directors</span></NuxtLink>
+        </li>
+        <li><NuxtLink to="/manifesto" @click.native="onClickNavLink">
+          <span class="rough-edges"></span>
+          <span>Manifesto</span></NuxtLink>
+        </li>
+        <li><NuxtLink to="/zine" @click.native="onClickNavLink">
+          <span class="rough-edges"></span>
+          <span>Zine</span></NuxtLink>
+        </li>
+        <li><NuxtLink to="/contact" @click.native="onClickNavLink">
+          <span class="rough-edges"></span>
+          <span>Contact</span></NuxtLink>
+        </li>
       </ul>
       <ul class="socials">
         <li v-for="link in store.socials">
           <NuxtLink :to="link" target="_blank" />
         </li>
       </ul>
-      <p>© {{ new Date().getFullYear() }} Flesh and Bones, Inc.</p>
+      <p class="manic sm">© {{ new Date().getFullYear() }} Flesh and Bones, Inc.</p>
     </div>
   </footer>
 </template>
@@ -90,18 +105,33 @@ function onClickNavLink(e) {
         justify-content: center;
 
         a {
+          position: relative;
           margin: 0 0.5em;
-          padding: 0.4em 0.2em;
+          padding: 0.1em 0.2em 0.2em;
           display: inline-flex;
           justify-content: center;
 
-          &.router-link-exact-active {
+          span.rough-edges {
+            @include abs-fill;
             background-color: $flesh;
+            visibility: hidden;
+          }
+
+          span:not(.rough-edges) {
+            position: relative;
+          }
+
+          &.router-link-exact-active {
+            span.rough-edges {
+              visibility: visible;
+            }
           }
 
           @include can-hover {
             &:hover {
-              background-color: $flesh;
+              span.rough-edges {
+                visibility: visible;
+              }
             }
           }
         }

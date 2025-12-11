@@ -33,9 +33,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 body {
-  font-family: $helvetica;
-  @include fluid-type($min, $max, 12px, 16px);
-  line-height: 1.25em;
+  font-family: $graphik-semibold;
+  @include fluid-type($min, $max, 12px, 18px);
+  line-height: 1.666em;
+  font-variant-ligatures: common-ligatures;
 }
 
 strong {
@@ -43,29 +44,92 @@ strong {
   text-transform: uppercase;
 }
 
-.fs-sm {
-  @include fluid-type($min, $max, 10px, 12px);
-  line-height: 1.1em;
+.fs-sm,
+.label {
+  @include fluid-type($min, $max, 11px, 14px);
+  line-height: 1.2em;
 }
 
-.fs-lg {
+.fs-lg,
+.brush {
   font-family: $tomarik;
-  @include fluid-type($min, $max, 16px, 20px);
-  line-height: 1.1em;
-  font-weight: normal;
+  @include fluid-type($min, $max, 20px, 30px);
+  line-height: 1.2em;
   text-transform: uppercase;
+  font-variant-ligatures: normal;
+
+  &.sm {
+    @include fluid-type($min, $max, 18px, 24px);
+  }
+
+  &.lg {
+    @include fluid-type($min, $max, 24px, 36px);
+  }
+}
+
+.manic {
+  font-family: $manic;
+  @include fluid-type($min, $max, 20px, 30px);
+  line-height: 1.2em;
+  text-transform: uppercase;
+
+  &.xs-reg {
+    @include fluid-type($min, $max, 14px, 30px);
+  }
+
+  &.md {
+    @include fluid-type($min, $max, 16px, 24px);
+  }
+
+  &.sm {
+    @include fluid-type($min, $max, 14px, 20px);
+  }
+}
+
+.manic-alt-1 {
+  font-family: $manic-alt1;
+  @include fluid-type($min, $max, 14px, 18px);
+  line-height: 1.1em;
+  text-transform: uppercase;
+
+  &.bone {
+    -webkit-text-stroke: 0.02em $bone;
+  }
+}
+
+.manic-alt-3 {
+  font-family: $manic-alt3;
+  @include fluid-type($min, $max, 14px, 18px);
+  line-height: 1.1em;
+  text-transform: uppercase;
+
+  &.bone {
+    -webkit-text-stroke: 0.02em $bone;
+  }
 }
 
 .h1 {
-  @include fluid-type($min, $max, 32px, 64px);
-  line-height: 1.13em;
-  font-weight: 900;
+  font-family: $graphic-black;
+  @include fluid-type($min, $max, 44px, 102px);
+  line-height: 1em;
   text-transform: uppercase;
+
+  &.flesh {
+    -webkit-text-stroke: 0.03em $flesh;
+  }
+
+  &.sm {
+    @include fluid-type($min, $max, 40px, 90px);
+  }
 }
 
 .h3 {
-  @include fluid-type($min, $max, 20px, 32px);
-  line-height: 1.13em;
-  font-weight: 900;
+  font-family: $graphic-black;
+  @include fluid-type($min, $max, 24px, 48px);
+  line-height: 1em;
   text-transform: uppercase;
+}
+
+.sketch-bold {
+  font-family: $graphic-black;
 }

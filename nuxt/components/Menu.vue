@@ -3,12 +3,37 @@
     <div id="menu-inner">
       <div id="menu-content" ref="contentRef" @click="closeMenu">
         <nav id="menu-paper" class="bg-bone">
-          <ul class="primary h1">
-            <li><NuxtLink to="/work" @click.native="onClickNavLink"><span>Work</span></NuxtLink></li>
-            <li><NuxtLink to="/directors" @click.native="onClickNavLink"><span>Directors</span></NuxtLink></li>
-            <li><NuxtLink to="/manifesto" @click.native="onClickNavLink"><span>Manifesto</span></NuxtLink></li>
-            <li><NuxtLink to="/zine" @click.native="onClickNavLink"><span>Zine</span></NuxtLink></li>
-            <li><NuxtLink to="/contact" @click.native="onClickNavLink"><span>Contact</span></NuxtLink></li>
+          <ul class="primary h1 sm">
+            <li>
+              <NuxtLink to="/work" @click.native="onClickNavLink">
+                <span class="rough-edges bg"></span>
+                <span class="rough-edges">Work</span>
+              </NuxtLink>
+            </li>
+            <li>
+              <NuxtLink to="/directors" @click.native="onClickNavLink">
+                <span class="rough-edges bg"></span>
+                <span class="rough-edges">Directors</span>
+              </NuxtLink>
+            </li>
+            <li>
+              <NuxtLink to="/manifesto" @click.native="onClickNavLink">
+                <span class="rough-edges bg"></span>
+                <span class="rough-edges">Manifesto</span>
+              </NuxtLink>
+            </li>
+            <li>
+              <NuxtLink to="/zine" @click.native="onClickNavLink">
+                <span class="rough-edges bg"></span>
+                <span class="rough-edges">Zine</span>
+              </NuxtLink>
+            </li>
+            <li>
+              <NuxtLink to="/contact" @click.native="onClickNavLink">
+                <span class="rough-edges bg"></span>
+                <span class="rough-edges">Contact</span>
+              </NuxtLink>
+            </li>
           </ul>
           <ul class="socials">
             <li v-for="link in store.socials">
@@ -16,7 +41,7 @@
             </li>
           </ul>
           <div class="locations-wrapper">
-            <ul class="locations">
+            <ul class="locations manic md">
               <li v-for="location in store.locations">
                 <p>{{ location }}</p>
               </li>
@@ -127,6 +152,14 @@ function closeMenu(e) {
             padding-top: 0px;
             @include header-ht(padding-bottom);
           }
+
+          ul.socials {
+            @include header-ht(padding-bottom);
+          }
+
+          .locations-wrapper {
+            @include header-ht(padding-bottom);
+          }
         }
       }
     }
@@ -161,7 +194,7 @@ function closeMenu(e) {
         display: flex;
 
         ul.primary  {
-          margin: 0 auto;
+          margin: 0.25em auto -0.5em;
           @include header-ht(padding-top);
           @include header-ht(padding-bottom);
           display: inline-flex;
@@ -173,17 +206,31 @@ function closeMenu(e) {
 
             a {
               position: relative;
-              padding: 0 0.1em;
+              padding: 0.04em 0.1em;
               display: flex;
               align-items: center;
 
-              &.router-link-exact-active {
+              span.rough-edges {
+                position: relative;
+              }
+
+              span.bg {
+                @include abs-fill;
                 background-color: $midnight;
+                visibility: hidden;
+              }
+
+              &.router-link-exact-active {
+                span.bg {
+                  visibility: visible;
+                }
               }
 
               @include can-hover {
                 &:hover {
-                  background-color: $midnight;
+                  span.bg {
+                    visibility: visible;
+                  }
                 }
               }
             }
@@ -191,58 +238,7 @@ function closeMenu(e) {
         }
 
         ul.socials {
-          position: absolute;
-          top: 50%;
-          left: span(1);
-          display: flex;
-          flex-direction: column;
-          transform: translateY(-50%);
-
-          li {
-            padding: $space-8 0;
-            display: inline-flex;
-
-            a {
-              width: $space-32;
-              height: $space-32;
-              border-radius: 50%;
-              background-color: $flesh;
-              display: flex;
-              flex-shrink: 0;
-              align-items: center;
-              justify-content: center;
-
-              &:after {
-                color: $bone;
-                font-size: 12px;
-                display: inline-flex;
-              }
-
-              &[href*='instagram'] {
-                &:after {
-                  content: 'IG';
-                }
-              }
-
-              &[href*='vimeo'] {
-                &:after {
-                  content: 'VI';
-                }
-              }
-
-              &[href*='facebook'] {
-                &:after {
-                  content: 'FB';
-                }
-              }
-
-              &[href*='linkedin'] {
-                &:after {
-                  content: 'LI';
-                }
-              }
-            }
-          }
+          display: none;
         }
 
         .locations-wrapper {
@@ -256,6 +252,71 @@ function closeMenu(e) {
     #menu-inner {
       #menu-content {
         nav#menu-paper {
+          ul.primary  {
+            margin: 0.25em auto 0;
+
+            li {
+              a {
+                padding: 0 0.1em;
+              }
+            }
+          }
+
+          ul.socials {
+            position: absolute;
+            top: 50%;
+            left: span(1);
+            display: flex;
+            flex-direction: column;
+            transform: translateY(-50%);
+
+            li {
+              padding: $space-8 0;
+              display: inline-flex;
+
+              a {
+                width: $space-32;
+                height: $space-32;
+                border-radius: 50%;
+                background-color: $flesh;
+                display: flex;
+                flex-shrink: 0;
+                align-items: center;
+                justify-content: center;
+
+                &:after {
+                  color: $bone;
+                  font-size: 12px;
+                  display: inline-flex;
+                }
+
+                &[href*='instagram'] {
+                  &:after {
+                    content: 'IG';
+                  }
+                }
+
+                &[href*='vimeo'] {
+                  &:after {
+                    content: 'VI';
+                  }
+                }
+
+                &[href*='facebook'] {
+                  &:after {
+                    content: 'FB';
+                  }
+                }
+
+                &[href*='linkedin'] {
+                  &:after {
+                    content: 'LI';
+                  }
+                }
+              }
+            }
+          }
+
           .locations-wrapper {
             position: absolute;
             left: span(3);
@@ -264,7 +325,7 @@ function closeMenu(e) {
             width: 2em;
             overflow: hidden;
             display: flex;
-            
+
             ul.locations {
               position: absolute;
               top: 50%;
@@ -289,7 +350,7 @@ function closeMenu(e) {
                 }
 
                 p {
-                  text-decoration: line-through;
+                  // text-decoration: line-through;
                   display: inline-flex;
                   align-items: center;
                 }

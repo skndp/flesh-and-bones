@@ -1,10 +1,10 @@
 <template>
   <section class="manifesto-hero pad-t pad-b">
     <div class="gutter pad-b">
-      <p class="fs-lg flesh">{{ kicker }}</p>
-      <h1 class="h1 flesh pad-b">{{ title }}</h1>
-      <RichTextSketch class="fs-lg" :copy="copy" />
-      <p class="h3 flesh pad-t">{{ endMark }}</p>
+      <p class="fs-lg flesh manic">{{ kicker }}</p>
+      <h1 class="h1 pad-b flesh rough-edges">{{ title }}</h1>
+      <RichTextSketch class="brush" :copy="copy" />
+      <p class="h3 pad-t flesh rough-edges">{{ endMark }}</p>
     </div>
   </section>
 </template>

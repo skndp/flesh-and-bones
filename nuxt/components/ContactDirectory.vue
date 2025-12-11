@@ -3,16 +3,16 @@
     <div class="gutter">
       <div v-for="row in directory" class="row">
         <div class="note">
-          <p class="flesh">{{ row.sketchnote }}</p>
+          <p class="flesh manic xs-reg">{{ row.sketchnote }}</p>
         </div>
-        <ul v-for="list in row.lists">
-          <li><p class="fs-lg flesh">{{ list.label }}</p></li>
+        <ul v-for="list in row.lists" class="bone brush">
+          <li><p class="flesh brush lg">{{ list.label }}</p></li>
           <li v-for="item in list.items">
             <template v-if="item.link">
-              <NuxtLink class="fs-lg" :to="item.link" target="_blank">{{ item.label }}</NuxtLink>
+              <NuxtLink :to="item.link" target="_blank">{{ item.label }}</NuxtLink>
             </template>
             <template v-else>
-              <p class="fs-lg">{{ item.label }}</p>
+              <p>{{ item.label }}</p>
             </template>
           </li>
         </ul>
@@ -65,10 +65,11 @@ section.contact-directory {
 
         .note {
           width: 33.333%;
+          margin-top: 1em;
           margin-bottom: 0px;
 
           p {
-            max-width: 270px;
+            max-width: 350px;
             margin-right: span(0.5);
           }
         }

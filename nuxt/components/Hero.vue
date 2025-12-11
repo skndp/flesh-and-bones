@@ -1,8 +1,8 @@
 <template>
   <section class="hero pad-t pad-b">
-    <div class="gutter pad-b">
-      <h1 class="h1 flesh">{{ title }}</h1>
-      <p v-if="copy">{{ copy }}</p>
+    <div class="gutter">
+      <h1 class="h1 flesh rough-edges">{{ title }}</h1>
+      <p v-if="copy" class="manic pad-t">{{ copy }}</p>
     </div>
   </section>
 </template>
@@ -40,7 +40,9 @@ section.hero {
     }
 
     p {
-      margin-top: 1em;
+      width: 100%;
+      max-width: 666px;
+      margin: 0 auto 2em;
     }
   }
 }

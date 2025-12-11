@@ -16,6 +16,7 @@
     <transition name="menu">
       <Menu v-if="store.menuOpen" />
     </transition>
+    <SvgFilters />
     <NuxtPage :class="{ 'fade-out': isFading }" />
   </div>
 </template>

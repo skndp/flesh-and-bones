@@ -2,17 +2,17 @@
   <section class="contact-founders pad-b">
     <div class="cutout pad-t pad-b bg-bone flesh">
       <div class="gutter pad-t pad-b">
-        <p>{{ cutoutTitle }}</p>
+        <p class="flesh manic">{{ cutoutTitle }}</p>
       </div>
     </div>
     <div class="gutter cols pad-b">
       <div v-for="founder in founders" class="col">
-        <p class="fs-lg flesh">{{ founder.name }}</p>
-        <p>{{ founder.role }}</p>
-        <p>
+        <p class="flesh brush">{{ founder.name }}</p>
+        <p class="manic sm">{{ founder.role }}</p>
+        <p class="manic sm">
           <NuxtLink :to="`mailto:${founder.email}`" target="_blank">{{ founder.email }}</NuxtLink>
         </p>
-        <p>{{ founder.location }}</p>
+        <p class="manic sm">{{ founder.location }}</p>
         <p class="bio">{{ founder.bio }}</p>
       </div>
     </div>
@@ -37,6 +37,12 @@ const props = defineProps({
 section.contact-founders {
   .cutout {
     text-align: center;
+
+    .gutter {
+      .manic {
+        white-space: pre-line;
+      }
+    }
   }
 
   .cols {
@@ -54,7 +60,7 @@ section.contact-founders {
           max-width: 666px;
           line-height: 1.666em;
           margin-bottom: 0px;
-          padding-top: $space-16;
+          padding-top: 2em;
           white-space: pre-line;
         }
       }

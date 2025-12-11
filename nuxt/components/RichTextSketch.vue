@@ -21,8 +21,8 @@ const customCopy = {
     'sketch-circle': ({ children }) => {
       return `<span class='sketch-circle'>${children}</span>`;
     },
-    'sketch-bold': ({ children }) => `<strong class='sketch-bold'>${children}</strong>`,
-    'sketch-note': ({ children }) => `<span class='sketch-note'>${children}</span>`
+    'sketch-bold': ({ children }) => `<strong class='sketch-bold flesh'>${children}</strong>`,
+    'sketch-note': ({ children }) => `<span class='sketch-note flesh manic'>${children}</span>`
   },
   list: {
     bullet: ({ children }) => `<ul>${children}</ul>`,
@@ -46,13 +46,14 @@ const copyHtml = toHTML(props.copy, {components: customCopy});
   }
 
   .sketch-bold {
-    color: $flesh;
+    position: relative;
+    transform: rotate(-1.3deg);
+    display: inline-flex;
   }
 
   .sketch-note {
-    color: $flesh;
-    text-transform: none;
-    font-family: fantasy, cursive, sans-serif;
+    padding: 0 0.5em;
+    letter-spacing: -0.05em;
   }
 }
 </style>

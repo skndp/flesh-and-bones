@@ -32,14 +32,12 @@ let circle_to = 0;
 
 // Mounted
 onMounted(() => {
-  window.addEventListener('resize', onResize);
   window.addEventListener('scroll', onScroll);
   onScroll();
 });
 
 // Before Unmount
 onBeforeUnmount(() => {
-  window.removeEventListener('resize', onResize);
   window.removeEventListener('scroll', onScroll);
 });
 
@@ -69,12 +67,6 @@ function toggleMenu() {
     }, 1332);
   }
 }
-
-function onResize() {
-  if (window.innerWidth >= 768 && store.menuOpen) {
-    closeMenu();
-  }
-};
 
 function onScroll() {
   const current_scroll = window.pageYOffset;
