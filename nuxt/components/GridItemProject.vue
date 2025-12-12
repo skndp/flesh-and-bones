@@ -156,11 +156,7 @@ function setMasks() {
       }
 
       .responsive-image-wrapper {
-<<<<<<< HEAD
         &:nth-child(2) {
-=======
-        &:nth-child(1), &:nth-child(2) {
->>>>>>> db690adafca02579bf6a45423328bf5060a2640a
           transition: visibility 0ms linear;
           visibility: visible;
         }
