@@ -8,13 +8,13 @@
     </div>
     <div v-if="item.ctaCardImages" class="item-image">
       <template v-if="(layout === 'square' || isSmallScreen) && item.ctaCardImages.squareImage">
-        <div class="item-image-paper" ref="paper"></div>
+        <div class="item-image-paper" :style="{'background-color': item.ctaCardImages.squareImage.image.palette.muted.background}" ref="paper"></div>
         <ResponsiveImage v-bind="item.ctaCardImages.squareImage.image" ref="imgTop" />
         <ResponsiveImage v-bind="item.ctaCardImages.squareImage.image" ref="imgBottom" />
         <ResponsiveImage v-bind="item.ctaCardImages.squareImage.image" />
       </template>
       <template v-else>
-        <div class="item-image-paper" ref="paper"></div>
+        <div class="item-image-paper" :style="{'background-color': item.ctaCardImages.landscapeImage.image.palette.muted.background}" ref="paper"></div>
         <ResponsiveImage v-bind="item.ctaCardImages.landscapeImage.image" ref="imgTop" />
         <ResponsiveImage v-bind="item.ctaCardImages.landscapeImage.image" ref="imgBottom" />
         <ResponsiveImage v-bind="item.ctaCardImages.landscapeImage.image" />
@@ -92,7 +92,7 @@ function createTornEdge(startX, startY, endX, endY, amplitude, frequency) {
   const step = 3;
   const freqs = [0.002, 0.004, 0.006, 0.008, 0.01, 0.012, 0.014, 0.016, 0.018, 0.02];
   let noiseOffset = 0;
-  let currentWaveAmplitude = Math.random() * 7;
+  let currentWaveAmplitude = 1 + Math.random() * 4;
   let currentWaveFrequency = freqs[Math.floor(Math.random() * freqs.length)];
   let period_x = ((2 * Math.PI) / currentWaveFrequency);
 
@@ -106,7 +106,7 @@ function createTornEdge(startX, startY, endX, endY, amplitude, frequency) {
     const y = startY + currentWaveAmplitude * sin;
     
     if(x >= period_x) {
-      currentWaveAmplitude = Math.random() * 10 + 1;
+      currentWaveAmplitude = 1 + Math.random() * 4;
       currentWaveFrequency = freqs[Math.floor(Math.random() * freqs.length)];
 
       period_x = x + ((2 * Math.PI) / currentWaveFrequency);
@@ -144,9 +144,19 @@ function setMasks() {
   cursor: pointer;
 
   &:hover {    
+    .item-info {
+      transition: visibility 0ms linear;
+      visibility: visible;
+    }
+
     .item-image {
+      .item-image-paper {
+        transition: visibility 0ms linear;
+        visibility: visible;
+      }
+
       .responsive-image-wrapper {
-        &:nth-child(1), &:nth-child(2) {
+        &:nth-child(2) {
           transition: visibility 0ms linear;
           visibility: visible;
         }
@@ -173,6 +183,8 @@ function setMasks() {
     padding: $space-8;
     width: calc(100% - $space-16);
     max-width: 400px;
+    transition: visibility 0ms linear $speed-333;
+    visibility: hidden;
 
     .meta {
       margin: 4px 0 0;
@@ -190,9 +202,11 @@ function setMasks() {
       left: 0.5px; // pixel rounding patch
       width: calc(100% - 1px); // pixel rounding patch
       height: 100%;
-      background-color: rgba($bone, 0.65);
       mask-size: cover;
-      transform: translate(0px, 3px);
+      transform: translate(0px, 2px);
+      transition: visibility 0ms linear $speed-333;
+      visibility: hidden;
+      opacity: 0.5;
     }
 
     .responsive-image-wrapper {
