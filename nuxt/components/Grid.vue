@@ -20,7 +20,7 @@
         </li>
       </ul>
       <Transition name="grid-switch" mode="out-in" :duration="333">
-        <div :key="selectedFilterId === 'all' ? 'all' : 'filtered'">
+        <div :key="selectedFilterId">
           <template v-if="filters && selectedFilterId !== 'all'">
             <div :class="[ 'filter-items', filterLayout ]">
               <GridItemProject
