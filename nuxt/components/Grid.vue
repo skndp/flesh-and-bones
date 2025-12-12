@@ -19,36 +19,40 @@
           <span>{{ item.filter }}</span>
         </li>
       </ul>
-      <template v-if="filters && selectedFilterId !== 'all'">
-        <div :class="[ 'filter-items', filterLayout ]">
-          <GridItemProject
-            v-for="(projectItem, index) in filteredProjects"
-            :layout="filterLayout"
-            :item="projectItem.project"
-            :key="index"
-            @click="onClickProjectItem(projectItem)"
-          />
-        </div>
-      </template>
-      <template v-else>
-        <div class="rows">
-          <div v-for="(row, rowIndex) in grid" class="row" :key="rowIndex">
-            <template v-for="(item, index) in row.items" :key="index">
+      <Transition name="grid-switch" mode="out-in" :duration="333">
+        <div :key="selectedFilterId === 'all' ? 'all' : 'filtered'">
+          <template v-if="filters && selectedFilterId !== 'all'">
+            <div :class="[ 'filter-items', filterLayout ]">
               <GridItemProject
-                v-if="item.type[0].type === 'projectItem'"
-                :layout="row.items.length > 1 ? 'square' : 'landscape'"
-                :item="item.type[0].project"
-                @click="onClickProjectItem(item.type[0])"
+                v-for="(projectItem, index) in filteredProjects"
+                :layout="filterLayout"
+                :item="projectItem.project"
+                :key="index"
+                @click="onClickProjectItem(projectItem)"
               />
-              <GridItemArticle
-                v-if="item.type[0].type === 'articleItem'"
-                :layout="row.items.length > 1 ? 'square' : 'landscape'"
-                :item="item.type[0].article"
-              />
-            </template>
-          </div>
+            </div>
+          </template>
+          <template v-else>
+            <div class="rows">
+              <div v-for="(row, rowIndex) in grid" class="row" :key="rowIndex">
+                <template v-for="(item, index) in row.items" :key="index">
+                  <GridItemProject
+                    v-if="item.type[0].type === 'projectItem'"
+                    :layout="row.items.length > 1 ? 'square' : 'landscape'"
+                    :item="item.type[0].project"
+                    @click="onClickProjectItem(item.type[0])"
+                  />
+                  <GridItemArticle
+                    v-if="item.type[0].type === 'articleItem'"
+                    :layout="row.items.length > 1 ? 'square' : 'landscape'"
+                    :item="item.type[0].article"
+                  />
+                </template>
+              </div>
+            </div>
+          </template>
         </div>
-      </template>
+      </Transition>
     </div>
   </section>
 </template>
@@ -189,6 +193,37 @@ section.grid {
           }
         }
       }
+    }
+
+    // Grid filter transitions...
+    .item {
+      transition: opacity $speed-333 $ease-out, transform $speed-333 $ease-out;
+    }
+
+    // Cascade in
+    .grid-switch-enter-from {
+      .item {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+    }
+
+    .grid-switch-enter-to {
+      .item {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    // Cascade out
+    .grid-switch-leave-from .item {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .grid-switch-leave-to .item {
+      opacity: 0;
+      transform: scale(0.9);
     }
   }
 
