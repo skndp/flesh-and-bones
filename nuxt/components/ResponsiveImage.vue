@@ -252,7 +252,7 @@ export default {
   &.responsive-image-picture--is-errored {
     picture.responsive-image-picture {
       opacity: 1;
-      transition: opacity $speed-666 $ease-out;
+      transition: opacity $speed-333 $ease-out;
     }
   }
 }
