@@ -52,6 +52,9 @@ watch(() => props.autoplay, (newVal) => {
 <style lang='scss'>
 .animated {
   width: 100%;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  pointer-events: none;
 
   &.hidden {
     display: none;
@@ -60,9 +63,10 @@ watch(() => props.autoplay, (newVal) => {
 
   &.circle {
     aspect-ratio: 286/251;
-    mask-size: contain;
-    mask-repeat: no-repeat;
-    pointer-events: none;
+  }
+
+  &.news-flash {
+    aspect-ratio: 36/25;
   }
 }
 </style>

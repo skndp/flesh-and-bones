@@ -90,11 +90,11 @@ function reflow() {
 function createTornEdge(startX, startY, endX, endY, amplitude, frequency) {
   const distance = Math.sqrt(Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2));
   const step = 3;
-  const freqs = [0.005, 0.01, 0.015, 0.02];
+  const freqs = [0.002, 0.004, 0.006, 0.008, 0.01, 0.012, 0.014, 0.016, 0.018, 0.02];
   let noiseOffset = 0;
-  let currentWaveAmplitude = Math.random() * 10;
+  let currentWaveAmplitude = Math.random() * 7;
   let currentWaveFrequency = freqs[Math.floor(Math.random() * freqs.length)];
-  let last_sin = 0;
+  let period_x = ((2 * Math.PI) / currentWaveFrequency);
 
   ctx.beginPath();
   ctx.moveTo(startX, startY);
@@ -105,12 +105,12 @@ function createTornEdge(startX, startY, endX, endY, amplitude, frequency) {
     const sin = Math.sin(currentWaveFrequency * x);
     const y = startY + currentWaveAmplitude * sin;
     
-    if(sin > 0 && last_sin < 0 || sin < 0 && last_sin > 0) {
+    if(x >= period_x) {
       currentWaveAmplitude = Math.random() * 10 + 1;
       currentWaveFrequency = freqs[Math.floor(Math.random() * freqs.length)];
+
+      period_x = x + ((2 * Math.PI) / currentWaveFrequency);
     }
-    
-    last_sin = sin;
 
     const noiseValue = noise.perlin2(i * frequency, noiseOffset);
 
@@ -146,10 +146,16 @@ function setMasks() {
   &:hover {    
     .item-image {
       .responsive-image-wrapper {
+        &:nth-child(1), &:nth-child(2) {
+          transition: visibility 0ms linear;
+          visibility: visible;
+        }
+
         &:nth-child(3) {
-          transition: transform 400ms cubic-bezier(0.550, 0.085, 0.680, 0.530), opacity 400ms cubic-bezier(0.550, 0.085, 0.680, 0.530);
+          transition: transform $speed-333 cubic-bezier(0.550, 0.085, 0.680, 0.530), opacity $speed-333 cubic-bezier(0.550, 0.085, 0.680, 0.530), visibility 0ms linear;
           transform: translate(0, 10%) rotateZ(-7deg) rotateY(5deg);
           opacity: 0;
+          visibility: visible;
         }
 
         &:nth-child(4) {
@@ -206,18 +212,25 @@ function setMasks() {
       }
 
       @include can-hover {
+        &:nth-child(1), &:nth-child(2) {
+          transition: visibility 0ms linear $speed-333;
+          visibility: hidden;
+        }
+
         &:nth-child(3) {
           display: block;
           mask-composite: exclude;
           transform-origin: 100% 80%;
-          transition: transform 400ms cubic-bezier(0.075, 0.820, 0.165, 1.000), opacity 400ms cubic-bezier(0.075, 0.820, 0.165, 1.000);
+          transition: transform $speed-333 cubic-bezier(0.075, 0.820, 0.165, 1.000), opacity $speed-333 cubic-bezier(0.075, 0.820, 0.165, 1.000), visibility 0ms linear $speed-333;
           pointer-events: none;
+          visibility: hidden;
         }
 
         &:nth-child(4) {
           display: block;
-          transition: visibility 0ms linear 400ms;
+          transition: visibility 0ms linear $speed-333;
           pointer-events: none;
+          visibility: visible;
         }
       }
 

@@ -1,12 +1,15 @@
 <template>
-  <NuxtLink :to="item.slug" class="item article flesh" :class="[ layout ]">
-    <div class="item-image">
+  <NuxtLink :to="item.slug" class="item article flesh" :class="[ layout ]" @mouseenter="onItemHover" @mouseleave="onItemHover">
+    <div class="item-image rough-edges">
       <template v-if="layout === 'square' && item.ctaCardImages.squareImage">
         <ResponsiveImage v-bind="item.ctaCardImages.squareImage.image" />
       </template>
       <template v-else>
         <ResponsiveImage v-bind="item.ctaCardImages.landscapeImage.image" />
       </template>
+      <div class="item-hover">
+        <Animated :autoplay="false" type="news-flash" :loop="true" background="bg-bone" ref="hoverAnimation" />
+      </div>
     </div>
     <div class="item-details">
       <div class="meta">
@@ -18,6 +21,9 @@
 </template>
 
 <script setup>
+const hoverAnimation = ref(null);
+let mqMobile;
+
 // Props
 const props = defineProps({
   item: {
@@ -29,6 +35,25 @@ const props = defineProps({
     required: true
   }
 });
+
+// Lifecycle
+onMounted(() => {
+  mqMobile = window.matchMedia('(max-width: 540px) and (hover: none)');
+  mqMobile.addEventListener('change', handleMqMobile);
+
+  handleMqMobile(mqMobile);
+});
+
+// Functions
+function handleMqMobile(e) {
+  if(e.matches) hoverAnimation.value.play();
+  else hoverAnimation.value.stop();
+}
+
+function onItemHover(e) {
+  if(e.type === 'mouseenter') hoverAnimation.value.play();
+  else hoverAnimation.value.stop();
+}
 </script>
 
 <style lang='scss'>
@@ -43,6 +68,14 @@ const props = defineProps({
     width: 83.333%;
     aspect-ratio: 1/1;
     margin: 0 auto;
+
+    .item-hover {
+      position: absolute;
+      top: 50%;
+      left: 0%;
+      width: 100px;
+      transform: translate(-36%, -50%);
+    }
   }
 
   .item-details {
@@ -75,6 +108,12 @@ const props = defineProps({
   }
 
   @include respond-to($desktop) {
+    .item-image {
+      .item-hover {
+        width: 132px;
+      }
+    }
+
     .item-details {
       .meta {
         p {
