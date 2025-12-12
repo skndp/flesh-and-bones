@@ -183,8 +183,11 @@ function setMasks() {
     padding: $space-8;
     width: calc(100% - $space-16);
     max-width: 400px;
-    transition: visibility 0ms linear $speed-333;
-    visibility: hidden;
+
+    @include can-hover {
+      transition: visibility 0ms linear $speed-333;
+      visibility: hidden;
+    }
 
     .meta {
       margin: 4px 0 0;
@@ -204,9 +207,12 @@ function setMasks() {
       height: 100%;
       mask-size: cover;
       transform: translate(0px, 2px);
-      transition: visibility 0ms linear $speed-333;
-      visibility: hidden;
       opacity: 0.5;
+
+      @include can-hover {
+        transition: visibility 0ms linear $speed-333;
+        visibility: hidden;
+      }
     }
 
     .responsive-image-wrapper {
