@@ -26,6 +26,7 @@ export const imageProps = `
     'dataTitle': asset->title,
     'dataAlt': asset->altText,
     'width': asset->metadata.dimensions.width,
-    'height': asset->metadata.dimensions.height
+    'height': asset->metadata.dimensions.height,
+    'palette': asset->metadata.palette
   }
 `;
