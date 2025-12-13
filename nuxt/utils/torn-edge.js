@@ -17,8 +17,6 @@ export const createTornEdge = (width, height, startX, startY, endX, endY, amplit
   ctx.beginPath();
   ctx.moveTo(startX, startY);
 
-  console.log(cnv, ctx);
-
   for (let i = 0; i < distance; i += step) {
     const t = i / distance;
     const x = startX + (endX - startX) * t;

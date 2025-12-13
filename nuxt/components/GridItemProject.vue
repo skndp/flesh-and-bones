@@ -24,18 +24,14 @@
 </template>
 
 <script setup>
-import NoiseModule from 'noisejs'
-
 const itemRef = ref(null);
 const infoRef = ref(null);
 const tearY = ref(0.8);
 
-const noise = new NoiseModule.Noise(Math.random());
 const paper = ref(null);
 const imgTop = ref(null);
 const imgBottom = ref(null);
 const isSmallScreen = ref(false);
-let cnv, ctx;
 
 // Props
 const props = defineProps({
@@ -73,67 +69,15 @@ function reflow() {
     const b = imgTop.value.$el.getBoundingClientRect(),
           w = b.width,
           h = b.height;
-    
-    cnv = document.createElement('canvas');
-    cnv.width = w;
-    cnv.height = h;
-    ctx = cnv.getContext('2d');
 
     let y_percent = 1 - (infoRef.value.getBoundingClientRect().height / itemRef.value.getBoundingClientRect().height);
     tearY.value = (Math.round(y_percent * 100) / 100) - 0.02;
 
-    createTornEdge(0, h * tearY.value, b.width, h * tearY.value, 3, 0.5);
-    setMasks();
+    const dataURL = createTornEdge(w, h, 0, h * tearY.value, b.width, h * tearY.value, 3, 0.5);
+    paper.value.style.maskImage = `url(${dataURL})`;
+    imgTop.value.$el.style.maskImage = `url(${dataURL})`;
+    imgBottom.value.$el.style.maskImage = `url(${dataURL}), linear-gradient(#000 0 0)`;
   }
-}
-
-function createTornEdge(startX, startY, endX, endY, amplitude, frequency) {
-  const distance = Math.sqrt(Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2));
-  const step = 3;
-  const freqs = [0.002, 0.004, 0.006, 0.008, 0.01, 0.012, 0.014, 0.016, 0.018, 0.02];
-  let noiseOffset = 0;
-  let currentWaveAmplitude = 1 + Math.random() * 4;
-  let currentWaveFrequency = freqs[Math.floor(Math.random() * freqs.length)];
-  let period_x = ((2 * Math.PI) / currentWaveFrequency);
-
-  ctx.beginPath();
-  ctx.moveTo(startX, startY);
-
-  for (let i = 0; i < distance; i += step) {
-    const t = i / distance;
-    const x = startX + (endX - startX) * t;
-    const sin = Math.sin(currentWaveFrequency * x);
-    const y = startY + currentWaveAmplitude * sin;
-    
-    if(x >= period_x) {
-      currentWaveAmplitude = 1 + Math.random() * 4;
-      currentWaveFrequency = freqs[Math.floor(Math.random() * freqs.length)];
-
-      period_x = x + ((2 * Math.PI) / currentWaveFrequency);
-    }
-
-    const noiseValue = noise.perlin2(i * frequency, noiseOffset);
-
-    const offsetX = (endY - startY) / distance * noiseValue * amplitude;
-    const offsetY = (endX - startX) / distance * noiseValue * amplitude;
-
-    ctx.lineTo(x + offsetX, y - offsetY);
-
-    noiseOffset += 0.01;
-  }
-
-  ctx.lineTo(endX, endY);
-  ctx.lineTo(endX, 0);
-  ctx.lineTo(0, 0);
-  ctx.lineTo(0, 400);
-  ctx.fill();
-}
-
-function setMasks() {
-  const dataURL = cnv.toDataURL('image/png');
-  paper.value.style.maskImage = `url(${dataURL})`;
-  imgTop.value.$el.style.maskImage = `url(${dataURL})`;
-  imgBottom.value.$el.style.maskImage = `url(${dataURL}), linear-gradient(#000 0 0)`;
 }
 </script>
 
