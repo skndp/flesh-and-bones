@@ -68,5 +68,13 @@ watch(() => props.autoplay, (newVal) => {
   &.news-flash {
     aspect-ratio: 36/25;
   }
+
+  &.bolt {
+    aspect-ratio: 23/20;
+  }
+
+  &.xxx {
+    aspect-ratio: 319/310;
+  }
 }
 </style>
