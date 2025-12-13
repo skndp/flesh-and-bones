@@ -1,7 +1,7 @@
 <template>
   <div>
     <Transition name="loading">
-      <Loader v-if="store.loading" duration="1000" />
+      <Loader v-if="store.loading" />
     </Transition>
     <Transition name="p2p-loading">
       <PageToPageLoader v-if="pageToPageLoader" />
@@ -86,7 +86,7 @@ onMounted(() => {
 
   setTimeout(() => {
     store.setLoaderComplete();
-  }, 3000);
+  }, 1000);
 });
 
 // Before Unmount
