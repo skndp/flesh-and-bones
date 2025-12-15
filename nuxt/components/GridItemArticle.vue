@@ -36,12 +36,19 @@ const props = defineProps({
   }
 });
 
-// Lifecycle
+// Mounted
 onMounted(() => {
   mqMobile = window.matchMedia('(max-width: 540px) and (hover: none)');
   mqMobile.addEventListener('change', handleMqMobile);
 
   handleMqMobile(mqMobile);
+});
+
+// Before Unmount
+onBeforeUnmount(() => {
+  if (mediaQueryList) {
+    mqMobile.removeEventListener('change', handleMqMobile);
+  }
 });
 
 // Functions
