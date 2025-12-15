@@ -25,14 +25,14 @@
               </Swiper>
             </ClientOnly>
           </div>
-          <!-- <div v-if="store.modalShowDirectors" class="directors-row">
+          <div v-if="store.modalShowDirectors" class="directors-row">
             <div v-for="(item, index) in store.modalProjects" class="directors-slider" :key="index">
               <p v-if="index === store.modalIndex" class="director-label brush sm">
                 <span>Director</span>
                 <NuxtLink :to="`/directors/${item.director.slug.current}`" class="flesh">{{ item.director.title }}<span class="bg-flesh rough-edges-light"></span></NuxtLink>
               </p>
             </div>
-          </div> -->
+          </div>
         </div>
         <div class="carousel-block">
           <ClientOnly>
