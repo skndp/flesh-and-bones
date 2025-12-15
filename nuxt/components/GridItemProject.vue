@@ -89,44 +89,14 @@ function reflow() {
 
   &:not(:has(.item-image)) {
     background-color: goldenrod;
+
+    .item-info {
+      transition: visibility 0ms linear;
+      visibility: visible;
+    }
   }
 
   @include can-hover {
-    .item-info {
-      transition: visibility 0ms linear $speed-333;
-      visibility: hidden;
-    }
-
-    .item-image {
-      transition: visibility 0ms linear $speed-333;
-      visibility: hidden;
-
-      .item-image-paper {
-        .responsive-image-wrapper {
-          &:nth-child(1), &:nth-child(2) {
-            transition: visibility 0ms linear $speed-333;
-            visibility: hidden;
-          }
-
-          &:nth-child(3) {
-            display: block;
-            mask-composite: exclude;
-            transform-origin: 100% 80%;
-            transition: transform $speed-333 cubic-bezier(0.075, 0.820, 0.165, 1.000), opacity $speed-333 cubic-bezier(0.075, 0.820, 0.165, 1.000), visibility 0ms linear $speed-333;
-            pointer-events: none;
-            visibility: hidden;
-          }
-
-          &:nth-child(4) {
-            display: block;
-            transition: visibility 0ms linear $speed-333;
-            pointer-events: none;
-            visibility: visible;
-          }
-        }
-      }
-    }
-
     &:hover {
       .item-info {
         transition: visibility 0ms linear;
@@ -169,6 +139,11 @@ function reflow() {
     width: calc(100% - $space-16);
     max-width: 400px;
 
+    @include can-hover {
+      transition: visibility 0ms linear $speed-333;
+      visibility: hidden;
+    }
+
     .meta {
       margin: 4px 0 0;
     }
@@ -188,6 +163,11 @@ function reflow() {
       mask-size: cover;
       transform: translate(0px, 2px);
       opacity: 0.5;
+
+      @include can-hover {
+        transition: visibility 0ms linear $speed-333;
+        visibility: hidden;
+      }
     }
 
     .responsive-image-wrapper {
@@ -204,6 +184,29 @@ function reflow() {
 
       &:nth-child(4) {
         display: none;
+      }
+
+      @include can-hover {
+        &:nth-child(1), &:nth-child(2) {
+          transition: visibility 0ms linear $speed-333;
+          visibility: hidden;
+        }
+
+        &:nth-child(3) {
+          display: block;
+          mask-composite: exclude;
+          transform-origin: 100% 80%;
+          transition: transform $speed-333 cubic-bezier(0.075, 0.820, 0.165, 1.000), opacity $speed-333 cubic-bezier(0.075, 0.820, 0.165, 1.000), visibility 0ms linear $speed-333;
+          pointer-events: none;
+          visibility: hidden;
+        }
+
+        &:nth-child(4) {
+          display: block;
+          transition: visibility 0ms linear $speed-333;
+          pointer-events: none;
+          visibility: visible;
+        }
       }
 
       img {

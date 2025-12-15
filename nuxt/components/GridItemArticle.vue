@@ -46,13 +46,17 @@ onMounted(() => {
 
 // Functions
 function handleMqMobile(e) {
-  if(e.matches) hoverAnimation.value.play();
-  else hoverAnimation.value.stop();
+  if (hoverAnimation.value) {
+    if (e.matches) hoverAnimation.value.play();
+    else hoverAnimation.value.stop();
+  }
 }
 
 function onItemHover(e) {
-  if(e.type === 'mouseenter') hoverAnimation.value.play();
-  else hoverAnimation.value.stop();
+  if (hoverAnimation.value) {
+    if (e.type === 'mouseenter') hoverAnimation.value.play();
+    else hoverAnimation.value.stop();
+  }
 }
 </script>
 
