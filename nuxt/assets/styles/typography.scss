@@ -130,6 +130,17 @@ strong {
   }
 }
 
+.h2 {
+  font-family: $graphic-black;
+  @include fluid-type($min, $max, 30px, 76px);
+  line-height: 1em;
+  text-transform: uppercase;
+
+  &.sm {
+    @include fluid-type($min, $max, 24px, 76px);
+  }
+}
+
 .h3 {
   font-family: $graphic-black;
   @include fluid-type($min, $max, 30px, 48px);

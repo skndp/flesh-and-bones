@@ -6,7 +6,7 @@
         <p class="brush xs"><strong>Director - {{ item.director.title }}</strong></p>
       </div>
     </div>
-    <div v-if="item.ctaCardImages" class="item-image">
+    <div v-if="item.ctaCardImages" class="item-image rough-edges">
       <template v-if="(layout === 'square' || isSmallScreen) && item.ctaCardImages.squareImage">
         <div class="item-image-paper" :style="{'background-color': item.ctaCardImages.squareImage.image.palette.muted.background}" ref="paper"></div>
         <ResponsiveImage v-bind="item.ctaCardImages.squareImage.image" ref="imgTop" />
@@ -73,7 +73,7 @@ function reflow() {
     const b = imgTop.value.$el.getBoundingClientRect(),
           w = b.width,
           h = b.height;
-    
+
     cnv = document.createElement('canvas');
     cnv.width = w;
     cnv.height = h;
@@ -104,7 +104,7 @@ function createTornEdge(startX, startY, endX, endY, amplitude, frequency) {
     const x = startX + (endX - startX) * t;
     const sin = Math.sin(currentWaveFrequency * x);
     const y = startY + currentWaveAmplitude * sin;
-    
+
     if(x >= period_x) {
       currentWaveAmplitude = 1 + Math.random() * 4;
       currentWaveFrequency = freqs[Math.floor(Math.random() * freqs.length)];
@@ -143,34 +143,49 @@ function setMasks() {
   aspect-ratio: 1/1;
   cursor: pointer;
 
-  &:hover {    
+  &:not(:has(.item-image)) {
+    &:before {
+      content: '';
+      @include abs-fill;
+      background-color: goldenrod;
+      filter: url(#roughEdges);
+    }
+  }
+
+  @include can-hover {
     .item-info {
-      transition: visibility 0ms linear;
-      visibility: visible;
+      transition: visibility 0ms linear $speed-333;
     }
 
-    .item-image {
-      .item-image-paper {
+    &:hover {
+      .item-info {
         transition: visibility 0ms linear;
         visibility: visible;
       }
 
-      .responsive-image-wrapper {
-        &:nth-child(2) {
+      .item-image {
+        .item-image-paper {
           transition: visibility 0ms linear;
           visibility: visible;
         }
 
-        &:nth-child(3) {
-          transition: transform $speed-333 cubic-bezier(0.550, 0.085, 0.680, 0.530), opacity $speed-333 cubic-bezier(0.550, 0.085, 0.680, 0.530), visibility 0ms linear;
-          transform: translate(0, 10%) rotateZ(-7deg) rotateY(5deg);
-          opacity: 0;
-          visibility: visible;
-        }
+        .responsive-image-wrapper {
+          &:nth-child(2) {
+            transition: visibility 0ms linear;
+            visibility: visible;
+          }
 
-        &:nth-child(4) {
-          transition: visibility 0ms linear;
-          visibility: hidden;
+          &:nth-child(3) {
+            transition: transform $speed-333 cubic-bezier(0.550, 0.085, 0.680, 0.530), opacity $speed-333 cubic-bezier(0.550, 0.085, 0.680, 0.530), visibility 0ms linear;
+            transform: translate(0, 10%) rotateZ(-7deg) rotateY(5deg);
+            opacity: 0;
+            visibility: visible;
+          }
+
+          &:nth-child(4) {
+            transition: visibility 0ms linear;
+            visibility: hidden;
+          }
         }
       }
     }
@@ -183,8 +198,6 @@ function setMasks() {
     padding: $space-8;
     width: calc(100% - $space-16);
     max-width: 400px;
-    transition: visibility 0ms linear $speed-333;
-    visibility: hidden;
 
     .meta {
       margin: 4px 0 0;

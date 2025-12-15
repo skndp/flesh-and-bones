@@ -7,6 +7,8 @@ export const useSiteStore = defineStore('site', {
     modalOpen: false,
     modalProjects: [],
     modalIndex: 0,
+    modalShowDirectors: false,
+    modalPaginationLabel: '',
     siteName: '',
     siteDescription: '',
     ogImage: '',
@@ -21,10 +23,15 @@ export const useSiteStore = defineStore('site', {
     setMenu(bool) {
       this.menuOpen = bool;
     },
-    setModalOpen(projects, index) {
+    setModalOpen(projects, index, directors, label) {
       this.modalProjects = projects;
       this.modalIndex = index;
+      this.modalShowDirectors = directors;
+      this.modalPaginationLabel = label;
       this.modalOpen = true;
+    },
+    setModalIndex(val) {
+      this.modalIndex = val;
     },
     setModalClose() {
       this.modalOpen = false;
@@ -32,9 +39,8 @@ export const useSiteStore = defineStore('site', {
     setModalCleanup() {
       this.modalProjects = [];
       this.modalIndex = 0;
-    },
-    setModalIndex(index) {
-      this.modalIndex = index;
+      this.modalShowDirectors = false;
+      this.modalPaginationLabel = '';
     },
     setSettings(settings) {
       this.siteName = settings.siteName,
