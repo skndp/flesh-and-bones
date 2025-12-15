@@ -34,7 +34,9 @@ const projectItems = computed(() => {
 });
 
 function onClickProjectItem(item) {
-  const index = projectItems.value.indexOf(item);  
-  store.setModalOpen(projectItems.value, index);
+  const index = projectItems.value.indexOf(item);
+  const directors = false;
+  const label = '';
+  store.setModalOpen(projectItems.value, index, directors, label);
 }
 </script>

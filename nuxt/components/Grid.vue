@@ -4,7 +4,7 @@
     <span v-if="sketchnoteRight" class="sketchnote right bone manic-alt-1" inert :data-label="sketchnoteRight"></span>
     <div class="gutter">
       <ul v-if="filters" class="filters pad-b brush sm">
-        <li class="flesh" :class="{ 'selected': selectedFilterId === 'all' }" @click="onClickFilter('all')">
+        <li class="flesh" :class="{ 'selected': selectedFilterId === 'all' }" @click="onClickFilter('all', 'All')">
           <span class="rough-edges-light bg"></span>
           <span>All</span>
         </li>
@@ -12,7 +12,7 @@
           v-for="(item, index) in filters"
           class="flesh"
           :class="{ 'selected': selectedFilterId === item.id.current }"
-          @click="onClickFilter(item.id.current, item.filterLayout)"
+          @click="onClickFilter(item.id.current, item.filter, item.filterLayout)"
           :key="index"
         >
           <span class="rough-edges-light bg"></span>
@@ -60,6 +60,7 @@
 <script setup>
 import { useSiteStore } from '~/stores/store';
 
+const route = useRoute();
 const store = useSiteStore();
 
 // Props
@@ -83,6 +84,7 @@ const props = defineProps({
 });
 
 const selectedFilterId = ref('all');
+const selectedFilterLabel = ref('All');
 const filterLayout = ref('landscape');
 
 const projectItems = computed(() => {
@@ -109,13 +111,15 @@ const filteredProjects = computed(() => {
 function onClickProjectItem(item) {
   const index = projectItems.value.indexOf(item);
   const flatProjects = projectItems.value.map(item => item.project);
-  store.setModalOpen(flatProjects, index);
+  const directors = true;
+  const label = props.filters ? selectedFilterLabel.value : 'Featured';
+  store.setModalOpen(flatProjects, index, directors, label);
 };
 
-function onClickFilter(id, layout) {
-  let fid = id === 'all' ? 'all' : id;
+function onClickFilter(id, label, layout) {
+  selectedFilterId.value = id === 'all' ? 'all' : id;;
+  selectedFilterLabel.value = label === 'All' ? 'All' : label;
   filterLayout.value = layout ? layout : 'landscape';
-  selectedFilterId.value = fid;
 }
 </script>
 
@@ -161,7 +165,7 @@ section.grid {
         @include can-hover {
           &:hover {
             color: $bone;
-            
+
             span.bg {
               visibility: visible;
             }

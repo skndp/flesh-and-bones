@@ -253,7 +253,7 @@ watch(route, () => {
       right: span(1);
       width: $space-48;
       height: $space-48;
-      margin-right: -12px;
+      margin-right: -6px;
       background-color: $flesh;
       border-radius: 50%;
       overflow: hidden;
@@ -359,6 +359,7 @@ watch(route, () => {
       #menu-btn {
         width: $space-56;
         height: $space-56;
+        margin-right: -12px;
       }
 
       .circle-the-button {

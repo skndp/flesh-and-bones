@@ -4,7 +4,10 @@
       :title="page.heroHeading"
       :copy="page.heroCopy"
     />
-    <Grid :filters="page.filters" :grid="page.projects" />
+    <Grid
+      :filters="page.filters"
+      :grid="page.projects"
+    />
     <Footer />
   </div>
 </template>

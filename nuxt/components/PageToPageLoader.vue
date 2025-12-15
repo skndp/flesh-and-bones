@@ -1,6 +1,6 @@
 <template>
   <div id="page-to-page-loader">
-    <div id="spinner"></div>
+    <div id="spinner" class="rough-edges"></div>
   </div>
 </template>
 
@@ -20,11 +20,11 @@
 
   #spinner {
     position: relative;
-    width: $space-32;
-    height: $space-32;
+    width: $space-56;
+    height: $space-56;
     border-radius: 50%;
     display: flex;
-    animation: spinner 2s linear infinite;
+    animation: spinner 1.3s linear infinite;
 
     &:before {
       content: '';
@@ -33,8 +33,8 @@
       left: 0px;
       right: 0px;
       bottom: 0px;
-      border: 4px solid $bone;
-      border-top: 4px solid transparent;
+      border: 8px solid $flesh;
+      border-top: 8px solid transparent;
       border-radius: 50%;
     }
   }
