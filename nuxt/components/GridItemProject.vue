@@ -87,34 +87,75 @@ function reflow() {
   aspect-ratio: 1/1;
   cursor: pointer;
 
-  &:hover {    
+  &:not(:has(.item-image)) {
+    background-color: goldenrod;
+  }
+
+  @include can-hover {
     .item-info {
-      transition: visibility 0ms linear;
-      visibility: visible;
+      transition: visibility 0ms linear $speed-333;
+      visibility: hidden;
     }
 
     .item-image {
+      transition: visibility 0ms linear $speed-333;
+      visibility: hidden;
+
       .item-image-paper {
+        .responsive-image-wrapper {
+          &:nth-child(1), &:nth-child(2) {
+            transition: visibility 0ms linear $speed-333;
+            visibility: hidden;
+          }
+
+          &:nth-child(3) {
+            display: block;
+            mask-composite: exclude;
+            transform-origin: 100% 80%;
+            transition: transform $speed-333 cubic-bezier(0.075, 0.820, 0.165, 1.000), opacity $speed-333 cubic-bezier(0.075, 0.820, 0.165, 1.000), visibility 0ms linear $speed-333;
+            pointer-events: none;
+            visibility: hidden;
+          }
+
+          &:nth-child(4) {
+            display: block;
+            transition: visibility 0ms linear $speed-333;
+            pointer-events: none;
+            visibility: visible;
+          }
+        }
+      }
+    }
+
+    &:hover {
+      .item-info {
         transition: visibility 0ms linear;
         visibility: visible;
       }
 
-      .responsive-image-wrapper {
-        &:nth-child(2) {
+      .item-image {
+        .item-image-paper {
           transition: visibility 0ms linear;
           visibility: visible;
         }
 
-        &:nth-child(3) {
-          transition: transform $speed-333 cubic-bezier(0.550, 0.085, 0.680, 0.530), opacity $speed-333 cubic-bezier(0.550, 0.085, 0.680, 0.530), visibility 0ms linear;
-          transform: translate(0, 10%) rotateZ(-7deg) rotateY(5deg);
-          opacity: 0;
-          visibility: visible;
-        }
+        .responsive-image-wrapper {
+          &:nth-child(2) {
+            transition: visibility 0ms linear;
+            visibility: visible;
+          }
 
-        &:nth-child(4) {
-          transition: visibility 0ms linear;
-          visibility: hidden;
+          &:nth-child(3) {
+            transition: transform $speed-333 cubic-bezier(0.550, 0.085, 0.680, 0.530), opacity $speed-333 cubic-bezier(0.550, 0.085, 0.680, 0.530), visibility 0ms linear;
+            transform: translate(0, 10%) rotateZ(-7deg) rotateY(5deg);
+            opacity: 0;
+            visibility: visible;
+          }
+
+          &:nth-child(4) {
+            transition: visibility 0ms linear;
+            visibility: hidden;
+          }
         }
       }
     }
@@ -127,11 +168,6 @@ function reflow() {
     padding: $space-8;
     width: calc(100% - $space-16);
     max-width: 400px;
-
-    @include can-hover {
-      transition: visibility 0ms linear $speed-333;
-      visibility: hidden;
-    }
 
     .meta {
       margin: 4px 0 0;
@@ -152,11 +188,6 @@ function reflow() {
       mask-size: cover;
       transform: translate(0px, 2px);
       opacity: 0.5;
-
-      @include can-hover {
-        transition: visibility 0ms linear $speed-333;
-        visibility: hidden;
-      }
     }
 
     .responsive-image-wrapper {
@@ -173,29 +204,6 @@ function reflow() {
 
       &:nth-child(4) {
         display: none;
-      }
-
-      @include can-hover {
-        &:nth-child(1), &:nth-child(2) {
-          transition: visibility 0ms linear $speed-333;
-          visibility: hidden;
-        }
-
-        &:nth-child(3) {
-          display: block;
-          mask-composite: exclude;
-          transform-origin: 100% 80%;
-          transition: transform $speed-333 cubic-bezier(0.075, 0.820, 0.165, 1.000), opacity $speed-333 cubic-bezier(0.075, 0.820, 0.165, 1.000), visibility 0ms linear $speed-333;
-          pointer-events: none;
-          visibility: hidden;
-        }
-
-        &:nth-child(4) {
-          display: block;
-          transition: visibility 0ms linear $speed-333;
-          pointer-events: none;
-          visibility: visible;
-        }
       }
 
       img {
