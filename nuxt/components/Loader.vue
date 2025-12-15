@@ -24,9 +24,6 @@
       <div class="loader-skull"></div>
       <div class="loader-logo"></div>
     </div>
-    <div class="loader-pants">
-      <div class="loader-crack" ref="crack"></div>
-    </div>
   </div>
 </template>
 
@@ -45,7 +42,6 @@ const bolt6 = ref(null);
 const bolt7 = ref(null);
 const bolt8 = ref(null);
 const bolt9 = ref(null);
-const crack = ref(null);
 
 onMounted(() => {
   if (loaderRef.value) {
@@ -85,11 +81,8 @@ function setMasks() {
   const h = window.innerHeight;
   const mask = createTornEdge(w, h, 0, h * 0.5, w, h * 0.5, 3, 0.5);
 
-  //paper.value.style.maskImage = `url(${mask})`;
   side1.value.style.maskImage = `url(${mask})`;
   side2.value.style.maskImage = `url(${mask}), linear-gradient(#000 0 0)`;
-  crack.value.style.backgroundImage = `url(${mask})`;
-  crack.value.style.maskImage = `url(${mask}), linear-gradient(#000 0 0)`;
 }
 </script>
 
@@ -105,18 +98,14 @@ function setMasks() {
 
   &.loading-enter-active,
   &.loading-leave-active {
-    transition: opacity 4100ms linear;
+    transition: opacity 24100ms linear;
 
     .loader-layer {
       transition: transform 2s cubic-bezier(0.95, 0.05, 0.795, 0.035) 2s;
 
       &:nth-child(3) {
-        transition: visibility 0ms linear 2s;
+        transition: clip-path 2s $ease-out;
       }
-    }
-
-    .loader-pants {
-      transition: width 2s $ease-out, opacity 100ms linear 2s;
     }
   }
 
@@ -134,13 +123,8 @@ function setMasks() {
       }
 
       &:nth-child(3) {
-        visibility: hidden;
+        clip-path: polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%);
       }
-    }
-
-    .loader-pants {
-      width: 100%;
-      opacity: 0;
     }
   }
 
@@ -152,9 +136,17 @@ function setMasks() {
     height: 100%;
     background-color: $bone;
     mask-size: cover;
+    mask-repeat: no-repeat;
+    mask-position: top -2px left 0px;
 
     &:nth-child(2) {
       mask-composite: exclude;
+      mask-repeat: no-repeat;
+      mask-position: bottom -2px left 0px;
+    }
+
+    &:nth-child(3) {
+      clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
     }
 
     .animated {
@@ -206,24 +198,6 @@ function setMasks() {
       mask-size: contain;
       mask-repeat: no-repeat;
       transform: translate(-50%, -50%);
-    }
-  }
-
-  .loader-pants {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 0%;
-    height: 100%;
-    overflow: hidden;
-
-    .loader-crack {
-      width: 100vw;
-      height: 100%;
-      mask-size: cover;
-      background-size: cover;
-      background-position-y: 2px;
-      mask-composite: exclude;
     }
   }
 
