@@ -53,6 +53,12 @@ export default defineType({
       ]
     }),
     defineField({
+      fieldset: 'hero',
+      name: 'projectVideo',
+      title: 'Video (Player w/ Controls)',
+      type: 'videoPlayer'
+    }),
+    defineField({
       fieldset: 'cta-card',
       name: 'ctaCardImages',
       title: 'Images',
