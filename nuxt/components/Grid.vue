@@ -109,11 +109,18 @@ const filteredProjects = computed(() => {
 });
 
 function onClickProjectItem(item) {
-  const index = projectItems.value.indexOf(item);
-  const flatProjects = projectItems.value.map(item => item.project);
   const directors = true;
   const label = props.filters ? selectedFilterLabel.value : 'Featured';
-  store.setModalOpen(flatProjects, index, directors, label);
+
+  if (props.filters && selectedFilterId.value !== 'all') {
+    const index = filteredProjects.value.indexOf(item);
+    const flatFilteredProjects = filteredProjects.value.map(item => item.project);
+    store.setModalOpen(flatFilteredProjects, index, directors, label);
+  } else {
+    const index = projectItems.value.indexOf(item);
+    const flatProjects = projectItems.value.map(item => item.project);
+    store.setModalOpen(flatProjects, index, directors, label);
+  }
 };
 
 function onClickFilter(id, label, layout) {

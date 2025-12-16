@@ -8,66 +8,96 @@
       </div>
       <div class="modal-content">
         <div class="title-block">
-          <div class="title-row">
+          <div class="title-row h2 sm">
             <ClientOnly>
               <Swiper
                 class="titles-swiper"
                 ref="titlesSwiperRef"
-                :modules="[Controller]"
+                direction="vertical"
                 slides-per-view="1"
-                loop
-                grab-cursor
+                :modules="[Controller]"
+                :grab-cursor="false"
+                :allow-touch-move="false"
+                :loop="store.modalProjects.length > 1"
+                :looped-slides="store.modalProjects.length > 1 ? store.modalProjects.length : 0"
                 @swiper="onTitlesSwiperReady"
               >
                 <SwiperSlide v-for="(item, index) in store.modalProjects" class="swiper-slide" :key="index">
-                  <h2 v-if="index === store.modalIndex" class="title h2 sm rough-edges-light">{{ item.title }}</h2>
+                  <h2 class="title rough-edges-light">{{ item.title }}</h2>
                 </SwiperSlide>
               </Swiper>
             </ClientOnly>
           </div>
           <div v-if="store.modalShowDirectors" class="directors-row">
-            <div v-for="(item, index) in store.modalProjects" class="directors-slider" :key="index">
-              <p v-if="index === store.modalIndex" class="director-label brush sm">
-                <span>Director</span>
-                <NuxtLink :to="`/directors/${item.director.slug.current}`" class="flesh">{{ item.director.title }}<span class="bg-flesh rough-edges-light"></span></NuxtLink>
-              </p>
-            </div>
+            <ClientOnly>
+              <Swiper
+                class="directors-swiper brush sm"
+                ref="directorsSwiperRef"
+                direction="vertical"
+                slides-per-view="1"
+                :modules="[Controller]"
+                :grab-cursor="false"
+                :allow-touch-move="false"
+                :loop="store.modalProjects.length > 1"
+                :looped-slides="store.modalProjects.length > 1 ? store.modalProjects.length : 0"
+                @swiper="onDirectorsSwiperReady"
+              >
+                <SwiperSlide v-for="(item, index) in store.modalProjects" class="swiper-slide" :key="index">
+                  <span>Director</span>
+                  <NuxtLink :to="`/directors/${item.director.slug.current}`" class="flesh">{{ item.director.title }}<span class="bg-flesh rough-edges-light"></span></NuxtLink>
+                </SwiperSlide>
+              </Swiper>
+            </ClientOnly>
           </div>
         </div>
-        <div class="carousel-block">
-          <ClientOnly>
-            <Swiper
-              class="main-swiper"
-              ref="mainSwiperRef"
-              :modules="[Controller]"
-              slides-per-view="1"
-              loop
-              grab-cursor
-              @swiper="onMainSwiperReady"
-            >
-              <SwiperSlide v-for="(item, index) in store.modalProjects" class="swiper-slide" :key="index">
-                <div class="inner">
-                  <div v-if="item.ctaCardImages && item.ctaCardImages.landscapeImage" class="video-holder rough-edges">
+        <div ref="carouselBlockRef" class="carousel-block">
+          <div class="carousel-wrapper" :style="ratioStyle">
+            <ClientOnly>
+              <Swiper
+                class="main-swiper"
+                ref="mainSwiperRef"
+                slides-per-view="auto"
+                :modules="[Controller]"
+                :grab-cursor="store.modalProjects.length > 1"
+                :allow-touch-move="store.modalProjects.length > 1"
+                :loop="store.modalProjects.length > 1"
+                :looped-slides="store.modalProjects.length > 1 ? store.modalProjects.length : 0"
+                @swiper="onMainSwiperReady"
+              >
+                <SwiperSlide v-for="(item, index) in store.modalProjects" class="swiper-slide" :key="index">
+                  <div v-if="item.ctaCardImages && item.ctaCardImages.landscapeImage" class="video-holder">
                     <ResponsiveImage v-bind="item.ctaCardImages.landscapeImage.image" />
                   </div>
-                  <div v-else class="video-holder bg-flesh rough-edges">
+                  <div v-else class="video-holder">
                     <p class="manic bone">{{ store.modalIndex + 1 }}</p>
                   </div>
-                </div>
-              </SwiperSlide>
-            </Swiper>
-          </ClientOnly>
+                </SwiperSlide>
+              </Swiper>
+            </ClientOnly>
+          </div>
         </div>
         <div class="controls-block">
-          <button class="arrow prev" aria-label="Previous Slide" @click="onClickPrev"></button>
+          <button
+            class="arrow prev"
+            :disabled="store.modalProjects.length <= 1"
+            :aria-hidden="store.modalProjects.length <= 1"
+            aria-label="Previous Slide"
+            @click="onClickPrev">
+          </button>
           <div class="counter">
             <p class="brush sm">
               <span v-if="store.modalPaginationLabel">{{ store.modalPaginationLabel }}</span>
               <span v-else>{{ store.modalProjects[0].director.title }}</span>
-              <span class="flesh">{{ store.modalIndex + 1 }} / {{ store.modalProjects.length }}</span>
+              <span class="flesh">{{ String(store.modalIndex + 1).padStart(2, '0') }} / {{ String(store.modalProjects.length).padStart(2, '0') }}</span>
             </p>
           </div>
-          <button class="arrow" aria-label="Next Slide" @click="onClickNext"></button>
+          <button
+            class="arrow"
+            :disabled="store.modalProjects.length <= 1"
+            :aria-hidden="store.modalProjects.length <= 1"
+            aria-label="Next Slide"
+            @click="onClickNext">
+          </button>
         </div>
       </div>
     </div>
@@ -89,11 +119,24 @@ const store = useSiteStore();
 const modalRef = ref(null);
 const mainSwiperRef = ref(null);
 const titlesSwiperRef = ref(null);
+const directorsSwiperRef = ref(null);
 let mainSwiper = null;
 let titlesSwiper = null;
+let directorsSwiper = null;
+
+const carouselBlockRef = ref(null);
+const ratioStyle = ref({
+  width: '0px',
+  height: '0px'
+});
+
+const ratio = 16/9;
 
 // Mounted
 onMounted(() => {
+  window.addEventListener('resize', onResize);
+  onResize();
+
   if (modalRef.value) {
     disableBodyScroll(modalRef.value);
   }
@@ -106,12 +149,29 @@ onMounted(() => {
 
 // Before Unmount
 onBeforeUnmount(() => {
+  window.removeEventListener('resize', onResize);
+
   if (modalRef.value) {
     enableBodyScroll(modalRef.value);
   }
 });
 
 // Methods
+function onResize() {
+  if (!carouselBlockRef.value) return;
+
+  const w = carouselBlockRef.value.clientWidth;
+  const h = carouselBlockRef.value.clientHeight;
+
+  if (w / h > ratio) {
+    ratioStyle.value.height = `${h}px`;
+    ratioStyle.value.width = `${h * ratio}px`;
+  } else {
+    ratioStyle.value.width = `${w}px`;
+    ratioStyle.value.height = `${w / ratio}px`;
+  }
+}
+
 function onMainSwiperReady(swiper) {
   mainSwiper = swiper;
   trySync();
@@ -126,21 +186,32 @@ function onTitlesSwiperReady(swiper) {
   trySync();
 }
 
+function onDirectorsSwiperReady(swiper) {
+  directorsSwiper = swiper;
+  trySync();
+}
+
 function trySync() {
-  if (mainSwiper && titlesSwiper) {
-    mainSwiper.controller.control = titlesSwiper;
-    titlesSwiper.controller.control = mainSwiper;
+  if (mainSwiper && titlesSwiper && directorsSwiper) {
+    mainSwiper.controller.control = [titlesSwiper, directorsSwiper];
+
+    const index = store.modalIndex || 0;
+    const duration = 0;
+
+    mainSwiper.slideToLoop(index, duration);
+    titlesSwiper.slideToLoop(index, duration);
+    directorsSwiper.slideToLoop(index, duration);
   }
 }
 
 function onClickPrev() {
-  if (mainSwiper) {
+  if (mainSwiper && store.modalProjects.length > 1) {
     mainSwiper.slidePrev();
   }
 }
 
 function onClickNext() {
-  if (mainSwiper) {
+  if (mainSwiper && store.modalProjects.length > 1) {
     mainSwiper.slideNext();
   }
 }
@@ -239,20 +310,20 @@ watch(route, () => {
         flex: 0 0 auto;
 
         &:has(.directors-row) {
-          padding-bottom: $space-24;
+          padding-bottom: $space-16;
         }
 
         .title-row {
           position: relative;
           @include header-ht(height);
           display: flex;
-          flex-grow: 1;
           align-items: center;
           justify-content: center;
 
           .titles-swiper {
-            @include abs-fill;
-            cursor: grab;
+            position: relative;
+            height: 1em;
+            pointer-events: none;
             z-index: auto;
 
             .swiper-slide {
@@ -276,17 +347,20 @@ watch(route, () => {
 
         .directors-row {
           width: 100%;
-          margin-top: -1em;
+          margin-top: -1.2em;
           display: flex;
           align-items: center;
           justify-content: center;
 
-          .directors-slider {
+          .directors-swiper {
+            height: 1.5em;
             display: inline-flex;
             justify-content: center;
 
-            .director-label {
-              line-height: 1.5em;
+            .swiper-slide {
+              position: relative;
+              width: 100%;
+              height: 100%;
               display: flex;
               align-items: center;
               justify-content: center;
@@ -321,13 +395,24 @@ watch(route, () => {
       .carousel-block {
         position: relative;
         display: flex;
+        margin: 0 $space-8;
         flex: 1 1 auto;
         align-items: center;
         justify-content: center;
 
+        .carousel-wrapper {
+          position: relative;
+          overflow: hidden;
+
+          &:after {
+            content: '';
+            @include abs-fill;
+            filter: url(#roughEdgesLight);
+          }
+        }
+
         .main-swiper {
           @include abs-fill;
-          cursor: grab;
           z-index: auto;
           overflow: visible;
 
@@ -335,20 +420,15 @@ watch(route, () => {
             position: relative;
             width: 100%;
             height: 100%;
-
-            .inner {
-              margin: 0 span(1);
-              height: 100%;
-            }
+            margin-right: $space-16;
 
             .video-holder {
-              position: relative;
-              aspect-ratio: 16/9;
-              width: auto;
-              height: 100%;
-              max-width: 100%;
-              max-height: 100%;
+              @include abs-fill;
               overflow: hidden;
+
+              &:has(.manic) {
+                background-color: goldenrod;
+              }
 
               .manic {
                 position: absolute;
@@ -363,7 +443,7 @@ watch(route, () => {
       }
 
       .controls-block {
-        @include header-ht(height);
+        padding: $space-16 0;
         display: flex;
         flex: 0 0 auto;
         align-items: center;
@@ -382,6 +462,12 @@ watch(route, () => {
           &.prev {
             transform: scaleX(-1);
           }
+
+          &:disabled {
+            opacity: 0.3;
+            cursor: default;
+            pointer-events: none;
+          }
         }
 
         .counter {
@@ -394,9 +480,12 @@ watch(route, () => {
           }
 
           span.flesh {
+            width: 3.1em;
             margin-left: 0.5em;
             letter-spacing: -0.04em;
             word-spacing: -0.04em;
+            white-space: nowrap;
+            justify-content: center;
           }
         }
       }
@@ -409,29 +498,29 @@ watch(route, () => {
         justify-content: center;
 
         .title-block {
-          padding-bottom: $space-24;
+          padding-bottom: $space-16;
 
           .title-row {
             height: auto;
           }
 
           .directors-row {
-            margin-top: 0.5em;
+            margin-top: 0px;
           }
         }
 
         .carousel-block {
           flex: 0 0 auto;
-
-          .video-holder {
-            width: 100%;
-            height: auto;
-          }
         }
+      }
+    }
 
-        .controls-block {
-          height: auto;
-          padding-top: $space-24;
+    @include respond-to($tablet) {
+      #modal-inner {
+        .modal-content {
+          .title-block {
+            padding-bottom: $space-24;
+          }
         }
       }
     }
@@ -440,7 +529,19 @@ watch(route, () => {
   @include respond-to($tablet) {
     #modal-inner {
       .modal-content {
+        .title-block {
+          &:has(.directors-row) {
+            padding-bottom: $space-24;
+          }
+        }
+
+        .carousel-block {
+          margin: 0 span(0.5);
+        }
+
         .controls-block {
+          padding: $space-24 0;
+
           .arrow {
             width: $space-40;
           }
@@ -452,6 +553,12 @@ watch(route, () => {
   @include respond-to($desktop) {
     #modal-inner {
       .modal-content {
+        .title-block {
+          .directors-row {
+            margin-top: -1.5em;
+          }
+        }
+
         .controls-block {
           .arrow {
             width: $space-48;

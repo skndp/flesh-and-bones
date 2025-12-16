@@ -137,7 +137,7 @@ strong {
   text-transform: uppercase;
 
   &.sm {
-    @include fluid-type($min, $max, 24px, 76px);
+    @include fluid-type($min, $max, 24px, 60px);
   }
 }
 
