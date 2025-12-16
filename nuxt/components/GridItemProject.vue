@@ -118,9 +118,16 @@ function reflow() {
         }
 
         .responsive-image-wrapper {
+          filter: contrast(100%);
+
           &:nth-child(2) {
             transition: visibility 0ms linear;
             visibility: visible;
+
+            .responsive-image-overlay,
+            &:after {
+              visibility: visible;
+            }
           }
 
           &:nth-child(3) {
@@ -128,11 +135,24 @@ function reflow() {
             transform: translate(0, 10%) rotateZ(-7deg) rotateY(5deg);
             opacity: 0;
             visibility: visible;
+
+            .responsive-image-overlay,
+            &:after {
+              visibility: visible;
+            }
           }
 
           &:nth-child(4) {
             transition: visibility 0ms linear;
             visibility: hidden;
+          }
+
+          img {
+            mix-blend-mode: hard-light;
+            filter:
+              grayscale(100%) 
+              brightness(145%) 
+              contrast(80%);
           }
         }
       }
@@ -170,6 +190,7 @@ function reflow() {
       mask-size: cover;
       transform: translate(0px, 2px);
       opacity: 0.5;
+      background-color: $bone !important;
 
       @include can-hover {
         transition: visibility 0ms linear $speed-333;
@@ -184,6 +205,45 @@ function reflow() {
       width: 100%;
       height: 100%;
       mask-size: cover;
+
+      &:before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        bottom: -50%;
+        right: -50%;
+        background: radial-gradient(circle at center, $midnight, $bone);
+        background-size: 2px 2px;
+        transform: rotate(20deg);
+      }
+
+      .responsive-image-overlay {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+        background-color: #062348;
+        mix-blend-mode: overlay;
+        visibility: hidden;
+      }
+
+      &:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+        background-color: #f2d4a0;
+        mix-blend-mode: overlay;
+        visibility: hidden;
+        opacity: 0.5;
+      }
 
       &:nth-child(3) {
         display: none;
