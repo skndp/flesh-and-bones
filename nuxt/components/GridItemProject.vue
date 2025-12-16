@@ -73,7 +73,15 @@ function reflow() {
     let y_percent = 1 - (infoRef.value.getBoundingClientRect().height / itemRef.value.getBoundingClientRect().height);
     tearY.value = (Math.round(y_percent * 100) / 100) - 0.02;
 
-    const dataURL = createTornEdge(w, h, 0, h * tearY.value, b.width, h * tearY.value, 3, 0.5);
+    const dataURL = createTornEdge({
+      width: w,
+      height: h,
+      startY: h * tearY.value,
+      endY: h * tearY.value,
+      wobble: 0.3,
+      edgeRoughness: 4
+    });
+
     paper.value.style.maskImage = `url(${dataURL})`;
     imgTop.value.$el.style.maskImage = `url(${dataURL})`;
     imgBottom.value.$el.style.maskImage = `url(${dataURL}), linear-gradient(#000 0 0)`;

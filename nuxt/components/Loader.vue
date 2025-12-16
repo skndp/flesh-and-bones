@@ -79,7 +79,14 @@ onBeforeUnmount(() => {
 function setMasks() {
   const w = window.innerWidth;
   const h = window.innerHeight;
-  const mask = createTornEdge(w, h, 0, h * 0.5, w, h * 0.5, 3, 0.5);
+  const mask = createTornEdge({
+    width: w,
+    height: h,
+    startY: (Math.random() * (h / 2)) + (h / 4),
+    endY: (Math.random() * (h / 2)) + (h / 4),
+    wobble: 1.2,
+    edgeRoughness: 4
+  });
 
   side1.value.style.maskImage = `url(${mask})`;
   side2.value.style.maskImage = `url(${mask}), linear-gradient(#000 0 0)`;
@@ -137,12 +144,10 @@ function setMasks() {
     background-color: $bone;
     mask-size: cover;
     mask-repeat: no-repeat;
-    mask-position: top -2px left 0px;
 
     &:nth-child(2) {
       mask-composite: exclude;
       mask-repeat: no-repeat;
-      mask-position: bottom -2px left 0px;
     }
 
     &:nth-child(3) {

@@ -1,50 +1,61 @@
-import NoiseModule from 'noisejs'
+import NoiseModule from 'noisejs';
 
-export const createTornEdge = (width, height, startX, startY, endX, endY, amplitude, frequency) => {
+export function createTornEdge ({
+  width,
+  height,
+  startY,
+  endY,
+  wobble = 0.9,
+  edgeRoughness = 6,
+  step = 2,
+  noiseScale = 0.01,
+  fillColor = "#99ff33"
+} = {}) {
+  const sy = Number.isFinite(startY) ? startY : Math.random() * height;
+  const ey = Number.isFinite(endY) ? endY : Math.random() * height;
+
+  const canvas = document.createElement("canvas");
+  canvas.width = Math.max(1, Math.floor(width));
+  canvas.height = Math.max(1, Math.floor(height));
+
+  const ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, width, height);
+
   const noise = new NoiseModule.Noise(Math.random());
-  const cnv = document.createElement('canvas');
-  const distance = Math.sqrt(Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2));
-  const step = 3;
-  const freqs = [0.002, 0.004, 0.006, 0.008, 0.01, 0.012, 0.014, 0.016, 0.018, 0.02];
-  let ctx = cnv.getContext('2d');
-  let noiseOffset = 0;
-  let currentWaveAmplitude = 1 + Math.random() * 4;
-  let currentWaveFrequency = freqs[Math.floor(Math.random() * freqs.length)];
-  let period_x = ((2 * Math.PI) / currentWaveFrequency);
 
-  cnv.width = width;
-  cnv.height = height;
+  let x = 0;
+  let y = sy;
+  let angle = Math.atan2(ey - y, width);
+  let t = Math.random() * 1000;
+
   ctx.beginPath();
-  ctx.moveTo(startX, startY);
+  ctx.moveTo(0, 0);
+  ctx.lineTo(0, sy);
 
-  for (let i = 0; i < distance; i += step) {
-    const t = i / distance;
-    const x = startX + (endX - startX) * t;
-    const sin = Math.sin(currentWaveFrequency * x);
-    const y = startY + currentWaveAmplitude * sin;
-    
-    if(x >= period_x) {
-      currentWaveAmplitude = 1 + Math.random() * 4;
-      currentWaveFrequency = freqs[Math.floor(Math.random() * freqs.length)];
+  while (x < width) {
+    const toGoal = Math.atan2(ey - y, width - x);
+    const n1 = noise.perlin2(x * noiseScale, t);
+    const n2 = noise.perlin2(x * noiseScale * 3, t * 2);
 
-      period_x = x + ((2 * Math.PI) / currentWaveFrequency);
-    }
+    angle = angle * 0.85 + (toGoal + n1 * wobble) * 0.15;
 
-    const noiseValue = noise.perlin2(i * frequency, noiseOffset);
+    x += Math.cos(angle) * step;
+    y += Math.sin(angle) * step;
 
-    const offsetX = (endY - startY) / distance * noiseValue * amplitude;
-    const offsetY = (endX - startX) / distance * noiseValue * amplitude;
+    const px = -Math.sin(angle);
+    const py =  Math.cos(angle);
+    const jag = (n2 * 0.5 + Math.random() * 0.5) * edgeRoughness;
 
-    ctx.lineTo(x + offsetX, y - offsetY);
+    ctx.lineTo(x + px * jag, y + py * jag);
 
-    noiseOffset += 0.01;
+    t += 0.02;
   }
 
-  ctx.lineTo(endX, endY);
-  ctx.lineTo(endX, 0);
-  ctx.lineTo(0, 0);
-  ctx.lineTo(0, endY);
+  ctx.lineTo(width, 0);
+  ctx.closePath();
+
+  ctx.fillStyle = fillColor;
   ctx.fill();
 
-  return cnv.toDataURL('image/png');
+  return canvas.toDataURL('image/png');
 }
