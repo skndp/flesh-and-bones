@@ -17,6 +17,7 @@
         ref="image"
       >
     </picture>
+    <div class="responsive-image-overlay"></div>
   </div>
 </template>
 
