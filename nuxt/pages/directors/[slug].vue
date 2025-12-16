@@ -43,6 +43,7 @@ const directorQuery = groq`*[_type == 'director' && slug.current == $slug][0]{
         title,
         slug
       },
+      projectVideo,
       ctaCardImages {
         landscapeImage {
           image ${imageProps}

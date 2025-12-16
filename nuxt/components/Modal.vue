@@ -14,12 +14,11 @@
                 class="titles-swiper"
                 ref="titlesSwiperRef"
                 direction="vertical"
-                slides-per-view="1"
+                slides-per-view="auto"
                 :modules="[Controller]"
                 :grab-cursor="false"
                 :allow-touch-move="false"
-                :loop="store.modalProjects.length > 1"
-                :looped-slides="store.modalProjects.length > 1 ? store.modalProjects.length : 0"
+                :loop="store.modalProjects.length > 1 ? true : false"
                 @swiper="onTitlesSwiperReady"
               >
                 <SwiperSlide v-for="(item, index) in store.modalProjects" class="swiper-slide" :key="index">
@@ -34,12 +33,11 @@
                 class="directors-swiper brush sm"
                 ref="directorsSwiperRef"
                 direction="vertical"
-                slides-per-view="1"
+                slides-per-view="auto"
                 :modules="[Controller]"
                 :grab-cursor="false"
                 :allow-touch-move="false"
-                :loop="store.modalProjects.length > 1"
-                :looped-slides="store.modalProjects.length > 1 ? store.modalProjects.length : 0"
+                :loop="store.modalProjects.length > 1 ? true : false"
                 @swiper="onDirectorsSwiperReady"
               >
                 <SwiperSlide v-for="(item, index) in store.modalProjects" class="swiper-slide" :key="index">
@@ -51,29 +49,37 @@
           </div>
         </div>
         <div ref="carouselBlockRef" class="carousel-block">
-          <div class="carousel-wrapper" :style="ratioStyle">
-            <ClientOnly>
-              <Swiper
-                class="main-swiper"
-                ref="mainSwiperRef"
-                slides-per-view="auto"
-                :modules="[Controller]"
-                :grab-cursor="store.modalProjects.length > 1"
-                :allow-touch-move="store.modalProjects.length > 1"
-                :loop="store.modalProjects.length > 1"
-                :looped-slides="store.modalProjects.length > 1 ? store.modalProjects.length : 0"
-                @swiper="onMainSwiperReady"
-              >
-                <SwiperSlide v-for="(item, index) in store.modalProjects" class="swiper-slide" :key="index">
-                  <div v-if="item.ctaCardImages && item.ctaCardImages.landscapeImage" class="video-holder">
-                    <ResponsiveImage v-bind="item.ctaCardImages.landscapeImage.image" />
-                  </div>
-                  <div v-else class="video-holder">
-                    <p class="manic bone">{{ store.modalIndex + 1 }}</p>
-                  </div>
-                </SwiperSlide>
-              </Swiper>
-            </ClientOnly>
+          <div class="carousel-containent">
+            <div class="carousel-containment-flex">
+              <div class="main-swiper-box">
+                <ClientOnly>
+                  <Swiper
+                    class="main-swiper"
+                    ref="mainSwiperRef"
+                    slides-per-view="auto"
+                    :modules="[Controller]"
+                    :grab-cursor="store.modalProjects.length > 1"
+                    :allow-touch-move="store.modalProjects.length > 1"
+                    :loop="store.modalProjects.length > 1 ? true : false"
+                    @swiper="onMainSwiperReady"
+                  >
+                    <SwiperSlide v-for="(item, index) in store.modalProjects" class="swiper-slide" :key="index">
+                      <VideoPlayer
+                        v-if="item.projectVideo && item.projectVideo.vimeo"
+                        :vimeo="item.projectVideo.vimeo"
+                        :poster="item.ctaCardImages && item.ctaCardImages.landscapeImage ? item.ctaCardImages.landscapeImage.image : null"
+                        :controls="true"
+                        :cover="false"
+                      />
+                      <div v-else class="video-holder">
+                        <ResponsiveImage v-if="item.ctaCardImages && item.ctaCardImages.landscapeImage" v-bind="item.ctaCardImages.landscapeImage.image" />
+                        <p v-else class="manic bone">{{ store.modalIndex + 1 }}</p>
+                      </div>
+                    </SwiperSlide>
+                  </Swiper>
+                </ClientOnly>
+              </div>
+            </div>
           </div>
         </div>
         <div class="controls-block">
@@ -105,7 +111,7 @@
 </template>
 
 <script setup>
-import { Swiper, SwiperSlide, useSwiper } from 'swiper/vue';
+import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Controller } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/controller';
@@ -124,53 +130,21 @@ let mainSwiper = null;
 let titlesSwiper = null;
 let directorsSwiper = null;
 
-const carouselBlockRef = ref(null);
-const ratioStyle = ref({
-  width: '0px',
-  height: '0px'
-});
-
 const ratio = 16/9;
 
 // Mounted
 onMounted(() => {
-  window.addEventListener('resize', onResize);
-  onResize();
-
   if (modalRef.value) {
     disableBodyScroll(modalRef.value);
   }
-
-  console.log(store.modalProjects);
-  console.log(store.modalIndex);
-  console.log(store.modalShowDirectors);
-  console.log(store.modalPaginationLabel);
 });
 
 // Before Unmount
 onBeforeUnmount(() => {
-  window.removeEventListener('resize', onResize);
-
   if (modalRef.value) {
     enableBodyScroll(modalRef.value);
   }
 });
-
-// Methods
-function onResize() {
-  if (!carouselBlockRef.value) return;
-
-  const w = carouselBlockRef.value.clientWidth;
-  const h = carouselBlockRef.value.clientHeight;
-
-  if (w / h > ratio) {
-    ratioStyle.value.height = `${h}px`;
-    ratioStyle.value.width = `${h * ratio}px`;
-  } else {
-    ratioStyle.value.width = `${w}px`;
-    ratioStyle.value.height = `${w / ratio}px`;
-  }
-}
 
 function onMainSwiperReady(swiper) {
   mainSwiper = swiper;
@@ -193,11 +167,10 @@ function onDirectorsSwiperReady(swiper) {
 
 function trySync() {
   if (mainSwiper && titlesSwiper && directorsSwiper) {
-    mainSwiper.controller.control = [titlesSwiper, directorsSwiper];
-
     const index = store.modalIndex || 0;
     const duration = 0;
 
+    mainSwiper.controller.control = [titlesSwiper, directorsSwiper];
     mainSwiper.slideToLoop(index, duration);
     titlesSwiper.slideToLoop(index, duration);
     directorsSwiper.slideToLoop(index, duration);
@@ -394,33 +367,47 @@ watch(route, () => {
 
       .carousel-block {
         position: relative;
-        display: flex;
         margin: 0 $space-8;
         flex: 1 1 auto;
-        align-items: center;
-        justify-content: center;
-
-        .carousel-wrapper {
+        
+        .carousel-containent {
           position: relative;
-          overflow: hidden;
+          width: 100%;
+          height: 100%;
+          container-name: containment;
+          container-type: size;
+        }
 
-          &:after {
-            content: '';
-            @include abs-fill;
-            filter: url(#roughEdgesLight);
+        .carousel-containment-flex {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+
+          @container containment (aspect-ratio < 16/9) {
+            flex-direction: row;
           }
         }
 
+        .main-swiper-box {
+          position: relative;
+          aspect-ratio: 16 / 9;
+          background-color: royalblue;
+          flex-grow: 1;
+        }
+        
         .main-swiper {
           @include abs-fill;
+          overflow: hidden;
           z-index: auto;
-          overflow: visible;
 
           .swiper-slide {
             position: relative;
             width: 100%;
             height: 100%;
-            margin-right: $space-16;
+            overflow: hidden;
 
             .video-holder {
               @include abs-fill;
@@ -511,6 +498,21 @@ watch(route, () => {
 
         .carousel-block {
           flex: 0 0 auto;
+
+          .carousel-containent {
+            height: auto;
+            aspect-ratio: 16/9;
+            container-size: none;
+          }
+
+          .carousel-containment-flex {
+            @include abs-fill;
+          }
+
+          .main-swiper-box {
+            @include abs-fill;
+            aspect-ratio: auto;
+          }
         }
       }
     }

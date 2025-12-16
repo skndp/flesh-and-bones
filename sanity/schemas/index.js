@@ -19,6 +19,7 @@ import anatomyTag from './collections/anatomy-tag';
 // Shared
 import seoSocial from './shared/seo-social';
 import singleImage from './shared/single-image';
+import videoPlayer from './shared/video-player';
 import richTextSketch from './shared/rich-text-sketch';
 
 export const schemaTypes = [
@@ -36,5 +37,6 @@ export const schemaTypes = [
   anatomyTag,
   seoSocial,
   singleImage,
+  videoPlayer,
   richTextSketch
 ];

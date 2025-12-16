@@ -36,6 +36,7 @@ const workQuery = groq`*[(_type == "work")][0]{
               title,
               slug
             },
+            projectVideo,
             ctaCardImages {
               landscapeImage {
                 image ${imageProps}

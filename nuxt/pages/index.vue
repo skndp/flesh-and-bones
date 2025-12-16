@@ -34,6 +34,7 @@ const homeQuery = groq`*[(_type == "home")][0]{
               title,
               slug
             },
+            projectVideo,
             ctaCardImages {
               landscapeImage {
                 image ${imageProps}
