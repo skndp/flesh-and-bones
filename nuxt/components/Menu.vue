@@ -3,7 +3,7 @@
     <div id="menu-inner">
       <div id="menu-content" ref="contentRef" @click="closeMenu">
         <nav id="menu-paper" class="bg-bone">
-          <ul class="primary h1 sm">
+          <ul class="primary h1 sm midnight">
             <li>
               <NuxtLink to="/work" @click.native="onClickNavLink">
                 <span class="rough-edges bg"></span>
@@ -216,7 +216,7 @@ function closeMenu(e) {
 
               span.bg {
                 @include abs-fill;
-                background-color: $midnight;
+                background-color: $flesh;
                 visibility: hidden;
               }
 
