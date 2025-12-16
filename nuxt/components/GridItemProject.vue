@@ -135,9 +135,8 @@ function reflow() {
     position: absolute;
     bottom: 0px;
     left: 0px;
+    width: 100%;
     padding: $space-8;
-    width: calc(100% - $space-16);
-    max-width: 400px;
 
     @include can-hover {
       transition: visibility 0ms linear $speed-333;

@@ -46,7 +46,7 @@ onMounted(() => {
 
 // Before Unmount
 onBeforeUnmount(() => {
-  if (mediaQueryList) {
+  if (mqMobile) {
     mqMobile.removeEventListener('change', handleMqMobile);
   }
 });
