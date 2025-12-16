@@ -126,9 +126,7 @@ function onEnded() {
   }
 }
 
-function clickToPlay() {
-  console.log('click to play');
-  
+function clickToPlay() {  
   if (player.value) {
     player.value.play().catch(() => {});
     playingMode.value = true;
