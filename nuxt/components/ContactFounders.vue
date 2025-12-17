@@ -1,8 +1,14 @@
 <template>
   <section class="contact-founders pad-b">
-    <div class="cutout pad-t pad-b bg-bone flesh">
-      <div class="gutter pad-t pad-b">
-        <p class="flesh manic">{{ cutoutTitle }}</p>
+    <div class="cutout">
+      <div class="cutout-torn-edge bg-bone" ref="topEdge"></div>
+      <div class="cutout-inner flesh" ref="cutout">
+        <div class="cutout-content bg-bone">
+          <Parallaxy :speed="80" class="contact-founder-skeleton">
+            <img src="/images/rob-test.png" />
+          </Parallaxy>
+          <p class="flesh manic">{{ cutoutTitle }}</p>
+        </div>
       </div>
     </div>
     <div class="gutter cols pad-b">
@@ -20,6 +26,11 @@
 </template>
 
 <script setup>
+import Parallaxy from '@lucien144/vue3-parallaxy';
+
+const cutout = ref(null);
+const topEdge = ref(null);
+
 // Props
 const props = defineProps({
   cutoutTitle: {
@@ -31,16 +42,81 @@ const props = defineProps({
     required: true
   }
 });
+
+// Lifecycle
+onMounted(() => {
+  setMask();
+});
+
+// Methods
+function setMask() {
+  const b = cutout.value.getBoundingClientRect();
+  const mask1 = createTornEdge({
+    width: window.innerWidth,
+    height: 300,
+    startY: 150,
+    endY: 150,
+    wobble: 0.85,
+    edgeRoughness: 4
+  });
+  const mask2 = createTornEdge({
+    width: b.width,
+    height: b.height,
+    startY: b.height - 150,
+    endY: b.height - 150,
+    wobble: 0.85,
+    edgeRoughness: 4
+  });
+
+  topEdge.value.style.maskImage = `url(${mask1}), linear-gradient(#000 0 0)`;
+  cutout.value.style.maskImage = `url(${mask2})`;
+}
 </script>
 
 <style lang='scss'>
 section.contact-founders {
   .cutout {
+    position: relative;
     text-align: center;
 
-    .gutter {
-      .manic {
-        white-space: pre-line;
+    .cutout-torn-edge {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      width: 100%;
+      height: 300px;
+      mask-size: 101% auto;
+      mask-composite: exclude;
+      mask-repeat: no-repeat;
+    }
+
+    .cutout-inner {
+      padding-top: 300px;
+      mask-size: 101% auto;
+      mask-position: bottom center;
+      mask-repeat: no-repeat;
+
+      .cutout-content {
+        position: relative;
+        aspect-ratio: 3 / 1;
+
+        .contact-founder-skeleton {
+          position: absolute;
+          bottom: -80px;
+          left: span(1);
+          width: span(5);
+          aspect-ratio: 480 / 613;
+          z-index: 1;
+
+          img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+
+        .manic {
+          white-space: pre-line;
+        }
       }
     }
   }
