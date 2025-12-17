@@ -1,7 +1,10 @@
 import { defineField, defineType } from 'sanity';
 import { ArrayMaxItems } from '../../components/array-max-items';
-import { DashboardIcon, HomeIcon, ProjectsIcon, AccessDeniedIcon } from '@sanity/icons';
+import { HomeIcon, ProjectsIcon, ImageIcon } from '@sanity/icons';
 // Sanity Icon Set: https://icons.sanity.build/all
+
+const projectId = import.meta.env.SANITY_STUDIO_PROJECT_ID;
+const dataset = import.meta.env.SANITY_STUDIO_DATASET;
 
 export default defineType({
   name: 'home',
@@ -119,14 +122,16 @@ export default defineType({
                           preview: {
                             select: {
                               title: 'project.title',
-                              image: 'project.ctaCardImages.landscapeImage.asset'
+                              landscapeImg: 'project.ctaCardImages.landscapeImage.image.asset',
+                              squareImg: 'project.ctaCardImages.squareImage.image.asset'
                             },
                             prepare(selection) {
-                              const { title, image } = selection;
+                              const { title, landscapeImg, squareImg } = selection;
+                              let image = landscapeImg ? landscapeImg : squareImg ? squareImg : null;
                               return {
                                 title: title ? title : 'Untitled',
                                 subtitle: '',
-                                media: image ? image : AccessDeniedIcon
+                                media: image ? image : ImageIcon
                               };
                             }
                           }
@@ -151,14 +156,16 @@ export default defineType({
                             select: {
                               title: 'article.title',
                               slug: 'article.slug',
-                              image: 'article.ctaCardImages.landscapeImage.asset'
+                              landscapeImg: 'article.ctaCardImages.landscapeImage.image.asset',
+                              squareImg: 'article.ctaCardImages.squareImage.image.asset'
                             },
                             prepare(selection) {
-                              const { title, slug, image } = selection;
+                              const { title, slug, landscapeImg, squareImg } = selection;
+                              let image = landscapeImg ? landscapeImg : squareImg ? squareImg : null;
                               return {
                                 title: title ? title : 'Untitled',
                                 subtitle: slug ? `/zine/${slug.current}` : '/zine/untitled',
-                                media: image ? image : AccessDeniedIcon
+                                media: image ? image : ImageIcon
                               };
                             }
                           }
@@ -170,32 +177,38 @@ export default defineType({
                     select: {
                       type0: 'type.0._type',
                       projectTitle: 'type.0.project.title',
-                      projectImage: 'type.0.project.ctaCardImages.landscapeImage.asset',
+                      projectImgLandscape: 'type.0.project.ctaCardImages.landscapeImage.image.asset',
+                      projectImgSquare: 'type.0.project.ctaCardImages.squareImage.image.asset',
                       articleTitle: 'type.0.article.title',
                       articleSlug: 'type.0.article.slug.current',
-                      articleImage: 'type.0.article.ctaCardImages.landscapeImage.asset'
+                      articleImgLandscape: 'type.0.article.ctaCardImages.landscapeImage.image.asset',
+                      articleImgSquare: 'type.0.article.ctaCardImages.squareImage.image.asset'
                     },
                     prepare({
                       type0,
                       projectTitle,
-                      projectImage,
+                      projectImgLandscape,
+                      projectImgSquare,
                       articleTitle,
                       articleSlug,
-                      articleImage
+                      articleImgLandscape,
+                      articleImgSquare
                     }) {
+                      let projectImage = projectImgLandscape ? projectImgLandscape : projectImgSquare ? projectImgSquare : null;
+                      let articleImage = articleImgLandscape ? articleImgLandscape : articleImgSquare ? articleImgSquare : null;
                       let title = 'No items selected';
                       let subtitle = '';
-                      let media;
+                      let media = null;
 
                       switch (type0) {
                         case 'projectItem':
                           title = projectTitle || '';
-                          media = projectImage ? projectImage : ProjectsIcon;
+                          media = projectImage ? projectImage : ImageIcon;
                           break;
                         case 'articleItem':
                           title = articleTitle || '';
                           subtitle = `/zine/${articleSlug || 'untitled'}`;
-                          media = articleImage ? articleImage : ProjectsIcon;
+                          media = articleImage ? articleImage : ImageIcon;
                           break;
                       }
 
@@ -215,78 +228,95 @@ export default defineType({
               // Item 1
               type1: 'items.0.type.0._type',
               projectTitle1: 'items.0.type.0.project.title',
-              projectImage1: 'items.0.type.0.project.ctaCardImages.landscapeImage.asset',
+              projectImgLandscape1: 'items.0.type.0.project.ctaCardImages.landscapeImage.image.asset',
+              projectImgSquare1: 'items.0.type.0.project.ctaCardImages.squareImage.image.asset',
               articleTitle1: 'items.0.type.0.article.title',
-              articleImage1: 'items.0.type.0.article.ctaCardImages.landscapeImage.asset',
+              articleImgLandscape1: 'items.0.type.0.article.ctaCardImages.landscapeImage.image.asset',
+              articleImgSquare1: 'items.0.type.0.article.ctaCardImages.squareImage.image.asset',
               // Item 2
               type2: 'items.1.type.0._type',
               projectTitle2: 'items.1.type.0.project.title',
-              projectImage2: 'items.1.type.0.project.ctaCardImages.landscapeImage.asset',
+              projectImgLandscape2: 'items.1.type.0.project.ctaCardImages.landscapeImage.image.asset',
+              projectImgSquare2: 'items.1.type.0.project.ctaCardImages.squareImage.image.asset',
               articleTitle2: 'items.1.type.0.article.title',
-              articleImage2: 'items.1.type.0.article.ctaCardImages.landscapeImage.asset'
+              articleImgLandscape2: 'items.1.type.0.article.ctaCardImages.landscapeImage.image.asset',
+              articleImgSquare2: 'items.1.type.0.article.ctaCardImages.squareImage.image.asset'
             },
             prepare(selection) {
               const parseItem = (type, data) => {
                 if (!type) return null;
 
                 let title = 'Untitled';
-                let media = DashboardIcon;
+                let media = null;
 
                 switch (type) {
-                  case 'projectItem':
+                  case 'projectItem':                    
                     title = data.projectTitle ? `[Project] ${data.projectTitle}` : 'Project';
-                    media = data.projectImage || ProjectsIcon;
+                    media = data.projectImage || null;
                     break;
                   case 'articleItem':
                     title = data.articleTitle ? `[Article] ${data.articleTitle}` : 'Article';
-                    media = data.articleImage || ProjectsIcon;
+                    media = data.articleImage || null;
                     break;
                 }
 
-                return {
-                  title,
-                  media
-                };
+                return { title, media };
               };
 
               const items = [];
               // Add item 1 has type selected...
               const item1 = parseItem(selection.type1, {
                 projectTitle: selection.projectTitle1,
-                projectImage: selection.projectImage1,
+                projectImage: selection.projectImgLandscape1
+                  ? selection.projectImgLandscape1
+                  : selection.projectImgSquare1
+                  ? selection.projectImgSquare1
+                  : null,
                 articleTitle: selection.articleTitle1,
-                articleImage: selection.articleImage1
+                articleImage: selection.articleImgLandscape1
+                  ? selection.articleImgLandscape1
+                  : selection.articleImgSquare1
+                  ? selection.articleImgSquare1
+                  : null
               });
               if (item1) items.push(item1);
 
               // Add item 2 has type selected...
               const item2 = parseItem(selection.type2, {
                 projectTitle: selection.projectTitle2,
-                projectImage: selection.projectImage2,
+                projectImage: selection.projectImgLandscape2
+                  ? selection.projectImgLandscape2
+                  : selection.projectImgSquare2
+                  ? selection.projectImgSquare2
+                  : null,
                 articleTitle: selection.articleTitle2,
-                articleImage: selection.articleImage2
+                articleImage: selection.articleImgLandscape2
+                  ? selection.articleImgLandscape2
+                  : selection.articleImgSquare2
+                  ? selection.articleImgSquare2
+                  : null
               });
               if (item2) items.push(item2);
 
-              // No items yet, fallback
-              if (items.length === 0) {
-                return {
-                  title: 'No items selected',
-                  subtitle: '',
-                  media: AccessDeniedIcon
-                };
-              }
-
               const rowTitle = items.length === 2 ? `${items[0].title} • ${items[1].title}` : items[0].title;
-              const validMedia = items.filter(item => item.media);
-              const mediaItems = validMedia.length === 0 ? AccessDeniedIcon : () =>
-                validMedia.map((item, index) =>
-                  typeof item.media === 'string' ? (
-                    <div className="media-item" key={index}>
-                      <img src={item.media} alt="" />
-                    </div>
-                  ) : <div className="media-item --empty" key={index}></div>
-                );
+              const mediaItems = (
+                <div className="media-items">
+                  {items.map((item, index) =>
+                    item.media?._ref ? (
+                      <div className="media-item" key={index}>
+                        <img
+                          src={`https://cdn.sanity.io/images/${projectId}/${dataset}/${item.media._ref
+                            .replace('image-', '')
+                            .replace(/-(jpg|png|webp)$/, '.$1')}`}
+                          alt=""
+                        />
+                      </div>
+                    ) : (
+                      <div className="media-item --empty" key={index} />
+                    )
+                  )}
+                </div>
+              );
 
               return {
                 title: rowTitle,

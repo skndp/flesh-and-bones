@@ -80,9 +80,11 @@ export default defineType({
   preview: {
     select: {
       title: 'title',
-      image: 'ctaCardImages.landscapeImage.asset'
+      landscapeImg: 'ctaCardImages.landscapeImage.image.asset',
+      squareImg: 'ctaCardImages.squareImage.image.asset'
     },
-    prepare({ title, image }) {
+    prepare({ title, landscapeImg, squareImg }) {
+      let image = landscapeImg ? landscapeImg : squareImg ? squareImg : null;
       return {
         title: title ? title : 'Untitled',
         media: image ? image : ImageIcon

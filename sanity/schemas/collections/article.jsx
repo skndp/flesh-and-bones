@@ -89,9 +89,11 @@ export default defineType({
     select: {
       title: 'title',
       slug: 'slug',
-      image: 'ctaCardImages.landscapeImage.asset'
+      landscapeImg: 'ctaCardImages.landscapeImage.image.asset',
+      squareImg: 'ctaCardImages.squareImage.image.asset'
     },
-    prepare({ title, slug, image }) {
+    prepare({ title, slug, landscapeImg, squareImg }) {
+      let image = landscapeImg ? landscapeImg : squareImg ? squareImg : null;
       return {
         title: title ? title : 'Untitled',
         subtitle: slug ? `/zine/${slug.current}` : '/zine/untitled',
