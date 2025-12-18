@@ -45,10 +45,16 @@ import { smoothScrollTo } from '~/utils/smooth-scroll-to';
 const route = useRoute();
 const store = useSiteStore();
 const foot = ref(null);
+let resize_to = 0;
 
 // Lifecycle
 onMounted(() => {
+  window.addEventListener('resize', onResize);
   setMask();
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', onResize);
 });
 
 // Methods
@@ -58,6 +64,13 @@ function onClickNavLink(e) {
   if (route.path === path) {
     smoothScrollTo(0);
   }
+}
+
+function onResize(e) {
+  clearTimeout(resize_to);
+  resize_to = setTimeout(() => {
+    setMask();
+  }, 250);
 }
 
 function setMask() {

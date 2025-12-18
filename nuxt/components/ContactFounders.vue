@@ -4,11 +4,14 @@
       <div class="cutout-torn-edge bg-bone" ref="topEdge"></div>
       <div class="cutout-inner flesh" ref="cutout">
         <div class="cutout-content bg-bone">
-          <Parallaxy :speed="80" class="contact-founder-skeleton">
+          <Parallaxy :speed="50" :breakpoints="{768: {speed: 75}}" class="contact-founder-skeleton">
             <img src="/images/rob-test.png" />
           </Parallaxy>
-          <p class="flesh manic">{{ cutoutTitle }}</p>
+          <Parallaxy :speed="50" :breakpoints="{768: {speed: 75}}" class="contact-founder-skeleton">
+            <img src="/images/tony-test.png" />
+          </Parallaxy>
         </div>
+        <p class="flesh manic">{{ cutoutTitle }}</p>
       </div>
     </div>
     <div class="gutter cols pad-b">
@@ -30,6 +33,7 @@ import Parallaxy from '@lucien144/vue3-parallaxy';
 
 const cutout = ref(null);
 const topEdge = ref(null);
+let resize_to = 0;
 
 // Props
 const props = defineProps({
@@ -45,25 +49,37 @@ const props = defineProps({
 
 // Lifecycle
 onMounted(() => {
+  window.addEventListener('resize', onResize);
   setMask();
 });
 
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', onResize);
+});
+
 // Methods
+function onResize(e) {
+  clearTimeout(resize_to);
+  resize_to = setTimeout(() => {
+    setMask();
+  }, 250);
+}
+
 function setMask() {
   const b = cutout.value.getBoundingClientRect();
   const mask1 = createTornEdge({
-    width: window.innerWidth,
-    height: 300,
-    startY: 150,
-    endY: 150,
+    width: b.width,
+    height: b.width < 768 ? 200 : 300,
+    startY: b.width < 768 ? 100 : 150,
+    endY: b.width < 768 ? 100 : 150,
     wobble: 0.85,
     edgeRoughness: 4
   });
   const mask2 = createTornEdge({
     width: b.width,
     height: b.height,
-    startY: b.height - 150,
-    endY: b.height - 150,
+    startY: b.width < 768 ? b.height - 100 : b.height - 150,
+    endY: b.width < 768 ? b.height - 100 : b.height - 150,
     wobble: 0.85,
     edgeRoughness: 4
   });
@@ -84,40 +100,54 @@ section.contact-founders {
       top: 0px;
       left: 0px;
       width: 100%;
-      height: 300px;
+      height: 200px;
       mask-size: 101% auto;
       mask-composite: exclude;
       mask-repeat: no-repeat;
     }
 
     .cutout-inner {
-      padding-top: 300px;
+      padding-top: 200px;
       mask-size: 101% auto;
       mask-position: bottom center;
       mask-repeat: no-repeat;
 
       .cutout-content {
         position: relative;
-        aspect-ratio: 3 / 1;
+        height: 200px;
 
-        .contact-founder-skeleton {
-          position: absolute;
-          bottom: -80px;
-          left: span(1);
-          width: span(5);
-          aspect-ratio: 480 / 613;
-          z-index: 1;
-
-          img {
-            width: 100%;
-            height: 100%;
+        &:has(.contact-founder-skeleton:only-child) {
+          .contact-founder-skeleton {
+            left: 50%;
           }
         }
 
-        .manic {
-          white-space: pre-line;
+        .contact-founder-skeleton {
+          position: absolute;
+          bottom: 20px;
+          left: 25%;
+          width: span(5);
+          margin-left: span(-2.5);
+          z-index: 1;
+
+          &:nth-child(2) {
+            left: 75%;
+          }
+
+          img {
+            width: 100%;
+            height: auto;
+          }
         }
       }
+    }
+
+    .manic {
+      position: absolute;
+      top: 150px;
+      left: 50%;
+      white-space: pre-line;
+      transform: translate(-50%, -50%) rotate(-7deg);
     }
   }
 
@@ -143,7 +173,34 @@ section.contact-founders {
     }
   }
 
+  @include respond-to($small-tablet) {
+    .cutout {
+      .manic {
+        top: 50%;
+      }
+    }
+  }
+
   @include respond-to($tablet) {
+    .cutout {
+      .cutout-torn-edge {
+        height: 300px;
+      }
+
+      .cutout-inner {
+        padding-top: 300px;
+
+        .cutout-content {
+          height: unset;
+          aspect-ratio: 3 / 1;
+
+          .contact-founder-skeleton {
+            bottom: 0px;
+          }
+        }
+      }
+    }
+
     .cols {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -152,6 +209,30 @@ section.contact-founders {
       .col {
         &:not(:last-child) {
           margin-bottom: 0px;
+        }
+      }
+    }
+  }
+
+  @include respond-to($average-desktop) {
+    .cutout {
+      .cutout-inner {
+        .cutout-content {
+          .contact-founder-skeleton {
+            bottom: -20px;
+          }
+        }
+      }
+    }
+  }
+
+  @include respond-to($macbook) {
+    .cutout {
+      .cutout-inner {
+        .cutout-content {
+          .contact-founder-skeleton {
+            bottom: -40px;
+          }
         }
       }
     }
