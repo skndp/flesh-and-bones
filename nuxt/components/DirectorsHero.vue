@@ -1,6 +1,6 @@
 <template>
   <section class="directors-hero pad-t">
-    <div v-if="isTouchDevice" class="background-videos">
+    <div v-if="!isTouchDevice" class="background-videos">
       <div v-for="(item, index) in directors" class="background-video" :class="{ '--active': index === activeIndex }">
         <VideoPlayer
           v-if="item.backgroundVideo && item.backgroundVideo.vimeo"
@@ -66,6 +66,9 @@ onMounted(() => {
     primaryInput === 'touch' ||
     'ontouchstart' in window ||
     navigator.maxTouchPoints > 0;
+  
+  console.log(isTouchDevice.value);
+  
 });
 
 // Methods
@@ -113,8 +116,25 @@ function onPlayerReady(index) {
 <style lang='scss'>
 section.directors-hero {
   position: relative;
+  padding-bottom: span(2);
   display: flex;
   flex-direction: column;
+
+  &:not(:has(.background-videos)) {
+    .gutter {
+      .title {
+        .sketch-note {
+          color: $bone;
+        }
+
+        .sketch-bold {
+          .sketch-underline {
+            border-bottom-color: $bone;
+          }
+        }
+      }
+    }
+  }
   
   .background-videos {
     @include abs-fill;
@@ -137,6 +157,7 @@ section.directors-hero {
   }
 
   .gutter {
+    position: relative;
     text-align: center;
 
     &:before,
@@ -216,6 +237,8 @@ section.directors-hero {
   }
   
   @include respond-to($tablet) {
+    padding-bottom: $space-48;
+
     .gutter {
       &:after {
         @include header-ht(padding-top);

@@ -1,5 +1,5 @@
 <template>
-  <footer id="footer" class="bg-bone pad-b" ref="foot">
+  <footer id="footer" class="bg-bone pad-b" :class="{ 'cover': cover }" ref="foot">
     <div class="gutter">
       <ul class="locations manic md">
         <li v-for="location in store.locations">
@@ -41,6 +41,15 @@
 <script setup>
 import { useSiteStore } from '~/stores/store';
 import { smoothScrollTo } from '~/utils/smooth-scroll-to';
+
+// Props
+const props = defineProps({
+  cover: {
+    type: Boolean,
+    required: false,
+    default: false
+  }
+});
 
 const route = useRoute();
 const store = useSiteStore();
@@ -95,6 +104,10 @@ function setMask() {
   mask-size: 101% auto;
   mask-composite: exclude;
   mask-repeat: no-repeat;
+
+  &.cover {
+    margin-top: -200px;
+  }
 
   .gutter {
     display: flex;

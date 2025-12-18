@@ -5,7 +5,7 @@
       :sketchHeading="page.heroHeading"
       :directors="page.directors"
     />
-    <Footer />
+    <Footer :cover="true" />
   </div>
 </template>
 
