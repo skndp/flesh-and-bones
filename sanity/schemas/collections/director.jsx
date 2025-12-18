@@ -71,12 +71,6 @@ export default defineType({
       type: 'image'
     }),
     defineField({
-      name: 'directorsPageVideo',
-      title: 'DIRECTORS PAGE VIDEO',
-      description: 'Background, fullscreen looping video (best at 5-15 seconds)',
-      type: 'videoPlayer'
-    }),
-    defineField({
       fieldset: 'anatomy',
       name: 'anatomyLabel',
       title: 'Label',

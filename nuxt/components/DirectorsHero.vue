@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="gutter">
-      <h1 class="title h5 midnight">
+      <h1 class="title h5 flesh">
         <RichTextSketch :copy="sketchHeading" />
       </h1>
       <div class="directors">
@@ -119,26 +119,9 @@ section.directors-hero {
   padding-bottom: span(2);
   display: flex;
   flex-direction: column;
-
-  &:not(:has(.background-videos)) {
-    .gutter {
-      .title {
-        .sketch-note {
-          color: $bone;
-        }
-
-        .sketch-bold {
-          .sketch-underline {
-            border-bottom-color: $bone;
-          }
-        }
-      }
-    }
-  }
   
   .background-videos {
     @include abs-fill;
-    background-color: goldenrod;
     overflow: hidden;
 
     .background-video {
@@ -169,17 +152,9 @@ section.directors-hero {
     }
 
     .title {
-      .sketch-note {
-        color: $midnight;
-      }
-
       .sketch-bold {
         line-height: 1.2em;
         transform: none;
-
-        .sketch-underline {
-          border-bottom-color: $midnight;
-        }
       }
     }
 

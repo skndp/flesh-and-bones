@@ -71,11 +71,13 @@ export default defineType({
           preview: {
             select: {
               title: 'director.title',
+              name: 'backgroundVideo.vimeo.name',
               image: 'director.profileImage.asset'
             },
-            prepare({ title, image }) {
+            prepare({ title, name, image }) {
               return {
                 title: title ? title : 'Untitled',
+                subtitle: name ? name : '',
                 media: image ? image : UserIcon
               };
             }
