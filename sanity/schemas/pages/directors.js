@@ -1,5 +1,5 @@
 import { defineField, defineType } from 'sanity';
-import { DashboardIcon } from '@sanity/icons';
+import { DashboardIcon, UserIcon } from '@sanity/icons';
 // Sanity Icon Set: https://icons.sanity.build/all
 
 export default defineType({
@@ -49,8 +49,37 @@ export default defineType({
       ],
       of: [
         {
-          type: 'reference',
-          to: [{ type: 'director' }]
+          type: 'object',
+          name: 'directorItem',
+          fields: [
+            {
+              name: 'director',
+              title: 'Director',
+              type: 'reference',
+              to: [{ type: 'director' }],
+              validation: [
+                Rule => Rule.required()
+              ]
+            },
+            {
+              name: 'backgroundVideo',
+              title: 'Video',
+              description: 'Fullscreen, background looping video (best at 5-15 seconds)',
+              type: 'videoPlayer'
+            }
+          ],
+          preview: {
+            select: {
+              title: 'director.title',
+              image: 'director.profileImage.asset'
+            },
+            prepare({ title, image }) {
+              return {
+                title: title ? title : 'Untitled',
+                media: image ? image : UserIcon
+              };
+            }
+          }
         }
       ]
     })
