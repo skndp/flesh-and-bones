@@ -1,14 +1,7 @@
 <template>
   <section class="director-hero pad-b">
-    <div class="cutout pad-t pad-b bg-bone flesh">
-      <div class="gutter">
-        <p v-if="tagline" class="pad-t pad-b flesh manic md">{{ tagline }}</p>
-        <h1 class="h1 xs rough-edges-light">
-          <span class="bg-midnight">{{ title }}</span>
-        </h1>
-      </div>
-    </div>
-    <div class="gutter pad-t">
+    <Boneyard :tagline="tagline" :name="title" />
+    <div class="gutter">
       <div class="hero-video-wrapper">
         <span class="bg-flesh rough-edges"></span>
         <p class="h5 bone">Reel / Video Player</p>
@@ -33,19 +26,19 @@ const props = defineProps({
 
 <style lang='scss'>
 section.director-hero {
-  .cutout {
-    text-align: center;
+  // .cutout {
+  //   text-align: center;
 
-    .manic {
-      white-space: pre-line;
-    }
+  //   .manic {
+  //     white-space: pre-line;
+  //   }
 
-    .h1 {
-      span {
-        padding: 0.125em 0.25em;
-      }
-    }
-  }
+  //   .h1 {
+  //     span {
+  //       padding: 0.125em 0.25em;
+  //     }
+  //   }
+  // }
 
   .hero-video-wrapper {
     position: relative;
