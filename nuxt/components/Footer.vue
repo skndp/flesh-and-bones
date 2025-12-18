@@ -1,5 +1,5 @@
 <template>
-  <footer id="footer" class="bg-bone pad-t pad-b">
+  <footer id="footer" class="bg-bone pad-b" ref="foot">
     <div class="gutter">
       <ul class="locations manic md">
         <li v-for="location in store.locations">
@@ -44,6 +44,18 @@ import { smoothScrollTo } from '~/utils/smooth-scroll-to';
 
 const route = useRoute();
 const store = useSiteStore();
+const foot = ref(null);
+let resize_to = 0;
+
+// Lifecycle
+onMounted(() => {
+  window.addEventListener('resize', onResize);
+  setMask();
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', onResize);
+});
 
 // Methods
 function onClickNavLink(e) {
@@ -53,12 +65,36 @@ function onClickNavLink(e) {
     smoothScrollTo(0);
   }
 }
+
+function onResize(e) {
+  clearTimeout(resize_to);
+  resize_to = setTimeout(() => {
+    setMask();
+  }, 250);
+}
+
+function setMask() {
+  const w = window.innerWidth;
+  const mask = createTornEdge({
+    width: w,
+    height: 200,
+    startY: 100,
+    endY: 100,
+    wobble: 0.85,
+    edgeRoughness: 4
+  });
+
+  foot.value.style.maskImage = `url(${mask}), linear-gradient(#000 0 0)`;
+}
 </script>
 
 <style lang='scss'>
-
 #footer {
   position: relative;
+  padding-top: calc(span(0.5) + 200px);
+  mask-size: 101% auto;
+  mask-composite: exclude;
+  mask-repeat: no-repeat;
 
   .gutter {
     display: flex;
