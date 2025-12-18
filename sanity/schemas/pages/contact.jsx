@@ -187,7 +187,10 @@ export default defineType({
             {
               name: 'profileImage',
               title: 'Profile Image',
-              type: 'image'
+              type: 'image',
+              validation: [
+                Rule => Rule.required()
+              ]
             },
             {
               name: 'name',

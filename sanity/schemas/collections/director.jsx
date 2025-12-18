@@ -68,7 +68,10 @@ export default defineType({
       fieldset: 'hero',
       name: 'profileImage',
       title: 'Profile Image',
-      type: 'image'
+      type: 'image',
+      validation: [
+        Rule => Rule.required()
+      ]
     }),
     defineField({
       fieldset: 'anatomy',

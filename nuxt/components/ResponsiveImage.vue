@@ -222,29 +222,33 @@ export default {
 <style lang='scss'>
 
 .responsive-image-wrapper {
-  @include abs-fill;
+  position: relative;
+  width: 100%;
   user-select: none;
   pointer-events: none;
-
+  
   &.--fill {
+    @include abs-fill;
     overflow: hidden;
 
     picture.responsive-image-picture {
+      @include abs-fill;
+
       img {
+        @include abs-fill;
         object-fit: cover;
+        object-position: 50% 50%;
       }
     }
   }
 
   picture.responsive-image-picture {
-    @include abs-fill;
     pointer-events: none;
     opacity: 0;
 
     img {
-      @include abs-fill;
-      object-fit: contain;
-      object-position: 50% 50%;
+      width: 100%;
+      height: auto;
     }
   }
 

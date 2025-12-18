@@ -29,6 +29,7 @@ const contactQuery = groq`*[(_type == "contact")][0]{
   },
   foundersSketchnote,
   founders[] {
+    profileImage ${imageProps},
     name,
     role,
     email,
