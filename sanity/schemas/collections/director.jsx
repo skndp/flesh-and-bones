@@ -1,7 +1,7 @@
 import { defineField, defineType } from 'sanity';
 import { SlugInput } from 'sanity-plugin-prefixed-slug';
 import { ArrayMaxItems } from '../../components/array-max-items';
-import { ProjectsIcon, ImageIcon } from '@sanity/icons';
+import { ProjectsIcon, ImageIcon, UserIcon } from '@sanity/icons';
 // Sanity Icon Set: https://icons.sanity.build/all
 
 const projectId = import.meta.env.SANITY_STUDIO_PROJECT_ID;
@@ -63,6 +63,18 @@ export default defineType({
       title: 'Tagline',
       type: 'text',
       rows: 2
+    }),
+    defineField({
+      fieldset: 'hero',
+      name: 'profileImage',
+      title: 'Profile Image',
+      type: 'image'
+    }),
+    defineField({
+      name: 'directorsPageVideo',
+      title: 'DIRECTORS PAGE VIDEO',
+      description: 'Background, fullscreen looping video (best at 5-15 seconds)',
+      type: 'videoPlayer'
     }),
     defineField({
       fieldset: 'anatomy',
@@ -227,12 +239,14 @@ export default defineType({
   preview: {
     select: {
       title: 'title',
-      slug: 'slug'
+      slug: 'slug',
+      image: 'profileImage.asset'
     },
-    prepare({ title, slug }) {
+    prepare({ title, slug, image }) {
       return {
         title: title ? title : 'Untitled',
-        subtitle: slug ? `/directors/${slug.current}` : '/directors/untitled'
+        subtitle: slug ? `/directors/${slug.current}` : '/directors/untitled',
+        media: image ? image : UserIcon
       };
     }
   }

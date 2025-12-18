@@ -185,6 +185,11 @@ export default defineType({
           ],
           fields: [
             {
+              name: 'profileImage',
+              title: 'Profile Image',
+              type: 'image'
+            },
+            {
               name: 'name',
               title: 'Name',
               type: 'string',
@@ -225,7 +230,19 @@ export default defineType({
                 Rule => Rule.required()
               ]
             }
-          ]
+          ],
+          preview: {
+            select: {
+              title: 'name',
+              image: 'profileImage.asset'
+            },
+            prepare({ title, image }) {
+              return {
+                title: title ? title : 'Untitled',
+                media: image ? image : UserIcon
+              };
+            }
+          }
         }
       ]
     })

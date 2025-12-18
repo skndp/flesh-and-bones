@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div id="directors-page" :class="page">
     <DirectorsHero
       :sketchnoteLeft="page.sketchnoteLeft"
       :sketchHeading="page.heroHeading"
@@ -13,9 +13,12 @@
 const directorsQuery = groq`*[(_type == "directors")][0]{
   heroHeading,
   sketchnoteLeft,
-  directors[]->{
-    title,
-    'slug': '/directors/' + slug.current
+  directors[]{
+    director->{
+      title,
+      'slug': '/directors/' + slug.current
+    },
+    backgroundVideo
   }
 }`;
 
@@ -28,3 +31,11 @@ onMounted(() => {
   console.log('Directors:', page);
 });
 </script>
+
+<style lang="scss">
+#directors-page {
+  &:before {
+    display: none;
+  }
+}
+</style>
