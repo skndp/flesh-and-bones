@@ -11,6 +11,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@lucien144/vue3-parallaxy": "^0.1.2",
     "@nuxtjs/dotenv": "^1.4.2",
     "@nuxtjs/sanity": "^2.0.0",
     "@nuxtjs/sitemap": "^7.4.3",
