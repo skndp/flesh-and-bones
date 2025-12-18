@@ -37,7 +37,7 @@
 </template>
 
 <script setup>
-// import { primaryInput } from 'detect-it';
+import { primaryInput } from 'detect-it';
 
 // Props
 const props = defineProps({
@@ -62,10 +62,10 @@ const emit = defineEmits(['hover-update']);
 
 // Mounted
 onMounted(() => {
-  // isTouchDevice.value =
-  //   primaryInput === 'touch' ||
-  //   'ontouchstart' in window ||
-  //   navigator.maxTouchPoints > 0;
+  isTouchDevice.value =
+    primaryInput === 'touch' ||
+    'ontouchstart' in window ||
+    navigator.maxTouchPoints > 0;
 });
 
 // Methods
