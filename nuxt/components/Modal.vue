@@ -66,6 +66,7 @@
                     <SwiperSlide v-for="(item, index) in store.modalProjects" class="swiper-slide" :key="index">
                       <VideoPlayer
                         v-if="item.projectVideo && item.projectVideo.vimeo"
+                        ref="videoRefs"
                         :vimeo="item.projectVideo.vimeo"
                         :poster="item.ctaCardImages && item.ctaCardImages.landscapeImage ? item.ctaCardImages.landscapeImage.image : null"
                         :controls="true"
@@ -126,11 +127,11 @@ const modalRef = ref(null);
 const mainSwiperRef = ref(null);
 const titlesSwiperRef = ref(null);
 const directorsSwiperRef = ref(null);
+const videoRefs = ref([]);
+
 let mainSwiper = null;
 let titlesSwiper = null;
 let directorsSwiper = null;
-
-const ratio = 16/9;
 
 // Mounted
 onMounted(() => {
@@ -152,6 +153,20 @@ function onMainSwiperReady(swiper) {
 
   mainSwiper.on('slideChange', () => {
     store.setModalIndex(mainSwiper.realIndex);
+
+    videoRefs.value.forEach((vid) => {
+      if (vid && vid.stopPlayer) {
+        vid.stopPlayer();
+      }
+    });
+  })
+
+  mainSwiper.on('slideChangeTransitionEnd', () => {
+    videoRefs.value.forEach((vid) => {
+      if (vid && vid.resetPlayer) {
+        vid.resetPlayer();
+      }
+    });
   })
 }
 
@@ -394,7 +409,6 @@ watch(route, () => {
         .main-swiper-box {
           position: relative;
           aspect-ratio: 16 / 9;
-          background-color: royalblue;
           flex-grow: 1;
         }
         
@@ -407,6 +421,7 @@ watch(route, () => {
             position: relative;
             width: 100%;
             height: 100%;
+            margin-right: $space-8;
             overflow: hidden;
 
             .video-holder {
@@ -445,6 +460,7 @@ watch(route, () => {
           mask-size: contain;
           mask-repeat: no-repeat;
           display: inline-flex;
+          cursor: pointer;
 
           &.prev {
             transform: scaleX(-1);

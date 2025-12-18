@@ -1,7 +1,7 @@
 <template>
   <header id="header" :class="{ '--hidden': !show_header, '--fill --shrink': fill_header, '--menu': store.menuOpen, '--stage2': stage2, 'appear': !store.loading }">
     <nav class="nav">
-      <NuxtLink class="logo" to="/" @click.native="onClickLogo">Flesh and Bones</NuxtLink>
+      <NuxtLink class="logo" to="/" @click="onClickLogo">Flesh and Bones</NuxtLink>
       <button id="menu-btn" aria-label="Menu" @click="toggleMenu">
         <span class="menu-btn__close"></span>
         <span class="menu-btn__open">
@@ -29,6 +29,7 @@ const stage2 = ref(false);
 const circleTheButton = ref(null);
 let prev_scroll = 0;
 let circle_to = 0;
+let isClosing = false;
 
 // Mounted
 onMounted(() => {
@@ -51,9 +52,22 @@ function onClickLogo() {
 }
 
 function closeMenu() {
+  if (!store.menuOpen) return;
   store.setMenu(false);
+}
+
+function handleMenuCloseEffects() {
+  if (isClosing) return;
+  isClosing = true;
+
   clearTimeout(circle_to);
-  circleTheButton.value.stop();
+  if (circleTheButton.value) {
+    circleTheButton.value.stop();
+  }
+
+  nextTick(() => {
+    isClosing = false;
+  });
 }
 
 function toggleMenu() {
@@ -91,8 +105,16 @@ function onMenuOpenEnd(e) {
 }
 
 // Watchers
-watch(route, () => {
-  closeMenu();
+watch(() => store.menuOpen, (isOpen, wasOpen) => {
+  if (!isOpen && wasOpen) {
+    handleMenuCloseEffects()
+  }
+});
+
+watch(() => route.fullPath, () => {
+  if (store.menuOpen) {
+    store.setMenu(false)
+  }
 });
 </script>
 

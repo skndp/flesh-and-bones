@@ -11,12 +11,14 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@lucien144/vue3-parallaxy": "^0.1.2",
     "@nuxtjs/dotenv": "^1.4.2",
     "@nuxtjs/sanity": "^2.0.0",
     "@nuxtjs/sitemap": "^7.4.3",
     "@pinia/nuxt": "^0.11.2",
     "@portabletext/to-html": "^2.0.14",
     "body-scroll-lock": "3.1.5",
+    "detect-it": "^4.0.1",
     "lodash": "^4.17.21",
     "noisejs": "^2.1.0",
     "nuxt": "3.17.7",

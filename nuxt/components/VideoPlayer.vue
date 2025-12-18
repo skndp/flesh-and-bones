@@ -25,6 +25,11 @@
 <script setup>
 import { vueVimeoPlayer } from 'vue-vimeo-player';
 
+defineExpose({
+  stopPlayer,
+  resetPlayer
+});
+
 const props = defineProps({
   vimeo: {
     type: Object
@@ -131,6 +136,16 @@ function clickToPlay() {
     player.value.play().catch(() => {});
     playingMode.value = true;
   }
+}
+
+function stopPlayer() {
+  if (player.value) {
+    player.value.pause();
+  }
+}
+
+async function resetPlayer() {
+  playingMode.value = false;
 }
 </script>
 

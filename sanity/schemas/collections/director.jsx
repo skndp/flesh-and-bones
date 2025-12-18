@@ -1,8 +1,11 @@
 import { defineField, defineType } from 'sanity';
 import { SlugInput } from 'sanity-plugin-prefixed-slug';
 import { ArrayMaxItems } from '../../components/array-max-items';
-import { ProjectsIcon, ImageIcon } from '@sanity/icons';
+import { ProjectsIcon, ImageIcon, UserIcon } from '@sanity/icons';
 // Sanity Icon Set: https://icons.sanity.build/all
+
+const projectId = import.meta.env.SANITY_STUDIO_PROJECT_ID;
+const dataset = import.meta.env.SANITY_STUDIO_DATASET;
 
 export default defineType({
   name: 'director',
@@ -60,6 +63,18 @@ export default defineType({
       title: 'Tagline',
       type: 'text',
       rows: 2
+    }),
+    defineField({
+      fieldset: 'hero',
+      name: 'profileImage',
+      title: 'Profile Image',
+      type: 'image'
+    }),
+    defineField({
+      name: 'directorsPageVideo',
+      title: 'DIRECTORS PAGE VIDEO',
+      description: 'Background, fullscreen looping video (best at 5-15 seconds)',
+      type: 'videoPlayer'
     }),
     defineField({
       fieldset: 'anatomy',
@@ -155,9 +170,11 @@ export default defineType({
                   preview: {
                     select: {
                       title: 'title',
-                      image: 'ctaCardImages.landscapeImage.asset'
+                      landscapeImg: 'ctaCardImages.landscapeImage.image.asset',
+                      squareImg: 'ctaCardImages.squareImage.image.asset'
                     },
-                    prepare({ title, image }) {
+                    prepare({ title, landscapeImg, squareImg }) {
+                      let image = landscapeImg ? landscapeImg : squareImg ? squareImg : null;
                       return {
                         title: title || 'Untitled project',
                         media: image || ImageIcon
@@ -172,35 +189,41 @@ export default defineType({
             select: {
               // Item 1
               title1: 'items.0.title',
-              img1: 'items.0.ctaCardImages.landscapeImage.asset',
+              landscapeImg1: 'items.0.ctaCardImages.landscapeImage.image.asset',
+              squareImg1: 'items.0.ctaCardImages.squareImage.image.asset',
               // Item 2
               title2: 'items.1.title',
-              img2: 'items.1.ctaCardImages.landscapeImage.asset'
+              landscapeImg2: 'items.1.ctaCardImages.landscapeImage.image.asset',
+              squareImg2: 'items.1.ctaCardImages.squareImage.image.asset'
             },
 
-            prepare({ title1, img1, title2, img2 }) {
+            prepare({ title1, landscapeImg1, squareImg1, title2, landscapeImg2, squareImg2 }) {
               const items = [];
+              let img1 = landscapeImg1 ? landscapeImg1 : squareImg1 ? squareImg1 : null;
+              let img2 = landscapeImg2 ? landscapeImg2 : squareImg2 ? squareImg2 : null;
 
               if (title1) items.push({ title: title1, media: img1 || ImageIcon });
               if (title2) items.push({ title: title2, media: img2 || ImageIcon });
-              if (items.length === 0) {
-                return {
-                  title: 'No items selected',
-                  subtitle: '',
-                  media: ImageIcon
-                };
-              }
 
               const rowTitle = items.length === 2 ? `${items[0].title} • ${items[1].title}` : items[0].title;
-              const validMedia = items.filter(item => item.media);
-              const mediaItems = validMedia.length === 0 ? ImageIcon : () =>
-                validMedia.map((item, index) =>
-                  typeof item.media === 'string' ? (
-                    <div className="media-item" key={index}>
-                      <img src={item.media} alt="" />
-                    </div>
-                  ) : (<div className="media-item --empty" key={index}></div>)
-                );
+              const mediaItems = (
+                <div className="media-items">
+                  {items.map((item, index) =>
+                    item.media?._ref ? (
+                      <div className="media-item" key={index}>
+                        <img
+                          src={`https://cdn.sanity.io/images/${projectId}/${dataset}/${item.media._ref
+                            .replace('image-', '')
+                            .replace(/-(jpg|png|webp)$/, '.$1')}`}
+                          alt=""
+                        />
+                      </div>
+                    ) : (
+                      <div className="media-item --empty" key={index} />
+                    )
+                  )}
+                </div>
+              );
 
               return {
                 title: rowTitle,
@@ -216,12 +239,14 @@ export default defineType({
   preview: {
     select: {
       title: 'title',
-      slug: 'slug'
+      slug: 'slug',
+      image: 'profileImage.asset'
     },
-    prepare({ title, slug }) {
+    prepare({ title, slug, image }) {
       return {
         title: title ? title : 'Untitled',
-        subtitle: slug ? `/directors/${slug.current}` : '/directors/untitled'
+        subtitle: slug ? `/directors/${slug.current}` : '/directors/untitled',
+        media: image ? image : UserIcon
       };
     }
   }
