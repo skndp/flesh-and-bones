@@ -3,6 +3,7 @@
     <div id="menu-inner">
       <div id="menu-content" ref="contentRef" @click="closeMenu">
         <nav id="menu-paper" class="bg-bone" ref="paper">
+          <Paper :light="true" />
           <ul class="primary h1 sm midnight">
             <li>
               <NuxtLink to="/work" @click.native="onClickNavLink">
