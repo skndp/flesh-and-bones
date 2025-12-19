@@ -87,6 +87,8 @@ onMounted(() => {
   setTimeout(() => {
     store.setLoaderComplete();
   }, 1000);
+
+  console.log(`Made with ☠️ by Seek and Deploy. https://seekanddeploy.com`);
 });
 
 // Before Unmount

@@ -122,11 +122,11 @@ function setMasks() {
 
     .loader-layer {
       &:nth-child(1) {
-        transform: translate(0%, -100%);
+        transform: translate(0%, -100%) rotate(-15deg);
       }
 
       &:nth-child(2) {
-        transform: translate(0%, 100%);
+        transform: translate(0%, 100%) rotate(15deg);
       }
 
       &:nth-child(3) {

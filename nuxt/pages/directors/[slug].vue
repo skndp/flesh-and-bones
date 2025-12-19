@@ -3,6 +3,7 @@
     <DirectorHero
       :tagline="page.tagline"
       :title="page.title"
+      :skeletons="[{profileImage: page.profileImage}]"
     />
     <DirectorAnatomy
       :label="page.anatomyLabel"
@@ -29,6 +30,7 @@ const directorQuery = groq`*[_type == 'director' && slug.current == $slug][0]{
   title,
   slug,
   tagline,
+  profileImage ${imageProps},
   anatomyLabel,
   anatomyBio,
   anatomyLocation,
