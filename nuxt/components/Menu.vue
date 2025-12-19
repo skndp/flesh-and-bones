@@ -2,7 +2,7 @@
   <div id="menu" :class="{'offset': offset}">
     <div id="menu-inner">
       <div id="menu-content" ref="contentRef" @click="closeMenu">
-        <nav id="menu-paper" class="bg-bone">
+        <nav id="menu-paper" class="bg-bone" ref="paper">
           <ul class="primary h1 sm midnight">
             <li>
               <NuxtLink to="/work" @click.native="onClickNavLink">
@@ -62,6 +62,8 @@ const route = useRoute();
 const store = useSiteStore();
 const contentRef = ref(null);
 const offset = ref(false);
+const paper = ref(null);
+let resize_to = 0;
 
 // Mounted
 onMounted(() => {
@@ -70,6 +72,9 @@ onMounted(() => {
   if (contentRef.value) {
     disableBodyScroll(contentRef.value);
   }
+
+  window.addEventListener('resize', onResize);
+  setMask();
 });
 
 // Before Unmount
@@ -77,6 +82,8 @@ onBeforeUnmount(() => {
   if (contentRef.value) {
     enableBodyScroll(contentRef.value);
   }
+
+  window.removeEventListener('resize', onResize);
 });
 
 // Methods
@@ -94,6 +101,27 @@ function closeMenu(e) {
   if (e.target && e.target.id === 'menu-content') {
     store.setMenu(false);
   }
+}
+
+function onResize(e) {
+  clearTimeout(resize_to);
+  resize_to = setTimeout(() => {
+    setMask();
+  }, 250);
+}
+
+function setMask() {
+  const b = paper.value.getBoundingClientRect();
+  const mask = createTornEdge({
+    width: b.width,
+    height: b.height,
+    startY: b.height - 100,
+    endY: b.height - 100,
+    wobble: 0.85,
+    edgeRoughness: 4
+  });
+
+  paper.value.style.maskImage = `url(${mask})`;
 }
 </script>
 
@@ -150,15 +178,15 @@ function closeMenu(e) {
         nav#menu-paper {
           ul.primary {
             padding-top: 0px;
-            @include header-ht(padding-bottom);
+            padding-bottom: 200px;
           }
 
           ul.socials {
-            @include header-ht(padding-bottom);
+            padding-bottom: 200px;
           }
 
           .locations-wrapper {
-            @include header-ht(padding-bottom);
+            height: calc(100% - 200px);
           }
         }
       }
@@ -192,11 +220,14 @@ function closeMenu(e) {
         position: relative;
         width: 100%;
         display: flex;
+        mask-size: 101% auto;
+        mask-position: bottom center;
+        mask-repeat: no-repeat;
 
         ul.primary  {
           margin: 0.25em auto -0.5em;
           @include header-ht(padding-top);
-          @include header-ht(padding-bottom);
+          padding-bottom: 200px;
           display: inline-flex;
           flex-direction: column;
           justify-content: center;
