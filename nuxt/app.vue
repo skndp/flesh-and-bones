@@ -106,7 +106,6 @@ function updateScrollbarWidth() {
 };
 
 function modalCleanup() {
-  console.log('Modal: CLEANUP');
   store.setModalCleanup();
 }
 </script>
