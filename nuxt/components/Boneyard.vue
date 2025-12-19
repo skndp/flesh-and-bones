@@ -4,31 +4,43 @@
       <div class="cutout-torn-edge bg-bone" ref="topEdge"></div>
       <div class="cutout-inner flesh" ref="cutout">
         <div class="cutout-content bg-bone">
-          <Parallaxy :speed="50" :breakpoints="{768: {speed: 75}}" class="cutout-skeleton">
-            <img :src="'/images/rob-test.png'" />
-          </Parallaxy>
-          <Parallaxy :speed="50" :breakpoints="{768: {speed: 75}}" class="cutout-skeleton">
-            <img :src="'/images/tony-test.png'" />
-          </Parallaxy>
+          <div v-scroll-container>
+            <div
+              v-for="(skeleton, index) in skeletons"
+              data-scroll="parallax"
+              data-fx='[{"prop":"y","from":0,"to":-100},{"prop":"s","from":0.9,"to":1}]'
+              class="cutout-skeleton"
+            >
+              <ResponsiveImage v-bind="skeleton.profileImage" fit="contain" :priority="true" />
+            </div>
+          </div>
         </div>
-        <p class="flesh manic">{{ tagline }}</p>
+        <p class="cutout-tagline flesh manic" :class="{'single': skeletons.length === 1}">{{ tagline }}</p>
+        <h1 v-if="title" class="h1 xs rough-edges-light">
+          <span class="bg-midnight">{{ title }}</span>
+        </h1>
       </div>
     </div>
   </section>
 </template>
 
 <script setup>
-import Parallaxy from '@lucien144/vue3-parallaxy';
-
 const cutout = ref(null);
 const topEdge = ref(null);
 let resize_to = 0;
 
 // Props
 const props = defineProps({
+  skeletons: {
+    type: Array,
+    required: true
+  },
   tagline: {
     type: String,
     required: true
+  },
+  title: {
+    type: String
   }
 });
 
@@ -36,6 +48,11 @@ const props = defineProps({
 onMounted(() => {
   window.addEventListener('resize', onResize);
   setMask();
+
+  // for Parallaxy
+  setTimeout(() => {
+    window.dispatchEvent(new Event('scroll'));
+  }, 500);
 });
 
 onBeforeUnmount(() => {
@@ -104,16 +121,19 @@ function setMask() {
         &:has(.cutout-skeleton:only-child) {
           .cutout-skeleton {
             left: 50%;
+            width: span(10);
+            margin-left: span(-5);
           }
         }
 
         .cutout-skeleton {
           position: absolute;
-          bottom: 20px;
+          bottom: -20px;
           left: 25%;
-          width: span(5);
-          margin-left: span(-2.5);
+          width: span(9);
+          margin-left: span(-4.5);
           z-index: 1;
+          will-change: transform;
 
           &:nth-child(2) {
             left: 75%;
@@ -121,25 +141,43 @@ function setMask() {
 
           img {
             width: 100%;
-            height: auto;
+            aspect-ratio: 1 / 1;
           }
         }
       }
     }
 
-    .manic {
+    .cutout-tagline {
       position: absolute;
       top: 150px;
       left: 50%;
       white-space: pre-line;
       transform: translate(-50%, -50%) rotate(-7deg);
     }
+
+    .h1 {
+      position: absolute;
+      top: 66%;
+      left: 50%;
+      white-space: nowrap;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+
+      span {
+        padding: 0.125em 0.25em;
+      }
+    }
   }
 
   @include respond-to($small-tablet) {
     .cutout {
-      .manic {
+      .cutout-tagline {
         top: 50%;
+
+        &.single {
+          top: 40%;
+          left: 75%;
+        }
       }
     }
   }
@@ -157,8 +195,17 @@ function setMask() {
           height: unset;
           aspect-ratio: 3 / 1;
 
+          &:has(.cutout-skeleton:only-child) {
+            .cutout-skeleton {
+              width: span(6.5);
+              margin-left: span(-3.25);
+            }
+          }
+
           .cutout-skeleton {
             bottom: 0px;
+            width: span(6.5);
+            margin-left: span(-3.25);
           }
         }
       }

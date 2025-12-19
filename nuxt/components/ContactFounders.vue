@@ -1,6 +1,6 @@
 <template>
   <section class="contact-founders pad-b">
-    <Boneyard :tagline="cutoutTitle" />
+    <Boneyard :tagline="cutoutTitle" :skeletons="founders" />
     <div class="gutter cols pad-b">
       <div v-for="founder in founders" class="col">
         <p class="flesh brush">{{ founder.name }}</p>

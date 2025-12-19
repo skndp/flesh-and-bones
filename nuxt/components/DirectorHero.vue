@@ -1,6 +1,6 @@
 <template>
   <section class="director-hero pad-b">
-    <Boneyard :tagline="tagline" :name="title" />
+    <Boneyard :tagline="tagline" :title="title" :skeletons="skeletons" />
     <div class="gutter">
       <div class="hero-video-wrapper">
         <span class="bg-flesh rough-edges"></span>
@@ -20,26 +20,16 @@ const props = defineProps({
   title: {
     type: String,
     required: true
+  },
+  skeletons: {
+    type: Array,
+    required: true
   }
 });
 </script>
 
 <style lang='scss'>
 section.director-hero {
-  // .cutout {
-  //   text-align: center;
-
-  //   .manic {
-  //     white-space: pre-line;
-  //   }
-
-  //   .h1 {
-  //     span {
-  //       padding: 0.125em 0.25em;
-  //     }
-  //   }
-  // }
-
   .hero-video-wrapper {
     position: relative;
     width: 100%;
