@@ -1,5 +1,6 @@
 <template>
   <div id="page-to-page-loader">
+    <Paper />
     <div id="spinner" class="rough-edges"></div>
   </div>
 </template>

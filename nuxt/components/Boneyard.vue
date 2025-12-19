@@ -1,9 +1,12 @@
 <template>
   <section class="boneyard pad-b">
     <div class="cutout">
-      <div class="cutout-torn-edge bg-bone" ref="topEdge"></div>
+      <div class="cutout-torn-edge bg-bone" ref="topEdge">
+        <Paper :light="true" />
+      </div>
       <div class="cutout-inner flesh" ref="cutout">
         <div class="cutout-content bg-bone">
+          <Paper :light="true" />
           <div v-scroll-container>
             <div
               v-for="(skeleton, index) in skeletons"

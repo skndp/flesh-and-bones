@@ -1,12 +1,6 @@
 <template>
   <div class="page">
-    <div class="paper">
-      <!-- <span class="speckles"></span> -->
-      <div class="chalkboard">
-        <div class="chalk-layer smudge"></div>
-        <div class="chalk-layer specks"></div>
-      </div>
-    </div>
+    <Paper />
     <HomeHero
       :title="page.heroHeading"
       :copy="page.heroCopy"

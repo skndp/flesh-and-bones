@@ -1,9 +1,12 @@
 <template>
   <div class="page">
+    <Paper />
     <DirectorHero
       :tagline="page.tagline"
       :title="page.title"
       :skeletons="[{profileImage: page.profileImage}]"
+      :reelVideo="page.reelVideo"
+      :reelPoster="page.reelPosterImage"
     />
     <DirectorAnatomy
       :label="page.anatomyLabel"
@@ -31,6 +34,8 @@ const directorQuery = groq`*[_type == 'director' && slug.current == $slug][0]{
   slug,
   tagline,
   profileImage ${imageProps},
+  reelVideo,
+  reelPosterImage ${imageProps},
   anatomyLabel,
   anatomyBio,
   anatomyLocation,

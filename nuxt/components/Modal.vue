@@ -1,5 +1,6 @@
 <template>
-  <div id="modal" ref="modalRef">
+  <div id="modal" class="bg-midnight" ref="modalRef">
+    <Paper />
     <div id="modal-inner">
       <div id="btn-container">
         <button id="close-modal-btn" @click="closeModal">
@@ -51,7 +52,7 @@
         <div ref="carouselBlockRef" class="carousel-block">
           <div class="carousel-containent">
             <div class="carousel-containment-flex">
-              <div class="main-swiper-box rough-edges">
+              <div class="main-swiper-box">
                 <ClientOnly>
                   <Swiper
                     class="main-swiper"
@@ -236,7 +237,6 @@ watch(route, () => {
 
   #modal-inner {
     @include abs-fill;
-    background-color: $midnight;
     overflow: hidden;
 
     #btn-container {

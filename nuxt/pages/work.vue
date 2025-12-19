@@ -1,5 +1,6 @@
 <template>
   <div class="page">
+    <Paper />
     <WorkHero
       :title="page.heroHeading"
       :copy="page.heroCopy"

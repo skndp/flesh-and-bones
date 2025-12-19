@@ -18,6 +18,10 @@ export default defineType({
       title: 'HERO'
     },
     {
+      name: 'reel',
+      title: 'REEL'
+    },
+    {
       name: 'anatomy',
       title: 'ANATOMY'
     }
@@ -72,6 +76,18 @@ export default defineType({
       validation: [
         Rule => Rule.required()
       ]
+    }),
+    defineField({
+      fieldset: 'reel',
+      name: 'reelVideo',
+      title: 'Video (Player w/ Controls)',
+      type: 'videoPlayer'
+    }),
+    defineField({
+      fieldset: 'reel',
+      name: 'reelPosterImage',
+      title: 'Poster Image',
+      type: 'image'
     }),
     defineField({
       fieldset: 'anatomy',

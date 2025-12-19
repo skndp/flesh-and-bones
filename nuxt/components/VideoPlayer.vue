@@ -32,10 +32,12 @@ defineExpose({
 
 const props = defineProps({
   vimeo: {
-    type: Object
+    type: Object,
+    required: true
   },
   poster: {
-    type: Object
+    type: Object,
+    required: false
   },
   controls: {
     type: Boolean,
@@ -146,6 +148,10 @@ function stopPlayer() {
 
 async function resetPlayer() {
   playingMode.value = false;
+  
+  if (player.value) {
+    player.value.update(props.vimeo.id);
+  }
 }
 </script>
 

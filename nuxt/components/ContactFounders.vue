@@ -31,6 +31,8 @@ const props = defineProps({
 
 <style lang='scss'>
 section.contact-founders {
+  position: relative;
+  
   .cols {
     padding-top: span(1);
 

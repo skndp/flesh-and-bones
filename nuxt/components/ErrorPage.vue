@@ -1,5 +1,6 @@
 <template>
   <div class="error-page">
+    <Paper />
     <section class="pad-t pad-b">
       <div class="gutter">
         <h2 class="h2">Error 404</h2>

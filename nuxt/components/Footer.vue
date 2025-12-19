@@ -1,8 +1,6 @@
 <template>
   <footer id="footer" class="bg-bone pad-b" :class="{ 'cover': cover }" ref="foot">
-    <div class="paper">
-      <span class="dark-specks"></span>
-    </div>
+    <Paper :light="true" />
     <div class="gutter">
       <ul class="locations manic md">
         <li v-for="location in store.locations">

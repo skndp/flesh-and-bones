@@ -33,6 +33,8 @@ const props = defineProps({
 
 <style lang='scss'>
 section.contact-directory {
+  position: relative;
+
   .gutter {
     .row {
       &:not(:last-child) {

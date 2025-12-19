@@ -1,5 +1,6 @@
 <template>
   <div class="page">
+    <Paper />
     <ManifestoHero
       :kicker="page.heroKicker"
       :title="page.heroHeading"

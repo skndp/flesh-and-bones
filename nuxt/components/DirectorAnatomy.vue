@@ -39,6 +39,8 @@ const props = defineProps({
 
 <style lang='scss'>
 section.director-anatomy {
+  position: relative;
+  
   .cols {
     display: flex;
     flex-direction: column;
