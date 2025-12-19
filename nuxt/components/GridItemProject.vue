@@ -215,15 +215,6 @@ function reflow() {
           visibility: visible;
         }
       }
-
-      img {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 100%;
-        height: auto;
-        transform: translate(-50%, -50%);
-      }
     }
   }
 
