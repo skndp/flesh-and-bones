@@ -1,6 +1,6 @@
 <template>
   <NuxtLink :to="item.slug" class="item article flesh" :class="[ layout ]" @mouseenter="onItemHover" @mouseleave="onItemHover">
-    <div class="item-image rough-edges">
+    <div class="item-image">
       <template v-if="layout === 'square' && item.ctaCardImages.squareImage">
         <ResponsiveImage v-bind="item.ctaCardImages.squareImage.image" />
       </template>
