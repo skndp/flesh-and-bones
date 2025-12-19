@@ -48,11 +48,6 @@ const props = defineProps({
 onMounted(() => {
   window.addEventListener('resize', onResize);
   setMask();
-
-  // for Parallaxy
-  setTimeout(() => {
-    window.dispatchEvent(new Event('scroll'));
-  }, 500);
 });
 
 onBeforeUnmount(() => {
