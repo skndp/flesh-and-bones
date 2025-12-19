@@ -226,7 +226,7 @@ function reflow() {
         width: 100%;
         height: 100%;
         z-index: 10;
-        background-color: #062348;
+        background-color: #07408a;
         mix-blend-mode: overlay;
         visibility: hidden;
       }
@@ -239,10 +239,10 @@ function reflow() {
         width: 100%;
         height: 100%;
         z-index: 10;
-        background-color: #f2d4a0;
+        background-color: #b09d42;
         mix-blend-mode: overlay;
         visibility: hidden;
-        opacity: 0.5;
+        opacity: 0.65;
       }
 
       &:nth-child(3) {
