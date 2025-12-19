@@ -1,5 +1,8 @@
 <template>
   <footer id="footer" class="bg-bone pad-b" :class="{ 'cover': cover }" ref="foot">
+    <div class="paper">
+      <span class="dark-specks"></span>
+    </div>
     <div class="gutter">
       <ul class="locations manic md">
         <li v-for="location in store.locations">
@@ -30,7 +33,7 @@
       </ul>
       <ul class="socials">
         <li v-for="link in store.socials">
-          <NuxtLink :to="link" target="_blank" />
+          <NuxtLink class="rough-edges" :to="link" target="_blank" />
         </li>
       </ul>
       <p class="manic sm">© {{ new Date().getFullYear() }} Flesh and Bones, Inc.</p>
@@ -110,6 +113,7 @@ function setMask() {
   }
 
   .gutter {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;

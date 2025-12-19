@@ -37,7 +37,7 @@
           </ul>
           <ul class="socials">
             <li v-for="link in store.socials">
-              <NuxtLink :to="link" target="_blank" />
+              <NuxtLink class="rough-edges" :to="link" target="_blank" />
             </li>
           </ul>
           <div class="locations-wrapper">

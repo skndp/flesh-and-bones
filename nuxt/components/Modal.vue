@@ -51,7 +51,7 @@
         <div ref="carouselBlockRef" class="carousel-block">
           <div class="carousel-containent">
             <div class="carousel-containment-flex">
-              <div class="main-swiper-box">
+              <div class="main-swiper-box rough-edges">
                 <ClientOnly>
                   <Swiper
                     class="main-swiper"

@@ -32,6 +32,7 @@ body {
 // --------------------------------------------
 
 .page {
+  position: relative;
   min-height: 100svh;
   background-color: $midnight;
   display: flex;
@@ -157,7 +158,7 @@ button {
 }
 
 // --------------------------------------------
-// Text FX
+// SVG FX
 // --------------------------------------------
 
 .rough-edges {
@@ -166,4 +167,49 @@ button {
 
 .rough-edges-light {
   filter: url(#roughEdgesLight);
+}
+
+.paper {
+  @include abs-fill;
+  overflow: hidden;
+
+  // .speckles {
+  //   @include abs-fill;
+  //   background-color: #ffffff;
+  //   filter: url(#speckles);
+  //   mix-blend-mode: screen;
+  //   opacity: 0.13;
+  // }
+
+  .dark-specks {
+    @include abs-fill;
+    background-color: #000000;
+    filter: url(#specks) invert(1);
+    opacity: 0.1;
+  }
+
+  .chalkboard {
+    @include abs-fill;
+    background: $midnight;
+    overflow: hidden;
+    
+    .chalk-layer {
+      @include abs-fill;
+
+      &.specks {
+        background-color: #ffffff;
+        filter: url(#specks);
+        opacity: 0.08;
+        mix-blend-mode: screen;
+      }
+
+      &.smudge {
+        background: #ffffff;
+        filter: url(#chalkSmudge);
+        opacity: 0.13;
+        mix-blend-mode: soft-light;
+        transform: scale(2);
+      }
+    }
+  }
 }
