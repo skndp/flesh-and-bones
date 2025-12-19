@@ -66,9 +66,6 @@ onMounted(() => {
     primaryInput === 'touch' ||
     'ontouchstart' in window ||
     navigator.maxTouchPoints > 0;
-  
-  console.log(isTouchDevice.value);
-  
 });
 
 // Methods
@@ -85,7 +82,7 @@ function onMouseleave() {
 function onHoverChange(index) {
   // pause previous player (if any)
   if (activeIndex.value !== null && players.value[activeIndex.value]) {
-    players.value[activeIndex.value].pause?.().catch(() => {});
+    players.value[activeIndex.value].pause();
   }
 
   // set the new active index
@@ -97,7 +94,7 @@ function onHoverChange(index) {
   // if the new player is ready, play it
   const player = players.value[index];
   if (player) {
-    player.play?.().catch(() => {});
+    player.play();
   }
 }
 
@@ -107,7 +104,7 @@ function onPlayerReady(index) {
 
     // if this video is currently active, play it
     if (activeIndex.value === index) {
-      playerInstance.play?.().catch(() => {});
+      playerInstance.play();
     }
   };
 }
