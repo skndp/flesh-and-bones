@@ -117,8 +117,8 @@ function setMask() {
     height: b.height,
     startY: b.height - 100,
     endY: b.height - 100,
-    wobble: 0.85,
-    edgeRoughness: 4
+    wobble: 0.6,
+    edgeRoughness: 6
   });
 
   paper.value.style.maskImage = `url(${mask})`;

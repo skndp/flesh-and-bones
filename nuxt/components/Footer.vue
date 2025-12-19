@@ -90,8 +90,8 @@ function setMask() {
     height: 200,
     startY: 100,
     endY: 100,
-    wobble: 0.85,
-    edgeRoughness: 4
+    wobble: 0.6,
+    edgeRoughness: 6
   });
 
   foot.value.style.maskImage = `url(${mask}), linear-gradient(#000 0 0)`;

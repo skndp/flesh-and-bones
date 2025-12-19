@@ -72,16 +72,16 @@ function setMask() {
     height: b.width < 768 ? 200 : 300,
     startY: b.width < 768 ? 100 : 150,
     endY: b.width < 768 ? 100 : 150,
-    wobble: 0.85,
-    edgeRoughness: 4
+    wobble: 0.8,
+    edgeRoughness: 6
   });
   const mask2 = createTornEdge({
     width: b.width,
     height: b.height,
     startY: b.width < 768 ? b.height - 100 : b.height - 150,
     endY: b.width < 768 ? b.height - 100 : b.height - 150,
-    wobble: 0.85,
-    edgeRoughness: 4
+    wobble: 0.8,
+    edgeRoughness: 6
   });
 
   topEdge.value.style.maskImage = `url(${mask1}), linear-gradient(#000 0 0)`;

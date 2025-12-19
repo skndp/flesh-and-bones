@@ -84,8 +84,8 @@ function setMasks() {
     height: h,
     startY: (Math.random() * (h / 2)) + (h / 4),
     endY: (Math.random() * (h / 2)) + (h / 4),
-    wobble: 1.2,
-    edgeRoughness: 4
+    wobble: 0.6,
+    edgeRoughness: 6
   });
 
   side1.value.style.maskImage = `url(${mask})`;
