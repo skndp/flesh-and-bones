@@ -25,7 +25,7 @@
                @mouseleave="onMouseleave"
             >
               <p class="h4">
-                <span class="rough-edges-light bg"></span>
+                <span class="rough-edges bg"></span>
                 <span class="rough-edges-light">{{ item.director.title }}</span>
               </p>
             </NuxtLink>
@@ -66,9 +66,6 @@ onMounted(() => {
     primaryInput === 'touch' ||
     'ontouchstart' in window ||
     navigator.maxTouchPoints > 0;
-  
-  console.log(isTouchDevice.value);
-  
 });
 
 // Methods
@@ -85,7 +82,7 @@ function onMouseleave() {
 function onHoverChange(index) {
   // pause previous player (if any)
   if (activeIndex.value !== null && players.value[activeIndex.value]) {
-    players.value[activeIndex.value].pause?.().catch(() => {});
+    players.value[activeIndex.value].pause();
   }
 
   // set the new active index
@@ -97,7 +94,7 @@ function onHoverChange(index) {
   // if the new player is ready, play it
   const player = players.value[index];
   if (player) {
-    player.play?.().catch(() => {});
+    player.play();
   }
 }
 
@@ -107,7 +104,7 @@ function onPlayerReady(index) {
 
     // if this video is currently active, play it
     if (activeIndex.value === index) {
-      playerInstance.play?.().catch(() => {});
+      playerInstance.play();
     }
   };
 }
@@ -129,12 +126,12 @@ section.directors-hero {
       overflow: hidden;
       opacity: 0;
       visibility: hidden;
-      transition: visibility 0ms linear $speed-666, opacity $speed-666 $evil-ease;
+      transition: visibility 0ms linear $speed-666, opacity $speed-333 $ease-out;
 
       &.--active {
         visibility: visible;
         opacity: 1;
-        transition: opacity $speed-666 $evil-ease;
+        transition: opacity $speed-333 $ease-out;
       }
     }
   }
@@ -186,21 +183,36 @@ section.directors-hero {
               margin: 0 0.3em;
               padding: 0.7em 0.3em;
               display: inline-flex;
+              transition: color $speed-333 $ease-out;
 
               span.bg {
                 @include abs-fill;
-                background-color: $flesh;
+                background-color: $midnight;
                 visibility: hidden;
+                opacity: 0;
+                transition: visibility 0ms linear $speed-333, opacity $speed-333 $ease-out;
               }
             }
+          }
+        }
 
-            @include can-hover {
-              &:hover {
+        @include can-hover {
+          &:has(li:hover) {
+            li {
+              a {
                 .h4 {
-                  color: $midnight;
+                  color: rgba($midnight, 0.5);
+                }
 
-                  span.bg {
-                    visibility: visible;
+                &:hover {
+                  .h4 {
+                    color: $flesh;
+
+                    span.bg {
+                      visibility: visible;
+                      opacity: 1;
+                      transition: opacity $speed-333 $ease-out;
+                    }
                   }
                 }
               }
