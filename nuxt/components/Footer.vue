@@ -1,40 +1,41 @@
 <template>
-  <footer id="footer" class="bg-bone pad-b" :class="{ 'cover': cover }" ref="foot">
-    <Paper :light="true" />
-    <div class="gutter">
-      <ul class="locations manic md">
-        <li v-for="location in store.locations">
-          <p>{{ location }}</p>
-        </li>
-      </ul>
-      <ul class="pages midnight brush">
-        <li><NuxtLink to="/work" @click.native="onClickNavLink">
-          <span class="rough-edges-light"></span>
-          <span>Work</span></NuxtLink>
-        </li>
-        <li><NuxtLink to="/directors" @click.native="onClickNavLink">
-          <span class="rough-edges-light"></span>
-          <span>Directors</span></NuxtLink>
-        </li>
-        <li><NuxtLink to="/manifesto" @click.native="onClickNavLink">
-          <span class="rough-edges-light"></span>
-          <span>Manifesto</span></NuxtLink>
-        </li>
-        <li><NuxtLink to="/zine" @click.native="onClickNavLink">
-          <span class="rough-edges-light"></span>
-          <span>Zine</span></NuxtLink>
-        </li>
-        <li><NuxtLink to="/contact" @click.native="onClickNavLink">
-          <span class="rough-edges-light"></span>
-          <span>Contact</span></NuxtLink>
-        </li>
-      </ul>
-      <ul class="socials">
-        <li v-for="link in store.socials">
-          <NuxtLink class="rough-edges" :to="link" target="_blank" />
-        </li>
-      </ul>
-      <p class="manic sm">© {{ new Date().getFullYear() }} Flesh and Bones, Inc.</p>
+  <footer id="footer">
+    <div class="footer-mask bg-bone pad-b" :class="{ 'cover': cover }" ref="foot">
+      <div class="gutter">
+        <ul class="locations manic md">
+          <li v-for="location in store.locations">
+            <p>{{ location }}</p>
+          </li>
+        </ul>
+        <ul class="pages midnight brush">
+          <li><NuxtLink to="/work" @click.native="onClickNavLink">
+            <span class="rough-edges-light"></span>
+            <span>Work</span></NuxtLink>
+          </li>
+          <li><NuxtLink to="/directors" @click.native="onClickNavLink">
+            <span class="rough-edges-light"></span>
+            <span>Directors</span></NuxtLink>
+          </li>
+          <li><NuxtLink to="/manifesto" @click.native="onClickNavLink">
+            <span class="rough-edges-light"></span>
+            <span>Manifesto</span></NuxtLink>
+          </li>
+          <li><NuxtLink to="/zine" @click.native="onClickNavLink">
+            <span class="rough-edges-light"></span>
+            <span>Zine</span></NuxtLink>
+          </li>
+          <li><NuxtLink to="/contact" @click.native="onClickNavLink">
+            <span class="rough-edges-light"></span>
+            <span>Contact</span></NuxtLink>
+          </li>
+        </ul>
+        <ul class="socials">
+          <li v-for="link in store.socials">
+            <NuxtLink class="rough-edges" :to="link" target="_blank" />
+          </li>
+        </ul>
+        <p class="manic sm">© {{ new Date().getFullYear() }} Flesh and Bones, Inc.</p>
+      </div>
     </div>
   </footer>
 </template>
@@ -101,13 +102,17 @@ function setMask() {
 <style lang='scss'>
 #footer {
   position: relative;
-  padding-top: calc(span(0.5) + 200px);
-  mask-size: 101% auto;
-  mask-composite: exclude;
-  mask-repeat: no-repeat;
+  
+  .footer-mask {
+    position: relative;
+    padding-top: calc(span(0.5) + 200px);
+    mask-size: 101% auto;
+    mask-composite: exclude;
+    mask-repeat: no-repeat;
 
-  &.cover {
-    margin-top: -200px;
+    &.cover {
+      margin-top: -200px;
+    }
   }
 
   .gutter {
