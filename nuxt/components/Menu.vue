@@ -1,5 +1,5 @@
 <template>
-  <div id="menu" :class="{'offset': offset}">
+  <div id="menu" :class="{'offset': offset, 'open': store.menuOpen}">
     <div id="menu-inner">
       <div id="menu-content" ref="contentRef" @click="closeMenu">
         <nav id="menu-paper" class="bg-bone" ref="paper">
@@ -66,24 +66,14 @@ const offset = ref(false);
 const paper = ref(null);
 let resize_to = 0;
 
-// Mounted
+// Lifecycle
 onMounted(() => {
-  offset.value = window.pageYOffset > 0;
-
-  if (contentRef.value) {
-    disableBodyScroll(contentRef.value);
-  }
-
+  //offset.value = window.pageYOffset > 0;
   window.addEventListener('resize', onResize);
   setMask();
 });
 
-// Before Unmount
 onBeforeUnmount(() => {
-  if (contentRef.value) {
-    enableBodyScroll(contentRef.value);
-  }
-
   window.removeEventListener('resize', onResize);
 });
 
@@ -124,10 +114,20 @@ function setMask() {
 
   paper.value.style.maskImage = `url(${mask})`;
 }
+
+// Watch
+watch(() => store.menuOpen, (isOpen, wasOpen) => {
+  if(!contentRef.value) return;
+
+  if(!isOpen && wasOpen) {
+    enableBodyScroll(contentRef.value);
+  } else {
+    disableBodyScroll(contentRef.value);
+  }
+});
 </script>
 
 <style lang='scss'>
-
 #menu {
   position: fixed;
   top: 0px;
@@ -135,37 +135,22 @@ function setMask() {
   right: 0px;
   bottom: 0px;
   overflow: hidden;
+  visibility: hidden;
+  transition: visibility 0ms linear $speed-666;
   z-index: 27;
 
-  &.menu-enter-active,
-  &.menu-leave-active {
-    transition: opacity $speed-666 $evil-ease;
+  &.open {
+    transition: visibility 0ms linear;
+    visibility: visible;
 
     #menu-inner {
       &:before {
-        transition: opacity $speed-666 $evil-ease;
+        opacity: 1;
       }
 
       #menu-content {
         nav#menu-paper {
-          transition: transform $speed-666 $evil-ease;
-        }
-      }
-    }
-  }
-
-  &.menu-enter-from,
-  &.menu-leave-to {
-    opacity: 0.999;
-
-    #menu-inner {
-      &:before {
-        opacity: 0;
-      }
-
-      #menu-content {
-        nav#menu-paper {
-          transform: translateY(-100%);
+          transform: translate3d(0px, 0px, 0px);
         }
       }
     }
@@ -207,6 +192,8 @@ function setMask() {
       @include abs-fill;
       opacity: 1;
       background-color: rgba($midnight, 0.5);
+      opacity: 0;
+      transition: opacity $speed-666 $evil-ease;
     }
 
     #menu-content {
@@ -224,6 +211,8 @@ function setMask() {
         mask-size: 101% auto;
         mask-position: bottom center;
         mask-repeat: no-repeat;
+        transform: translate3d(0px, -100%, 0px);
+        transition: transform $speed-666 $evil-ease;
 
         ul.primary  {
           margin: 0.25em auto -0.5em;
@@ -253,9 +242,7 @@ function setMask() {
               }
 
               &.router-link-exact-active {
-                span.bg {
-                  visibility: visible;
-                }
+                // TODO
               }
 
               @include can-hover {

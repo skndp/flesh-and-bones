@@ -10,7 +10,6 @@
       </button>
       <div class="circle-the-button">
         <Animated :autoplay="false" type="circle" :loop="false" background="bg-flesh" ref="circleTheButton" />
-        <!-- NOTE: this is just an example for later <Animated :autoplay="store.menuOpen" type="circle" :loop="false" ref="circleTheButton" /> -->
       </div>
     </nav>
   </header>
@@ -84,7 +83,7 @@ function toggleMenu() {
 
 function onScroll() {
   const current_scroll = window.pageYOffset;
-  fill_header.value = true;
+  //fill_header.value = true;
 
   if (current_scroll < prev_scroll) {
     show_header.value = true;
@@ -94,7 +93,7 @@ function onScroll() {
 
   if (current_scroll <= 1) {
     show_header.value = true;
-    fill_header.value = false;
+    //fill_header.value = false;
   }
 
   prev_scroll = current_scroll;
@@ -119,7 +118,6 @@ watch(() => route.fullPath, () => {
 </script>
 
 <style lang='scss'>
-
 #header {
   position: fixed;
   top: 0px;
@@ -260,7 +258,7 @@ watch(() => route.fullPath, () => {
     .logo {
       position: relative;
       color: transparent;
-      width: 160px;
+      width: 180px;
       aspect-ratio: 100/27;
       background-color: $bone;
       mask-image: url('/images/logo.png');
@@ -325,7 +323,7 @@ watch(() => route.fullPath, () => {
         }
 
         &:after {
-          transition: transform $speed-666 $speed-666, visibility 0ms linear;
+          transition: transform $speed-666 $ease-out $speed-666, visibility 0ms linear;
           transform: translate(-50%, 100%);
         }
       }
@@ -361,7 +359,7 @@ watch(() => route.fullPath, () => {
   @include respond-to($tablet) {
     nav {
       .logo {
-        width: 180px;
+        width: 200px;
       }
 
       .circle-the-button {
@@ -375,7 +373,7 @@ watch(() => route.fullPath, () => {
   @include respond-to($average-desktop) {
     nav {
       .logo {
-        width: 210px;
+        width: 240px;
       }
 
       #menu-btn {
