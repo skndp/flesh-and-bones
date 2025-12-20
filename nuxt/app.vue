@@ -13,9 +13,7 @@
       <Modal v-if="store.modalOpen" />
     </Transition>
     <Header />
-    <transition name="menu">
-      <Menu v-if="store.menuOpen" />
-    </transition>
+    <Menu />
     <SvgFilters />
     <NuxtPage :class="{ 'fade-out': isFading }" />
   </div>
@@ -86,7 +84,7 @@ onMounted(() => {
 
   setTimeout(() => {
     store.setLoaderComplete();
-  }, 1000);
+  }, 100);
 
   console.log(`Made with ☠️ by Seek and Deploy. https://seekanddeploy.com`);
 });

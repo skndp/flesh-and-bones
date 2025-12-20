@@ -6,18 +6,16 @@
         <p class="brush xs"><strong>Director - {{ item.director.title }}</strong></p>
       </div>
     </div>
-    <div v-if="item.ctaCardImages" class="item-image">
+    <div v-if="item.ctaCardImages" class="item-image" @mouseenter="onItemHover" @mouseleave="onItemHover">
       <template v-if="(layout === 'square' || isSmallScreen) && item.ctaCardImages.squareImage">
         <div class="item-image-paper" :style="{'background-color': item.ctaCardImages.squareImage.image.palette.muted.background}" ref="paper"></div>
         <ResponsiveImage v-bind="item.ctaCardImages.squareImage.image" ref="imgTop" />
-        <ResponsiveImage v-bind="item.ctaCardImages.squareImage.image" ref="imgBottom" />
-        <ResponsiveImage v-bind="item.ctaCardImages.squareImage.image" />
+        <ResponsiveImage v-bind="item.ctaCardImages.squareImage.image" class="item-hover-image" />
       </template>
       <template v-else>
         <div class="item-image-paper" :style="{'background-color': item.ctaCardImages.landscapeImage.image.palette.muted.background}" ref="paper"></div>
         <ResponsiveImage v-bind="item.ctaCardImages.landscapeImage.image" ref="imgTop" />
-        <ResponsiveImage v-bind="item.ctaCardImages.landscapeImage.image" ref="imgBottom" />
-        <ResponsiveImage v-bind="item.ctaCardImages.landscapeImage.image" />
+        <ResponsiveImage v-bind="item.ctaCardImages.landscapeImage.image" class="item-hover-image" />
       </template>
     </div>
   </div>
@@ -45,6 +43,7 @@ const props = defineProps({
   }
 });
 
+// Lifecycle
 onMounted(() => {
   window.addEventListener('resize', onResize);
   nextTick(() => {
@@ -56,6 +55,7 @@ onBeforeUnmount(() => {
   window.removeEventListener('resize', onResize);
 });
 
+// Functions
 function onResize() {
   isSmallScreen.value = window.innerWidth < 540;
 
@@ -64,8 +64,21 @@ function onResize() {
   });
 }
 
+function onItemHover(e) {
+  const t = e.currentTarget,
+        i = t.querySelector('.item-hover-image');
+
+  if(e.type === 'mouseenter') {
+    i.style.maskComposite = 'exclude';
+    i.style.maskImage = `url('/images/rip-mask.png?${Date.now()}'), linear-gradient(#000 0 0)`;
+  } else {
+    i.style.maskComposite = 'unset';
+    i.style.maskImage = `url('/images/rip-mask.png?${Date.now()}')`;
+  }
+}
+
 function reflow() {
-  if(imgTop.value && imgBottom.value) {
+  if(paper.value && imgTop.value) {
     const b = imgTop.value.$el.getBoundingClientRect(),
           w = b.width,
           h = b.height;
@@ -84,7 +97,6 @@ function reflow() {
 
     paper.value.style.maskImage = `url(${dataURL})`;
     imgTop.value.$el.style.maskImage = `url(${dataURL})`;
-    imgBottom.value.$el.style.maskImage = `url(${dataURL}), linear-gradient(#000 0 0)`;
   }
 }
 </script>
@@ -122,18 +134,6 @@ function reflow() {
             transition: visibility 0ms linear;
             visibility: visible;
           }
-
-          &:nth-child(3) {
-            transition: transform $speed-333 cubic-bezier(0.550, 0.085, 0.680, 0.530), opacity $speed-333 cubic-bezier(0.550, 0.085, 0.680, 0.530), visibility 0ms linear;
-            transform: translate(0, 10%) rotateZ(-7deg) rotateY(5deg);
-            opacity: 0;
-            visibility: visible;
-          }
-
-          &:nth-child(4) {
-            transition: visibility 0ms linear;
-            visibility: hidden;
-          }
         }
       }
     }
@@ -147,7 +147,7 @@ function reflow() {
     padding: $space-8;
 
     @include can-hover {
-      transition: visibility 0ms linear $speed-333;
+      transition: visibility 0ms linear 350ms;
       visibility: hidden;
     }
 
@@ -172,7 +172,7 @@ function reflow() {
       opacity: 0.5;
 
       @include can-hover {
-        transition: visibility 0ms linear $speed-333;
+        transition: visibility 0ms linear 350ms;
         visibility: hidden;
       }
     }
@@ -189,30 +189,17 @@ function reflow() {
         display: none;
       }
 
-      &:nth-child(4) {
-        display: none;
-      }
-
       @include can-hover {
-        &:nth-child(1), &:nth-child(2) {
-          transition: visibility 0ms linear $speed-333;
+        &:nth-child(2) {
+          transition: visibility 0ms linear 350ms;
           visibility: hidden;
         }
 
         &:nth-child(3) {
           display: block;
-          mask-composite: exclude;
-          transform-origin: 100% 80%;
-          transition: transform $speed-333 cubic-bezier(0.075, 0.820, 0.165, 1.000), opacity $speed-333 cubic-bezier(0.075, 0.820, 0.165, 1.000), visibility 0ms linear $speed-333;
+          mask-size: 101% 50%;
+          mask-position: bottom -1px right -1px;
           pointer-events: none;
-          visibility: hidden;
-        }
-
-        &:nth-child(4) {
-          display: block;
-          transition: visibility 0ms linear $speed-333;
-          pointer-events: none;
-          visibility: visible;
         }
       }
     }
