@@ -242,7 +242,26 @@ watch(() => store.menuOpen, (isOpen, wasOpen) => {
               }
 
               &.router-link-exact-active {
-                // TODO
+                &:after {
+                  visibility: visible;
+                }
+              }
+
+              &:after {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 100%;
+                width: 40px;
+                aspect-ratio: 96 / 31;
+                margin-left: $space-8;
+                mask-image: url('/images/bolt.png');
+                mask-size: contain;
+                mask-repeat: no-repeat;
+                background-color: $flesh;
+                transform: translate(0px, -100%) rotate(-5deg);
+                visibility: hidden;
+                transition: visibility 0ms linear 1s;
               }
 
               @include can-hover {
@@ -277,6 +296,10 @@ watch(() => store.menuOpen, (isOpen, wasOpen) => {
             li {
               a {
                 padding: 0 0.1em;
+
+                &:after {
+                  width: 60px;
+                }
               }
             }
           }
