@@ -38,6 +38,9 @@
 
 <script setup>
 import { primaryInput } from 'detect-it';
+import { useSiteStore } from '~/stores/store';
+
+const store = useSiteStore();
 
 // Props
 const props = defineProps({
@@ -77,7 +80,7 @@ function onMouseenter(index, e) {
   activeIndex.value = index;
 
   bg.style.maskComposite = 'unset';
-  bg.style.maskImage = `url('/images/rip-mask.png?${Date.now()}')`;
+  bg.style.maskImage = `url('${store.getRipMask()}')`;
 }
 
 function onMouseleave(e) {
@@ -88,7 +91,7 @@ function onMouseleave(e) {
   activeIndex.value = null;
 
   bg.style.maskComposite = 'exclude';
-  bg.style.maskImage = `url('/images/rip-mask.png?${Date.now()}'), linear-gradient(#000 0 0)`;
+  bg.style.maskImage = `url('${store.getRipMask()}'), linear-gradient(#000 0 0)`;
 }
 
 function onHoverChange(index) {

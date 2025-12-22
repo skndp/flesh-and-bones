@@ -121,10 +121,10 @@ function onItemHover(e) {
 
   if(e.type === 'mouseenter') {
     bg.style.maskComposite = 'unset';
-    bg.style.maskImage = `url('/images/rip-mask.png?${Date.now()}')`;
+    bg.style.maskImage = `url('${store.getRipMask()}')`;
   } else {
     bg.style.maskComposite = 'exclude';
-    bg.style.maskImage = `url('/images/rip-mask.png?${Date.now()}'), linear-gradient(#000 0 0)`;
+    bg.style.maskImage = `url('${store.getRipMask()}'), linear-gradient(#000 0 0)`;
   }
 }
 

@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 
 export const useSiteStore = defineStore('site', {
   state: () => ({
+    ripMask: '',
     loading: true,
     menuOpen: false,
     modalOpen: false,
@@ -17,6 +18,12 @@ export const useSiteStore = defineStore('site', {
     socials: []
   }),
   actions: {
+    setRipMask(blob) {
+      this.ripMask = blob;
+    },
+    getRipMask() {
+      return URL.createObjectURL(this.ripMask);
+    },
     setLoaderComplete() {
       this.loading = false;
     },

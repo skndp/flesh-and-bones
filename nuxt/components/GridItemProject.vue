@@ -22,6 +22,9 @@
 </template>
 
 <script setup>
+import { useSiteStore } from '~/stores/store';
+
+const store = useSiteStore();
 const itemRef = ref(null);
 const infoRef = ref(null);
 const tearY = ref(0.8);
@@ -69,10 +72,10 @@ function onItemHover(e) {
 
   if(e.type === 'mouseenter') {
     i.style.maskComposite = 'exclude';
-    i.style.maskImage = `url('/images/rip-mask.png?${Date.now()}'), linear-gradient(#000 0 0)`;
+    i.style.maskImage = `url('${store.getRipMask()}'), linear-gradient(#000 0 0)`;
   } else {
     i.style.maskComposite = 'unset';
-    i.style.maskImage = `url('/images/rip-mask.png?${Date.now()}')`;
+    i.style.maskImage = `url('${store.getRipMask()}')`;
   }
 }
 

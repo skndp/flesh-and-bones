@@ -29,7 +29,9 @@
 
 <script setup>
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
+import { useSiteStore } from '~/stores/store';
 
+const store = useSiteStore();
 const loaderRef = ref(null);
 const side1 = ref(null);
 const side2 = ref(null);
@@ -44,6 +46,8 @@ const bolt8 = ref(null);
 const bolt9 = ref(null);
 
 onMounted(() => {
+  preload();
+
   if (loaderRef.value) {
     disableBodyScroll(loaderRef.value);
   }
@@ -76,6 +80,15 @@ onBeforeUnmount(() => {
 });
 
 // Functions
+function preload() {
+  // Rip mask
+  fetch('/images/rip-mask.png')
+    .then(res => res.blob())
+    .then(blob => {
+      store.setRipMask(blob);
+    });
+}
+
 function setMasks() {
   const w = window.innerWidth;
   const h = window.innerHeight;
