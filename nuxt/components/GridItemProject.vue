@@ -22,13 +22,15 @@
 </template>
 
 <script setup>
+import { useSiteStore } from '~/stores/store';
+
+const store = useSiteStore();
 const itemRef = ref(null);
 const infoRef = ref(null);
 const tearY = ref(0.8);
 
 const paper = ref(null);
 const imgTop = ref(null);
-const imgBottom = ref(null);
 const isSmallScreen = ref(false);
 
 // Props
@@ -70,10 +72,10 @@ function onItemHover(e) {
 
   if(e.type === 'mouseenter') {
     i.style.maskComposite = 'exclude';
-    i.style.maskImage = `url('/images/rip-mask.png?${Date.now()}'), linear-gradient(#000 0 0)`;
+    i.style.maskImage = `url('${store.getRipMask()}'), linear-gradient(#000 0 0)`;
   } else {
     i.style.maskComposite = 'unset';
-    i.style.maskImage = `url('/images/rip-mask.png?${Date.now()}')`;
+    i.style.maskImage = `url('${store.getRipMask()}')`;
   }
 }
 
@@ -199,7 +201,11 @@ function reflow() {
           display: block;
           mask-size: 101% 50%;
           mask-position: bottom -1px right -1px;
+          mask-image: url('/images/rip-mask.png');
           pointer-events: none;
+          backface-visibility: hidden;
+          transform: translateZ(0);
+          will-change: transform, mask-image, mask-composite;
         }
       }
     }

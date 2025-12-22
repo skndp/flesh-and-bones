@@ -4,7 +4,7 @@
     <span v-if="sketchnoteRight" class="sketchnote right bone manic-alt-1" inert :data-label="sketchnoteRight"></span>
     <div class="gutter">
       <ul v-if="filters" class="filters pad-b brush sm">
-        <li class="flesh" :class="{ 'selected': selectedFilterId === 'all' }" @click="onClickFilter('all', 'All')">
+        <li class="flesh" :class="{ 'selected': selectedFilterId === 'all' }" @click="onClickFilter('all', 'All')" @mouseenter="onItemHover" @mouseleave="onItemHover">
           <span class="rough-edges-light bg"></span>
           <span>All</span>
         </li>
@@ -13,6 +13,8 @@
           class="flesh"
           :class="{ 'selected': selectedFilterId === item.id.current }"
           @click="onClickFilter(item.id.current, item.filter, item.filterLayout)"
+          @mouseenter="onItemHover"
+          @mouseleave="onItemHover"
           :key="index"
         >
           <span class="rough-edges-light bg"></span>
@@ -128,6 +130,19 @@ function onClickFilter(id, label, layout) {
   selectedFilterLabel.value = label === 'All' ? 'All' : label;
   filterLayout.value = layout ? layout : 'landscape';
 }
+
+function onItemHover(e) {
+  const t = e.currentTarget,
+        bg = t.querySelector('.bg');
+
+  if(e.type === 'mouseenter') {
+    bg.style.maskComposite = 'unset';
+    bg.style.maskImage = `url('${store.getRipMask()}')`;
+  } else {
+    bg.style.maskComposite = 'exclude';
+    bg.style.maskImage = `url('${store.getRipMask()}'), linear-gradient(#000 0 0)`;
+  }
+}
 </script>
 
 <style lang='scss'>
@@ -157,7 +172,13 @@ section.grid {
         span.bg {
           @include abs-fill;
           background-color: $flesh;
-          visibility: hidden;
+          mask-size: cover;
+          mask-composite: exclude;
+          mask-image: url('/images/rip-mask.png'), linear-gradient(#000 0 0);
+          pointer-events: none;
+          backface-visibility: hidden;
+          transform: translateZ(0);
+          will-change: transform, mask-image, mask-composite;
         }
 
         &.selected {
@@ -165,17 +186,13 @@ section.grid {
           pointer-events: none;
 
           span.bg {
-            visibility: visible;
+            mask-image: none !important;
           }
         }
 
         @include can-hover {
           &:hover {
             color: $bone;
-
-            span.bg {
-              visibility: visible;
-            }
           }
         }
       }

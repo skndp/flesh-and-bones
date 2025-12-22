@@ -6,31 +6,31 @@
           <Paper :light="true" />
           <ul class="primary h1 sm midnight">
             <li>
-              <NuxtLink to="/work" @click.native="onClickNavLink">
+              <NuxtLink to="/work" @click.native="onClickNavLink" @mouseenter="onItemHover" @mouseleave="onItemHover">
                 <span class="rough-edges bg"></span>
                 <span class="rough-edges">Work</span>
               </NuxtLink>
             </li>
             <li>
-              <NuxtLink to="/directors" @click.native="onClickNavLink">
+              <NuxtLink to="/directors" @click.native="onClickNavLink" @mouseenter="onItemHover" @mouseleave="onItemHover">
                 <span class="rough-edges bg"></span>
                 <span class="rough-edges">Directors</span>
               </NuxtLink>
             </li>
             <li>
-              <NuxtLink to="/manifesto" @click.native="onClickNavLink">
+              <NuxtLink to="/manifesto" @click.native="onClickNavLink" @mouseenter="onItemHover" @mouseleave="onItemHover">
                 <span class="rough-edges bg"></span>
                 <span class="rough-edges">Manifesto</span>
               </NuxtLink>
             </li>
             <li>
-              <NuxtLink to="/zine" @click.native="onClickNavLink">
+              <NuxtLink to="/zine" @click.native="onClickNavLink" @mouseenter="onItemHover" @mouseleave="onItemHover">
                 <span class="rough-edges bg"></span>
                 <span class="rough-edges">Zine</span>
               </NuxtLink>
             </li>
             <li>
-              <NuxtLink to="/contact" @click.native="onClickNavLink">
+              <NuxtLink to="/contact" @click.native="onClickNavLink" @mouseenter="onItemHover" @mouseleave="onItemHover">
                 <span class="rough-edges bg"></span>
                 <span class="rough-edges">Contact</span>
               </NuxtLink>
@@ -113,6 +113,19 @@ function setMask() {
   });
 
   paper.value.style.maskImage = `url(${mask})`;
+}
+
+function onItemHover(e) {
+  const t = e.currentTarget,
+        bg = t.querySelector('.bg');
+
+  if(e.type === 'mouseenter') {
+    bg.style.maskComposite = 'unset';
+    bg.style.maskImage = `url('${store.getRipMask()}')`;
+  } else {
+    bg.style.maskComposite = 'exclude';
+    bg.style.maskImage = `url('${store.getRipMask()}'), linear-gradient(#000 0 0)`;
+  }
 }
 
 // Watch
@@ -238,7 +251,13 @@ watch(() => store.menuOpen, (isOpen, wasOpen) => {
               span.bg {
                 @include abs-fill;
                 background-color: $flesh;
-                visibility: hidden;
+                mask-size: cover;
+                mask-composite: exclude;
+                mask-image: url('/images/rip-mask.png'), linear-gradient(#000 0 0);
+                pointer-events: none;
+                backface-visibility: hidden;
+                transform: translateZ(0);
+                will-change: transform, mask-image, mask-composite;
               }
 
               &.router-link-exact-active {
@@ -264,13 +283,13 @@ watch(() => store.menuOpen, (isOpen, wasOpen) => {
                 transition: visibility 0ms linear 1s;
               }
 
-              @include can-hover {
-                &:hover {
-                  span.bg {
-                    visibility: visible;
-                  }
-                }
-              }
+              // @include can-hover {
+              //   &:hover {
+              //     span.bg {
+              //       visibility: visible;
+              //     }
+              //   }
+              // }
             }
           }
         }
