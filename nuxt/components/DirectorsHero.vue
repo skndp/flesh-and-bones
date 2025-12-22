@@ -21,7 +21,7 @@
             <NuxtLink
               :to="item.director.slug"
               :key="index"
-               @mouseenter="onMouseenter(index)"
+               @mouseenter="onMouseenter(index, $event)"
                @mouseleave="onMouseleave"
             >
               <p class="h4">
@@ -69,14 +69,26 @@ onMounted(() => {
 });
 
 // Methods
-function onMouseenter(index) {
+function onMouseenter(index, e) {
+  const t = e.currentTarget,
+        bg = t.querySelector('.bg');
+
   onHoverChange(index);
   activeIndex.value = index;
+
+  bg.style.maskComposite = 'unset';
+  bg.style.maskImage = `url('/images/rip-mask.png?${Date.now()}')`;
 }
 
-function onMouseleave() {
+function onMouseleave(e) {
+  const t = e.currentTarget,
+        bg = t.querySelector('.bg');
+
   onHoverChange(null);
   activeIndex.value = null;
+
+  bg.style.maskComposite = 'exclude';
+  bg.style.maskImage = `url('/images/rip-mask.png?${Date.now()}'), linear-gradient(#000 0 0)`;
 }
 
 function onHoverChange(index) {
@@ -188,9 +200,15 @@ section.directors-hero {
               span.bg {
                 @include abs-fill;
                 background-color: $midnight;
-                visibility: hidden;
+                mask-size: cover;
+                mask-composite: exclude;
+                mask-image: url('/images/rip-mask.png'), linear-gradient(#000 0 0);
+                pointer-events: none;
+                backface-visibility: hidden;
+                transform: translateZ(0);
+                will-change: transform, mask-image, mask-composite;
                 opacity: 0;
-                transition: visibility 0ms linear $speed-333, opacity $speed-333 $ease-out;
+                transition: opacity $speed-333 $ease-out;
               }
             }
           }
@@ -209,7 +227,6 @@ section.directors-hero {
                     color: $flesh;
 
                     span.bg {
-                      visibility: visible;
                       opacity: 1;
                       transition: opacity $speed-333 $ease-out;
                     }
