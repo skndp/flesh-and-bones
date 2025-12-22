@@ -28,6 +28,7 @@ import { useSiteStore } from '~/stores/store';
 
 const nuxtApp = useNuxtApp();
 const router = useRouter();
+const route = useRoute();
 const store = useSiteStore();
 
 const isFading = ref(false);
@@ -85,7 +86,11 @@ onMounted(() => {
   onResize();
 
   setTimeout(() => {
-    store.setLoaderComplete();
+    // If not home page, go ahead and set loader complete
+    // (HomeHeroVideo has it's own video loadeer to trigger it's own setLoaderComplete)
+    if (route.name !== 'index') {
+      store.setLoaderComplete();
+    }
   }, 1000);
 
   console.log(`Made with ☠️ by Seek and Deploy. https://seekanddeploy.com`);

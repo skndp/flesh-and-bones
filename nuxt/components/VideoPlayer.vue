@@ -25,11 +25,6 @@
 <script setup>
 import { vueVimeoPlayer } from 'vue-vimeo-player';
 
-defineExpose({
-  stopPlayer,
-  resetPlayer
-});
-
 const props = defineProps({
   vimeo: {
     type: Object,
@@ -48,9 +43,21 @@ const props = defineProps({
     type: Boolean,
     default: false,
     required: false
+  },
+  manualPlay: {
+    type: Boolean,
+    default: false,
+    required: false
   }
 });
 
+defineExpose({
+  playPlayer,
+  pausePlayer,
+  resetPlayer
+});
+
+const emit = defineEmits(['ready']);
 const wrapperRef = ref(null);
 const player = ref(null);
 const playerWidth = ref(0);
@@ -114,8 +121,15 @@ function onLoaded() {
     // Now that the video is loaded, call resize again to be safe
     onResize();
 
-    if (!props.controls) {
-      player.value.play().catch(() => {});
+    // Pause video by default
+    pausePlayer();
+
+    // Call ready in parent component
+    emit('ready');
+
+    // Now 'autoplay' for looping autoplay videos...
+    if (!props.controls && !props.manualPlay) {
+      playPlayer();
     }
   }
 }
@@ -133,16 +147,22 @@ function onEnded() {
   }
 }
 
-function clickToPlay() {  
+function clickToPlay() {
   if (player.value) {
     player.value.play().catch(() => {});
     playingMode.value = true;
   }
 }
 
-function stopPlayer() {
+function playPlayer() {
   if (player.value) {
-    player.value.pause();
+    player.value.play().catch(() => {});
+  }
+}
+
+function pausePlayer() {
+  if (player.value) {
+    player.value.pause().catch(() => {})
   }
 }
 

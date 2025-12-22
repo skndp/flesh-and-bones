@@ -27,6 +27,13 @@ section.home-hero {
   display: flex;
   flex-direction: column;
 
+  &:before {
+    content: '';
+    width: 100%;
+    @include header-ht(height);
+    display: flex;
+  }
+
   .gutter {
     position: relative;
     display: flex;
