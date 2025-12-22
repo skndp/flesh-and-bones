@@ -6,7 +6,6 @@
           v-if="item.backgroundVideo && item.backgroundVideo.vimeo"
           :vimeo="item.backgroundVideo.vimeo"
           :cover="true"
-          @ready="onPlayerReady(index)"
         />
       </div>
     </div>
@@ -96,17 +95,6 @@ function onHoverChange(index) {
   if (player) {
     player.play();
   }
-}
-
-function onPlayerReady(index) {
-  return (playerInstance) => {
-    players.value[index] = playerInstance;
-
-    // if this video is currently active, play it
-    if (activeIndex.value === index) {
-      playerInstance.play();
-    }
-  };
 }
 </script>
 

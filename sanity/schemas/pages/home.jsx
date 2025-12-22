@@ -31,6 +31,16 @@ export default defineType({
     }),
     defineField({
       fieldset: 'hero',
+      name: 'heroVideo',
+      title: 'Video',
+      description: 'Fullscreen, background looping video',
+      type: 'videoPlayer',
+      validation: [
+        Rule => Rule.required()
+      ]
+    }),
+    defineField({
+      fieldset: 'hero',
       name: 'heroHeading',
       title: 'Heading',
       type: 'text',
