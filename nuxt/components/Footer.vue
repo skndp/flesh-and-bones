@@ -8,23 +8,23 @@
           </li>
         </ul>
         <ul class="pages midnight brush">
-          <li><NuxtLink to="/work" @click.native="onClickNavLink">
+          <li><NuxtLink to="/work" @click.native="onClickNavLink" @mouseenter="onItemHover" @mouseleave="onItemHover">
             <span class="rough-edges-light"></span>
             <span>Work</span></NuxtLink>
           </li>
-          <li><NuxtLink to="/directors" @click.native="onClickNavLink">
+          <li><NuxtLink to="/directors" @click.native="onClickNavLink" @mouseenter="onItemHover" @mouseleave="onItemHover">
             <span class="rough-edges-light"></span>
             <span>Directors</span></NuxtLink>
           </li>
-          <li><NuxtLink to="/manifesto" @click.native="onClickNavLink">
+          <li><NuxtLink to="/manifesto" @click.native="onClickNavLink" @mouseenter="onItemHover" @mouseleave="onItemHover">
             <span class="rough-edges-light"></span>
             <span>Manifesto</span></NuxtLink>
           </li>
-          <li><NuxtLink to="/zine" @click.native="onClickNavLink">
+          <li><NuxtLink to="/zine" @click.native="onClickNavLink" @mouseenter="onItemHover" @mouseleave="onItemHover">
             <span class="rough-edges-light"></span>
             <span>Zine</span></NuxtLink>
           </li>
-          <li><NuxtLink to="/contact" @click.native="onClickNavLink">
+          <li><NuxtLink to="/contact" @click.native="onClickNavLink" @mouseenter="onItemHover" @mouseleave="onItemHover">
             <span class="rough-edges-light"></span>
             <span>Contact</span></NuxtLink>
           </li>
@@ -96,6 +96,19 @@ function setMask() {
   });
 
   foot.value.style.maskImage = `url(${mask}), linear-gradient(#000 0 0)`;
+}
+
+function onItemHover(e) {
+  const t = e.currentTarget,
+        bg = t.querySelector('.rough-edges-light');
+
+  if(e.type === 'mouseenter') {
+    bg.style.maskComposite = 'unset';
+    bg.style.maskImage = `url('/images/rip-mask.png?${Date.now()}')`;
+  } else {
+    bg.style.maskComposite = 'exclude';
+    bg.style.maskImage = `url('/images/rip-mask.png?${Date.now()}'), linear-gradient(#000 0 0)`;
+  }
 }
 </script>
 
@@ -170,7 +183,13 @@ function setMask() {
           span.rough-edges-light {
             @include abs-fill;
             background-color: $flesh;
-            visibility: hidden;
+            mask-size: cover;
+            mask-composite: exclude;
+            mask-image: url('/images/rip-mask.png'), linear-gradient(#000 0 0);
+            pointer-events: none;
+            backface-visibility: hidden;
+            transform: translateZ(0);
+            will-change: transform, mask-image, mask-composite;
           }
 
           span:not(.rough-edges-light) {
@@ -178,17 +197,7 @@ function setMask() {
           }
 
           &.router-link-exact-active {
-            span.rough-edges-light {
-              visibility: visible;
-            }
-          }
-
-          @include can-hover {
-            &:hover {
-              span.rough-edges-light {
-                visibility: visible;
-              }
-            }
+            // TODO: do we want this?
           }
         }
       }
