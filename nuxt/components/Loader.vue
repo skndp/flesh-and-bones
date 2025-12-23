@@ -155,12 +155,15 @@ function setMasks() {
     width: 100%;
     height: 100%;
     background-color: $bone;
-    mask-size: cover;
+    mask-size: 100% calc(100% + 1px);
     mask-repeat: no-repeat;
+
+    &:nth-child(1) {
+      mask-position: bottom 1px right 0px;
+    }
 
     &:nth-child(2) {
       mask-composite: exclude;
-      mask-repeat: no-repeat;
     }
 
     &:nth-child(3) {
