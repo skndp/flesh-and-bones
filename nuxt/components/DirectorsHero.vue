@@ -193,7 +193,7 @@ section.directors-hero {
                 background-color: $midnight;
                 mask-size: cover;
                 mask-composite: exclude;
-                mask-image: url('/images/rip-mask.png'), linear-gradient(#000 0 0);
+                mask-image: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
                 pointer-events: none;
                 backface-visibility: hidden;
                 transform: translateZ(0);

@@ -201,7 +201,6 @@ function reflow() {
           display: block;
           mask-size: 101% 50%;
           mask-position: bottom -1px right -1px;
-          mask-image: url('/images/rip-mask.png');
           pointer-events: none;
           backface-visibility: hidden;
           transform: translateZ(0);
