@@ -53,9 +53,36 @@
 // Logos, icons, etc
 // --------------------------------------------
 
-@mixin example($fill) {
-  background-image: url('data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 0 0" xml:space="preserve" fill="#{svgColorMaker($fill)}"><path d=""/></svg>');
+@mixin facebook($fill, $include_size_and_position: true, $width: false, $height: false) {
+  background-image: url('data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="#{$width}" height="#{$height}" viewBox="0 0 10 20" xml:space="preserve" fill="#{svgColorMaker($fill)}"><path d="M7.57,3.46h2.16C9.88,3.46,10,3.35,10,3.21V0.25C10,0.11,9.88,0,9.73,0H6.08C3.94,0,2.2,1.61,2.2,3.6v2.85H0.27C0.12,6.46,0,6.57,0,6.71v2.96c0,0.14,0.12,0.25,0.27,0.25H2.2v0.16v9.67C2.2,19.89,2.32,20,2.47,20h3.86c0.15,0,0.27-0.11,0.27-0.25V9.92h2.8c0.14,0,0.26-0.1,0.27-0.23l0.27-2.96c0.01-0.15-0.11-0.27-0.27-0.27H6.61v-2.1C6.61,3.86,7.04,3.46,7.57,3.46z"/></svg>');
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: 50% 50%;
-  background-size: contain;
+}
+
+@mixin instagram($fill, $include_size_and_position: true, $width: false, $height: false) {
+  background-image: url('data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="#{$width}" height="#{$height}" viewBox="0 0 20 20" xml:space="preserve" fill="#{svgColorMaker($fill)}"><path d="M15,10c0-2.76-2.24-5-5-5c-2.76,0-5,2.24-5,5c0,2.76,2.24,5,5,5C12.76,15,15,12.76,15,10z M6.8,10c0-1.77,1.44-3.2,3.2-3.2c1.77,0,3.2,1.44,3.2,3.2s-1.44,3.2-3.2,3.2C8.23,13.2,6.8,11.77,6.8,10z"/><path d="M6.02,20h7.95C17.3,20,20,17.31,20,13.98V6.02C20,2.69,17.3,0,13.98,0H6.02C2.7,0,0,2.7,0,6.02v7.95C0,17.3,2.7,20,6.02,20z M1.89,6.02c0-2.28,1.85-4.14,4.14-4.14h7.95c2.29,0,4.14,1.85,4.14,4.14v7.95c0,2.28-1.85,4.14-4.14,4.14H6.02c-2.28,0-4.14-1.85-4.14-4.14V6.02z"/><path d="M16.25,4.8c0-0.69-0.56-1.25-1.25-1.25c-0.69,0-1.25,0.56-1.25,1.25c0,0.69,0.56,1.25,1.25,1.25C15.69,6.05,16.25,5.49,16.25,4.8z"/></svg>');
+  @if $include_size_and_position {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+  }
+}
+
+@mixin vimeo($fill, $include_size_and_position: true, $width: false, $height: false) {
+  background-image: url('data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="#{$width}" height="#{$height}" viewBox="0 0 22 22" xml:space="preserve" fill="#{svgColorMaker($fill)}"><path d="M17.51,14.85c-2.99,4.07-5.52,6.1-7.6,6.1c-1.28,0-2.37-1.24-3.25-3.72 c-0.59-2.28-1.18-4.55-1.78-6.82C4.22,7.93,3.52,6.68,2.76,6.68c-0.16,0-0.74,0.36-1.73,1.09L0,6.37c1.08-1,2.15-2,3.21-3 c1.44-1.31,2.53-2,3.25-2.07c1.71-0.17,2.76,1.05,3.16,3.67c0.42,2.83,0.72,4.59,0.88,5.27c0.49,2.34,1.03,3.51,1.63,3.51 c0.46,0,1.15-0.76,2.07-2.27c0.92-1.52,1.41-2.67,1.48-3.47c0.13-1.31-0.36-1.96-1.48-1.96c-0.53,0-1.07,0.12-1.63,0.36 c1.09-3.69,3.16-5.48,6.21-5.38c2.26,0.07,3.33,1.6,3.2,4.6C21.89,7.89,20.4,10.96,17.51,14.85z"/></svg>');
+  @if $include_size_and_position {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+  }
+}
+
+@mixin linkedin($fill, $include_size_and_position: true, $width: false, $height: false) {
+  background-image: url('data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="#{$width}" height="#{$height}" viewBox="0 0 22 22" xml:space="preserve" fill="#{svgColorMaker($fill)}"><path d="M0,2.93c0-0.7,0.25-1.3,0.74-1.74c0.49-0.47,1.15-0.7,1.93-0.7s1.4,0.23,1.89,0.68c0.49,0.47,0.74,1.08,0.74,1.83 c0,0.68-0.23,1.25-0.72,1.7c-0.49,0.47-1.15,0.7-1.95,0.7H2.61c-0.79,0-1.4-0.23-1.89-0.7C0.23,4.23,0,3.63,0,2.93z M0.28,21.51 V7.33h4.71v14.19H0.28z M7.6,21.51h4.71v-7.92c0-0.49,0.06-0.87,0.17-1.15c0.19-0.49,0.51-0.89,0.91-1.21 c0.4-0.34,0.89-0.51,1.51-0.51c1.59,0,2.38,1.06,2.38,3.21v7.58H22v-8.13c0-2.1-0.49-3.67-1.49-4.76c-1-1.08-2.29-1.64-3.93-1.64 c-1.83,0-3.25,0.79-4.27,2.36v0.04H12.3l0.02-0.04V7.33H7.6C7.62,12.05,7.62,16.78,7.6,21.51z"/></svg>');
+  @if $include_size_and_position {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+  }
 }

@@ -346,32 +346,41 @@ watch(() => store.menuOpen, (isOpen, wasOpen) => {
                 justify-content: center;
 
                 &:after {
-                  color: $bone;
-                  font-size: 12px;
+                  content: "";
                   display: inline-flex;
                 }
 
                 &[href*='instagram'] {
                   &:after {
-                    content: 'IG';
-                  }
+                    width: 18px;
+                    height: 18px;
+                    @include instagram($bone);
+                  } 
                 }
 
                 &[href*='vimeo'] {
                   &:after {
-                    content: 'VI';
+                    width: 18px;
+                    height: 16px;
+                    margin: 1px 0 0 1px;
+                    @include vimeo($bone);
                   }
                 }
 
                 &[href*='facebook'] {
                   &:after {
-                    content: 'FB';
+                    width: 16px;
+                    height: 16px;
+                    @include facebook($bone);
                   }
                 }
 
                 &[href*='linkedin'] {
                   &:after {
-                    content: 'LI';
+                    width: 16px;
+                    height: 16px;
+                    margin: -1px 0 0 1px;
+                    @include linkedin($bone);
                   }
                 }
               }
