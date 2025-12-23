@@ -62,7 +62,7 @@ watch(() => props.autoplay, (newVal) => {
   }
 
   &.circle {
-    aspect-ratio: 286/251;
+    aspect-ratio: 137/159;
   }
 
   &.news-flash {
