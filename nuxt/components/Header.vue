@@ -77,7 +77,7 @@ function toggleMenu() {
 
     circle_to = setTimeout(() => {
       circleTheButton.value.play();
-    }, 1332);
+    }, 333);
   }
 }
 
@@ -151,8 +151,6 @@ watch(() => route.fullPath, () => {
     &.--stage2 {
       nav {
         #menu-btn {
-          background-color: transparent;
-
           .menu-btn__open {
             span {
               transition: transform 0ms linear;
@@ -182,36 +180,38 @@ watch(() => route.fullPath, () => {
       }
 
       #menu-btn {
+        background-color: transparent;
+
         .menu-btn__open {
           span, &:before, &:after {
             visibility: hidden;
           }
 
           span {
-            transition: transform $speed-666 cubic-bezier(0.600, 0.040, 0.980, 0.335) 200ms, visibility 0ms linear $speed-666 + 200ms;
+            transition: transform $speed-333 cubic-bezier(0.600, 0.040, 0.980, 0.335) 200ms, visibility 0ms linear $speed-333 + 200ms;
             transform: translate(-50%, 500%);
           }
 
           &:before {
-            transition: transform $speed-666 cubic-bezier(0.600, 0.040, 0.980, 0.335) 100ms, visibility 0ms linear $speed-666 + 100ms;
+            transition: transform $speed-333 cubic-bezier(0.600, 0.040, 0.980, 0.335) 100ms, visibility 0ms linear $speed-333 + 100ms;
             transform: translate(-50%, 650%) rotate(180deg);
           }
 
           &:after {
-            transition: transform $speed-666 cubic-bezier(0.600, 0.040, 0.980, 0.335), visibility 0ms linear $speed-666;
+            transition: transform $speed-333 cubic-bezier(0.600, 0.040, 0.980, 0.335), visibility 0ms linear $speed-333;
             transform: translate(-50%, 800%);
           }
         }
 
         .menu-btn__close {
           &:before {
-            transition: transform $speed-666 $ease-out $speed-666, visibility 0ms linear;
+            transition: transform $speed-333 $ease-out $speed-333, visibility 0ms linear;
             transform: translate(-50%, -50%) rotate(45deg);
             visibility: visible;
           }
 
           &:after {
-            transition: transform $speed-666 $ease-out $speed-666 + 66ms, visibility 0ms linear;
+            transition: transform $speed-333 $ease-out $speed-333 + 66ms, visibility 0ms linear;
             transform: translate(-50%, -50%) rotate(-45deg);
             visibility: visible;
           }
@@ -225,13 +225,13 @@ watch(() => route.fullPath, () => {
       #menu-btn {
         .menu-btn__close {
           &:before {
-            transition: transform $speed-666 cubic-bezier(0.600, 0.040, 0.980, 0.335) 66ms, visibility 0ms linear $speed-666 + 66ms;
+            transition: transform $speed-333 cubic-bezier(0.600, 0.040, 0.980, 0.335) 66ms, visibility 0ms linear $speed-333 + 66ms;
             transform: translateY(-50%) rotate(45deg) translateX(200%);
             visibility: hidden;
           }
 
           &:after {
-            transition: transform $speed-666 cubic-bezier(0.600, 0.040, 0.980, 0.335), visibility 0ms linear $speed-666;
+            transition: transform $speed-333 cubic-bezier(0.600, 0.040, 0.980, 0.335), visibility 0ms linear $speed-333;
             transform: translateY(-50%) rotate(-45deg) translateX(-200%);
             visibility: hidden;
           }
@@ -313,17 +313,17 @@ watch(() => route.fullPath, () => {
         }
 
         span {
-          transition: transform $speed-666 $ease-out $speed-666 + 200ms, visibility 0ms linear;
+          transition: transform $speed-333 $ease-out $speed-333 + 200ms, visibility 0ms linear;
           transform: translate(-50%, -200%);
         }
 
         &:before {
-          transition: transform $speed-666 $ease-out $speed-666 + 100ms, visibility 0ms linear;
+          transition: transform $speed-333 $ease-out $speed-333 + 100ms, visibility 0ms linear;
           transform: translate(-50%, -50%) rotate(180deg);
         }
 
         &:after {
-          transition: transform $speed-666 $ease-out $speed-666, visibility 0ms linear;
+          transition: transform $speed-333 $ease-out $speed-333, visibility 0ms linear;
           transform: translate(-50%, 100%);
         }
       }
