@@ -31,6 +31,7 @@ const homeQuery = groq`*[(_type == "home")][0]{
   sketchnoteLeft,
   sketchnoteRight,
   featuredGrid[] {
+    layout,
     items[] {
       type[] {
         _type == 'projectItem' => {
@@ -58,9 +59,6 @@ const homeQuery = groq`*[(_type == "home")][0]{
             title,
             'slug': '/zine/' + slug.current,
             ctaCardImages {
-              landscapeImage {
-                image ${imageProps}
-              },
               squareImage {
                 image ${imageProps}
               }

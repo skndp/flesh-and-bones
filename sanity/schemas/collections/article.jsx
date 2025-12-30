@@ -60,11 +60,6 @@ export default defineType({
       type: 'object',
       fields: [
         {
-          name: 'landscapeImage',
-          title: 'Landscape (16:9)',
-          type: 'singleImage'
-        },
-        {
           name: 'squareImage',
           title: 'Square (1:1)',
           type: 'singleImage'

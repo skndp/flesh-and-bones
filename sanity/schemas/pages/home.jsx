@@ -91,6 +91,21 @@ export default defineType({
           type: 'object',
           fields: [
             {
+              name: 'layout',
+              title: 'Layout',
+              type: 'string',
+              options: {
+                list: [
+                  { title: 'Left 50%, Right 50% (Square, Square)', value: 'fifty-fifty' },
+                  { title: 'Left 33%, Right 66% (Portrait, Landscape)', value: 'one-third-two-third' },
+                  { title: 'Left 66%, Right 33% (Landscape, Portrait)', value: 'two-third-one-third' }
+                ],
+                layout: 'radio'
+              },
+              initialValue: 'fifty-fifty',
+              hidden: ({ parent }) => parent?.items?.length !== 2
+            },
+            {
               name: 'items',
               title: 'Items',
               type: 'array',
@@ -260,7 +275,7 @@ export default defineType({
                 let media = null;
 
                 switch (type) {
-                  case 'projectItem':                    
+                  case 'projectItem':
                     title = data.projectTitle ? `[Project] ${data.projectTitle}` : 'Project';
                     media = data.projectImage || null;
                     break;
@@ -275,40 +290,44 @@ export default defineType({
 
               const items = [];
               // Add item 1 has type selected...
-              const item1 = parseItem(selection.type1, {
-                projectTitle: selection.projectTitle1,
-                projectImage: selection.projectImgLandscape1
-                  ? selection.projectImgLandscape1
-                  : selection.projectImgSquare1
-                  ? selection.projectImgSquare1
-                  : null,
-                articleTitle: selection.articleTitle1,
-                articleImage: selection.articleImgLandscape1
-                  ? selection.articleImgLandscape1
-                  : selection.articleImgSquare1
-                  ? selection.articleImgSquare1
-                  : null
-              });
-              if (item1) items.push(item1);
+              if (selection.type1) {
+                const item1 = parseItem(selection.type1, {
+                  projectTitle: selection.projectTitle1,
+                  projectImage: selection.projectImgLandscape1
+                    ? selection.projectImgLandscape1
+                    : selection.projectImgSquare1
+                    ? selection.projectImgSquare1
+                    : null,
+                  articleTitle: selection.articleTitle1,
+                  articleImage: selection.articleImgLandscape1
+                    ? selection.articleImgLandscape1
+                    : selection.articleImgSquare1
+                    ? selection.articleImgSquare1
+                    : null
+                });
+                if (item1) items.push(item1);
+              }
 
               // Add item 2 has type selected...
-              const item2 = parseItem(selection.type2, {
-                projectTitle: selection.projectTitle2,
-                projectImage: selection.projectImgLandscape2
-                  ? selection.projectImgLandscape2
-                  : selection.projectImgSquare2
-                  ? selection.projectImgSquare2
-                  : null,
-                articleTitle: selection.articleTitle2,
-                articleImage: selection.articleImgLandscape2
-                  ? selection.articleImgLandscape2
-                  : selection.articleImgSquare2
-                  ? selection.articleImgSquare2
-                  : null
-              });
-              if (item2) items.push(item2);
+              if (selection.type2) {
+                const item2 = parseItem(selection.type2, {
+                  projectTitle: selection.projectTitle2,
+                  projectImage: selection.projectImgLandscape2
+                    ? selection.projectImgLandscape2
+                    : selection.projectImgSquare2
+                    ? selection.projectImgSquare2
+                    : null,
+                  articleTitle: selection.articleTitle2,
+                  articleImage: selection.articleImgLandscape2
+                    ? selection.articleImgLandscape2
+                    : selection.articleImgSquare2
+                    ? selection.articleImgSquare2
+                    : null
+                });
+                if (item2) items.push(item2);
+              }
 
-              const rowTitle = items.length === 2 ? `${items[0].title} • ${items[1].title}` : items[0].title;
+              const rowTitle = items.length === 2 ? `${items[0].title} • ${items[1].title}` : items[0]?.title || 'No item selected';
               const mediaItems = (
                 <div className="media-items">
                   {items.map((item, index) =>

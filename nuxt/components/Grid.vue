@@ -22,7 +22,7 @@
         </li>
       </ul>
       <Transition name="grid-switch" mode="out-in" :duration="333">
-        <div :key="selectedFilterId">
+        <div class="grid-rows" :key="selectedFilterId">
           <template v-if="filters && selectedFilterId !== 'all'">
             <div :class="[ 'filter-items', filterLayout ]">
               <GridItemProject
@@ -36,7 +36,7 @@
           </template>
           <template v-else>
             <div class="rows">
-              <div v-for="(row, rowIndex) in grid" class="row" :key="rowIndex">
+              <div v-for="(row, rowIndex) in grid" class="row" :class="getLayout(row.layout, row.items.length)" :key="rowIndex">
                 <template v-for="(item, index) in row.items" :key="index">
                   <GridItemProject
                     v-if="item.type[0].type === 'projectItem'"
@@ -46,7 +46,6 @@
                   />
                   <GridItemArticle
                     v-if="item.type[0].type === 'articleItem'"
-                    :layout="row.items.length > 1 ? 'square' : 'landscape'"
                     :item="item.type[0].article"
                   />
                 </template>
@@ -109,6 +108,10 @@ const filteredProjects = computed(() => {
     });
   });
 });
+
+function getLayout(layout, total) {
+  return total === 2 ? layout ? layout : '' : '';
+}
 
 function onClickProjectItem(item) {
   const directors = true;
@@ -270,8 +273,17 @@ section.grid {
           grid-template-columns: repeat(2, 1fr);
           gap: span(1);
 
+          // 1 item — landscape → full width
           &:has(.item:only-child) {
             grid-template-columns: 1fr;
+          }
+
+          &:has(.item.square:only-child) {
+            .item {
+              width: calc(50% - span(0.5));
+              margin-left: auto;
+              margin-right: auto;
+            }
           }
 
           .item {
@@ -336,6 +348,57 @@ section.grid {
           &:not(:last-child) {
             margin-bottom: span(0.75);
           }
+
+          &:has(.item.square:only-child),
+          &:has(.item.square:only-child) {
+            .item {
+              width: calc(50% - span(0.375));
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @include respond-to($average-desktop) {
+    .gutter {
+      .rows {
+        .row {
+          &.one-third-two-third {
+            &:not(:has(.item.article)) {
+              grid-template-columns: 1fr 2fr;
+
+              .item {
+                min-width: 0px;
+
+                &:first-child {
+                  aspect-ratio: auto;
+                }
+
+                &:last-child {
+                  aspect-ratio: 16/9;
+                }
+              }
+            }
+          }
+
+          &.two-third-one-third {
+            &:not(:has(.item.article)) {
+              grid-template-columns: 2fr 1fr;
+
+              .item {
+                min-width: 0px;
+
+                &:first-child {
+                  aspect-ratio: 16/9;
+                }
+
+                &:last-child {
+                  aspect-ratio: auto;
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -361,6 +424,12 @@ section.grid {
 
           &:not(:last-child) {
             margin-bottom: span(0.5);
+          }
+
+          &:has(.item.square:only-child) {
+            .item {
+              width: calc(50% - span(0.25));
+            }
           }
         }
       }

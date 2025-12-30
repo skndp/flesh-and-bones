@@ -23,6 +23,7 @@ const workQuery = groq`*[(_type == "work")][0]{
     filterLayout
   },
   projects[] {
+    layout,
     items[] {
       type[] {
         _type == 'projectItem' => {

@@ -44,6 +44,7 @@ const directorQuery = groq`*[_type == 'director' && slug.current == $slug][0]{
     id
   },
   projects[] {
+    layout,
     items[]->{
       title,
       director->{
