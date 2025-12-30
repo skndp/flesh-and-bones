@@ -2,7 +2,7 @@
   <section class="grid pad-b">
     <div class="gutter">
       <div class="rows">
-        <div v-for="(row, rowIndex) in grid" class="row" :key="rowIndex">
+        <div v-for="(row, rowIndex) in grid" class="row" :class="getLayout(row.layout, row.items.length)" :key="rowIndex">
           <GridItemProject
             v-for="(item, index) in row.items"
             :layout="row.items.length > 1 ? 'square' : 'landscape'"
@@ -32,6 +32,10 @@ const props = defineProps({
 const projectItems = computed(() => {
   return props.grid.flatMap(row => row.items)
 });
+
+function getLayout(layout, total) {
+  return total === 2 ? layout ? layout : '' : '';
+}
 
 function onClickProjectItem(item) {
   const index = projectItems.value.indexOf(item);

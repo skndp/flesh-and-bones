@@ -144,6 +144,21 @@ export default defineType({
           type: 'object',
           fields: [
             {
+              name: 'layout',
+              title: 'Layout',
+              type: 'string',
+              options: {
+                list: [
+                  { title: 'Left 50%, Right 50% (Square, Square)', value: 'fifty-fifty' },
+                  { title: 'Left 33%, Right 66% (Portrait, Landscape)', value: 'one-third-two-third' },
+                  { title: 'Left 66%, Right 33% (Landscape, Portrait)', value: 'two-third-one-third' }
+                ],
+                layout: 'radio'
+              },
+              initialValue: 'fifty-fifty',
+              hidden: ({ parent }) => parent?.items?.length !== 2
+            },
+            {
               name: 'items',
               title: 'Items',
               type: 'array',
@@ -218,7 +233,7 @@ export default defineType({
               if (title1) items.push({ title: title1, media: img1 || ImageIcon });
               if (title2) items.push({ title: title2, media: img2 || ImageIcon });
 
-              const rowTitle = items.length === 2 ? `${items[0].title} • ${items[1].title}` : items[0].title;
+              const rowTitle = items.length === 2 ? `${items[0].title} • ${items[1].title}` : items[0]?.title || 'No item selected';
               const mediaItems = (
                 <div className="media-items">
                   {items.map((item, index) =>

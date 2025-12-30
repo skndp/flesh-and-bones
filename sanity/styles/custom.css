@@ -33,6 +33,7 @@
 
 [data-testid="Media"]:has(> .media-items) .media-item img {
   border-radius: 0;
+  object-fit: cover;
 }
 
 [data-testid="Media"]:has(> .media-items) .media-item.--empty {

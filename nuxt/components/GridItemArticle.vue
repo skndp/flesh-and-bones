@@ -1,11 +1,8 @@
 <template>
-  <NuxtLink :to="item.slug" class="item article flesh" :class="[ layout ]" @mouseenter="onItemHover" @mouseleave="onItemHover">
+  <NuxtLink :to="item.slug" class="item article square flesh" @mouseenter="onItemHover" @mouseleave="onItemHover">
     <div class="item-image">
-      <template v-if="layout === 'square' && item.ctaCardImages.squareImage">
+      <template v-if="item.ctaCardImages.squareImage">
         <ResponsiveImage v-bind="item.ctaCardImages.squareImage.image" />
-      </template>
-      <template v-else>
-        <ResponsiveImage v-bind="item.ctaCardImages.landscapeImage.image" />
       </template>
       <div class="item-hover">
         <Animated :autoplay="false" type="news-flash" :loop="true" background="bg-bone" ref="hoverAnimation" />
@@ -28,10 +25,6 @@ let mqMobile;
 const props = defineProps({
   item: {
     type: Object,
-    required: true
-  },
-  layout: {
-    type: String,
     required: true
   }
 });
