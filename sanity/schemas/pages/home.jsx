@@ -103,7 +103,19 @@ export default defineType({
                 layout: 'radio'
               },
               initialValue: 'fifty-fifty',
-              hidden: ({ parent }) => parent?.items?.length !== 2
+              hidden: ({ parent }) => {
+                const items = parent?.items || [];
+
+                // Must have exactly 2 items
+                if (items.length !== 2) return true;
+
+                // If either item is an article, hide layout
+                const hasArticle = items.some(
+                  (item) => item?.type?.[0]?._type === 'articleItem'
+                );
+
+                return hasArticle;
+              }
             },
             {
               name: 'items',
