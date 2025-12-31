@@ -1,7 +1,10 @@
 <template>
   <section class="work-hero pad-t pad-b">
     <div class="gutter">
-      <h1 class="h1 flesh rough-edges">{{ title }}</h1>
+      <HeroTitle
+        :title="title"
+        :sketches="sketches"
+      />
       <p v-if="copy" class="manic">{{ copy }}</p>
     </div>
   </section>
@@ -13,6 +16,10 @@ const props = defineProps({
   title: {
     type: String,
     required: true
+  },
+  sketches: {
+    type: Object,
+    required: false
   },
   copy: {
     type: String,
@@ -35,8 +42,20 @@ section.work-hero {
     align-items: center;
     justify-content: center;
 
-    .h1 {
-      white-space: pre-line;
+    .hero-title {
+      .sketch1-holder {
+        top: auto;
+        left: 0px;
+        bottom: 0.1em;
+        height: 0.44em;
+        transform: translateX(-130%);
+      }
+
+      .sketch2-holder {
+        height: 1.5em;
+        bottom: 0px;
+        transform: translateX(47%);
+      }
     }
 
     p {
@@ -44,6 +63,18 @@ section.work-hero {
       width: 100%;
       margin: 0 auto 2em;
       transform: rotate(-1.8deg);
+    }
+  }
+
+  @include respond-to($tablet) {
+    .gutter {
+      .hero-title {
+        .sketch1-holder {
+          top: auto;
+          bottom: 0.05em;
+          transform: translateX(-180%);
+        }
+      }
     }
   }
 }

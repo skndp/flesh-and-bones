@@ -1,8 +1,8 @@
 <template>
-  <h1 class="hero-title h1 flesh rough-edges">
+  <h1 class="hero-title h1 flesh">
     <template v-for="(line, index) in titleWords" :key="index">
       <span v-for="(word, wordIndex) in line" :key="wordIndex">
-        {{ word }}
+        <span class="rough-edges">{{ word }}</span>
         <template v-if="index === 0 && wordIndex === 0 && sketches && sketches.sketch1 && titleWords.length === 1">
           <div
             class="sketch1-holder"

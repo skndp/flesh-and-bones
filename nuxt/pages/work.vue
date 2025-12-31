@@ -3,6 +3,7 @@
     <Paper />
     <WorkHero
       :title="page.heroHeading"
+      :sketches="page.heroHeadingSketches"
       :copy="page.heroCopy"
     />
     <Grid
@@ -16,6 +17,14 @@
 <script setup>
 const workQuery = groq`*[(_type == "work")][0]{
   heroHeading,
+  heroHeadingSketches {
+    sketch1 {
+      image ${imageProps}
+    },
+    sketch2 {
+      image ${imageProps}
+    }
+  },
   heroCopy,
   filters[]->{
     filter,
