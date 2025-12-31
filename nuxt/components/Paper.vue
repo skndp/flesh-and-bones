@@ -1,32 +1,21 @@
 <template>
-  <div class="paper" :class="{ 'light': light }">
-    <div v-if="!light" class="edge left">
+  <div class="paper">
+    <div class="edge left">
       <span class="distress"></span>
       <span class="tear"></span>
     </div>
-    <div v-if="!light" class="edge right">
+    <div class="edge right">
       <span class="tear"></span>
     </div>
   </div>
 </template>
-
-<script setup>
-// Props
-const props = defineProps({
-  light: {
-    type: Boolean,
-    required: false,
-    default: false
-  }
-});
-</script>
 
 <style lang="scss">
 .paper {
   @include abs-fill;
   overflow: hidden;
   pointer-events: none;
-  
+
   &:before,
   &:after {
     content: '';

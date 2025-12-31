@@ -2,8 +2,8 @@
   <div id="menu" :class="{'offset': offset, 'open': store.menuOpen}">
     <div id="menu-inner">
       <div id="menu-content" ref="contentRef" @click="closeMenu">
-        <nav id="menu-paper" class="bg-bone" ref="paper">
-          <Paper :light="true" />
+        <nav id="menu-mask" class="bg-bone" ref="maskRef">
+          <div v-if="store.menuPaper" id="menu-paper" :style="{ 'background-image': `url('${store.menuPaper}')` }"></div>
           <ul class="primary h1 sm midnight">
             <li>
               <NuxtLink to="/work" @click.native="onClickNavLink" @mouseenter="onItemHover" @mouseleave="onItemHover">
@@ -63,7 +63,7 @@ const route = useRoute();
 const store = useSiteStore();
 const contentRef = ref(null);
 const offset = ref(false);
-const paper = ref(null);
+const maskRef = ref(null);
 let resize_to = 0;
 
 // Lifecycle
@@ -102,7 +102,7 @@ function onResize(e) {
 }
 
 function setMask() {
-  const b = paper.value.getBoundingClientRect();
+  const b = maskRef.value.getBoundingClientRect();
   const mask = createTornEdge({
     width: b.width,
     height: b.height,
@@ -112,7 +112,7 @@ function setMask() {
     edgeRoughness: 6
   });
 
-  paper.value.style.maskImage = `url(${mask})`;
+  maskRef.value.style.maskImage = `url(${mask})`;
 }
 
 function onItemHover(e) {
@@ -162,7 +162,7 @@ watch(() => store.menuOpen, (isOpen, wasOpen) => {
       }
 
       #menu-content {
-        nav#menu-paper {
+        nav#menu-mask {
           transform: translate3d(0px, 0px, 0px);
         }
       }
@@ -174,7 +174,7 @@ watch(() => store.menuOpen, (isOpen, wasOpen) => {
       @include header-ht(top);
 
       #menu-content {
-        nav#menu-paper {
+        nav#menu-mask {
           ul.primary {
             padding-top: 0px;
             padding-bottom: 200px;
@@ -217,7 +217,7 @@ watch(() => store.menuOpen, (isOpen, wasOpen) => {
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
 
-      nav#menu-paper {
+      nav#menu-mask {
         position: relative;
         width: 100%;
         display: flex;
@@ -226,6 +226,13 @@ watch(() => store.menuOpen, (isOpen, wasOpen) => {
         mask-repeat: no-repeat;
         transform: translate3d(0px, -100%, 0px);
         transition: transform $speed-666 $evil-ease;
+
+        #menu-paper {
+          @include abs-fill;
+          background-repeat: no-repeat;
+          background-position: 50% 0%;
+          background-size: cover;
+        }
 
         ul.primary  {
           margin: 0.25em auto -0.5em;
@@ -308,7 +315,7 @@ watch(() => store.menuOpen, (isOpen, wasOpen) => {
   @include respond-to($tablet) {
     #menu-inner {
       #menu-content {
-        nav#menu-paper {
+        nav#menu-mask {
           ul.primary  {
             margin: 0.25em auto 0;
 

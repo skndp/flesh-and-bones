@@ -1,6 +1,7 @@
 <template>
   <footer id="footer">
     <div class="footer-mask bg-bone pad-b" :class="{ 'cover': cover }" ref="foot">
+      <div v-if="store.footerPaper" class="footer-paper" :style="{ 'background-image': `url('${store.footerPaper}')` }"></div>
       <div class="gutter">
         <ul class="locations manic md">
           <li v-for="location in store.locations">
@@ -125,6 +126,13 @@ function onItemHover(e) {
 
     &.cover {
       margin-top: -200px;
+    }
+
+    .footer-paper {
+      @include abs-fill;
+      background-repeat: no-repeat;
+      background-position: 50% 0%;
+      background-size: cover;
     }
   }
 
