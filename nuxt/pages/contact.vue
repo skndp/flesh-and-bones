@@ -3,6 +3,8 @@
     <Paper />
     <ContactHero
       :title="page.heroHeading"
+      :sketches="page.heroHeadingSketches"
+      :subSketch="page.subHeadingSketch"
     />
     <ContactDirectory
       :directory="page.directory"
@@ -18,6 +20,17 @@
 <script setup>
 const contactQuery = groq`*[(_type == "contact")][0]{
   heroHeading,
+  heroHeadingSketches {
+    sketch1 {
+      image ${imageProps}
+    },
+    sketch2 {
+      image ${imageProps}
+    }
+  },
+  subHeadingSketch {
+    image ${imageProps}
+  },
   directory[] {
     sketchnote,
     lists[] {

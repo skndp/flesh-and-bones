@@ -41,6 +41,30 @@ export default defineType({
       ]
     }),
     defineField({
+      fieldset: 'hero',
+      name: 'heroHeadingSketches',
+      title: 'Heading Sketches',
+      type: 'object',
+      fields: [
+        {
+          name: 'sketch1',
+          title: ' ',
+          type: 'sketchImage'
+        },
+        {
+          name: 'sketch2',
+          title: ' ',
+          type: 'sketchImage'
+        }
+      ]
+    }),
+    defineField({
+      fieldset: 'hero',
+      name: 'subHeadingSketch',
+      title: 'Sub-heading Sketch',
+      type: 'sketchImage'
+    }),
+    defineField({
       fieldset: 'directory',
       name: 'directory',
       title: 'Rows',

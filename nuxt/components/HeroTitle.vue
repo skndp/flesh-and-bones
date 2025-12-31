@@ -43,6 +43,14 @@
       </span>
       <template v-if="index < titleWords.length - 1"> <br></template>
     </template>
+    <div
+      v-if="subSketch"
+      class="sub-sketch-holder"
+      :style="{
+        'aspect-ratio': `${subSketch.image.width}/${subSketch.image.height}`,
+        'background-image': `url(${subSketch.image.src})`
+      }"
+    ></div>
   </h1>
 </template>
 
@@ -56,13 +64,23 @@ const props = defineProps({
   sketches: {
     type: Object,
     required: false
+  },
+  subSketch: {
+    type: Object,
+    required: false
   }
 });
 
 const titleWords = computed(() => {
-  const lines = props.title.split('\n');
-  return lines.map(line => line.trim().split(/\s+/));
+  const arr = props.title.split('\n');
+  const lines = arr.map(line => line.trim().split(/\s+/));
+
+  return lines;
 });
+
+onMounted(() => {
+  console.log('subsketch:', props.subSketch);
+})
 </script>
 
 <style lang='scss'>
@@ -96,6 +114,17 @@ const titleWords = computed(() => {
     background-size: contain;
     background-position: 50% 50%;
     transform: translateX(30%);
+  }
+
+  .sub-sketch-holder {
+    position: relative;
+    width: auto;
+    height: 1.4em;
+    margin-top: -0.3em;
+    margin-left: 11%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: 50% 50%;
   }
 
   @include respond-to($tablet) {

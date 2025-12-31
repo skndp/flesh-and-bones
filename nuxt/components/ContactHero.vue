@@ -6,7 +6,11 @@
           <p>{{ location }}</p>
         </li>
       </ul>
-      <h1 class="h1 flesh rough-edges">{{ title }}</h1>
+      <HeroTitle
+        :title="title"
+        :sketches="sketches"
+        :subSketch="subSketch"
+      />
     </div>
   </section>
 </template>
@@ -22,8 +26,12 @@ const props = defineProps({
     type: String,
     required: true
   },
-  copy: {
-    type: String,
+  sketches: {
+    type: Object,
+    required: false
+  },
+  subSketch: {
+    type: Object,
     required: false
   }
 });
@@ -71,8 +79,12 @@ section.contact-hero {
       }
     }
 
-    .h1 {
-      white-space: pre-line;
+    .hero-title {
+      .sketch1-holder {
+        top: 50%;
+        left: 66%;
+        transform: translateX(-50%) translateY(-48%);
+      }
     }
   }
 }
