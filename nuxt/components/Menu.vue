@@ -38,7 +38,7 @@
           </ul>
           <ul class="socials">
             <li v-for="link in store.socials">
-              <NuxtLink class="rough-edges" :to="link" target="_blank" />
+              <NuxtLink class="rough-edges-light" :to="link" target="_blank" />
             </li>
           </ul>
           <div class="locations-wrapper">
@@ -355,7 +355,7 @@ watch(() => store.menuOpen, (isOpen, wasOpen) => {
                     width: 18px;
                     height: 18px;
                     @include instagram($bone);
-                  } 
+                  }
                 }
 
                 &[href*='vimeo'] {

@@ -4,8 +4,10 @@
     <ManifestoHero
       :kicker="page.heroKicker"
       :title="page.heroHeading"
+      :sketches="page.heroHeadingSketches"
       :copy="page.heroCopy"
       :endMark="page.heroEndMark"
+      :endMarkSketch="page.heroEndMarkSketch"
     />
     <Footer />
   </div>
@@ -15,8 +17,19 @@
 const manifestoQuery = groq`*[(_type == "manifesto")][0]{
   heroKicker,
   heroHeading,
+  heroHeadingSketches {
+    sketch1 {
+      image ${imageProps}
+    },
+    sketch2 {
+      image ${imageProps}
+    }
+  },
   heroCopy,
-  heroEndMark
+  heroEndMark,
+  heroEndMarkSketch {
+    image ${imageProps}
+  }
 }`;
 
 // Async

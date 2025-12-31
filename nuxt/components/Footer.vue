@@ -31,7 +31,7 @@
         </ul>
         <ul class="socials">
           <li v-for="link in store.socials">
-            <NuxtLink class="rough-edges" :to="link" target="_blank" />
+            <NuxtLink class="rough-edges-light" :to="link" target="_blank" />
           </li>
         </ul>
         <p class="manic sm">© {{ new Date().getFullYear() }} Flesh and Bones, Inc.</p>
@@ -115,7 +115,7 @@ function onItemHover(e) {
 <style lang='scss'>
 #footer {
   position: relative;
-  
+
   .footer-mask {
     position: relative;
     padding-top: calc(span(0.5) + 200px);
@@ -232,7 +232,7 @@ function onItemHover(e) {
               width: 18px;
               height: 18px;
               @include instagram($bone);
-            } 
+            }
           }
 
           &[href*='vimeo'] {

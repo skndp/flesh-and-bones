@@ -21,6 +21,7 @@ import seoSocial from './shared/seo-social';
 import singleImage from './shared/single-image';
 import videoPlayer from './shared/video-player';
 import richTextSketch from './shared/rich-text-sketch';
+import sketchImage from './shared/sketch-image';
 
 export const schemaTypes = [
   settings,
@@ -38,5 +39,6 @@ export const schemaTypes = [
   seoSocial,
   singleImage,
   videoPlayer,
-  richTextSketch
+  richTextSketch,
+  sketchImage
 ];
