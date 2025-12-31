@@ -1,7 +1,7 @@
 <template>
   <div id="modal" class="bg-midnight" ref="modalRef">
-    <Paper />
     <div id="modal-inner">
+      <div v-if="store.modalPaper" id="modal-paper" :style="{ 'background-image': `url('${store.modalPaper}')` }"></div>
       <div id="btn-container">
         <button id="close-modal-btn" @click="closeModal">
           <span class="x"></span>
@@ -239,6 +239,13 @@ watch(route, () => {
     @include abs-fill;
     overflow: hidden;
 
+    #modal-paper {
+      @include abs-fill;
+      background-repeat: no-repeat;
+      background-position: 50% 50%;
+      background-size: cover;
+    }
+
     #btn-container {
       position: absolute;
       top: 0px;
@@ -384,7 +391,7 @@ watch(route, () => {
         position: relative;
         margin: 0 $space-8;
         flex: 1 1 auto;
-        
+
         .carousel-containent {
           position: relative;
           width: 100%;
@@ -411,7 +418,7 @@ watch(route, () => {
           aspect-ratio: 16 / 9;
           flex-grow: 1;
         }
-        
+
         .main-swiper {
           @include abs-fill;
           overflow: hidden;

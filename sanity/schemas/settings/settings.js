@@ -65,13 +65,18 @@ export default defineType({
       ]
     }),
     defineField({
+      name: 'menuPaper',
+      title: 'MENU PAPER',
+      type: 'image'
+    }),
+    defineField({
       name: 'footerPaper',
       title: 'FOOTER PAPER',
       type: 'image'
     }),
     defineField({
-      name: 'menuPaper',
-      title: 'MENU PAPER',
+      name: 'modalPaper',
+      title: 'MODAL PAPER',
       type: 'image'
     })
   ]
