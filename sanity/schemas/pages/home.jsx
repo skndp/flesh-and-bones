@@ -51,6 +51,24 @@ export default defineType({
     }),
     defineField({
       fieldset: 'hero',
+      name: 'heroHeadingSketches',
+      title: 'Heading Sketches',
+      type: 'object',
+      fields: [
+        {
+          name: 'sketch1',
+          title: ' ',
+          type: 'sketchImage'
+        },
+        {
+          name: 'sketch2',
+          title: ' ',
+          type: 'sketchImage'
+        }
+      ]
+    }),
+    defineField({
+      fieldset: 'hero',
       name: 'heroCopy',
       title: 'Copy',
       type: 'string',

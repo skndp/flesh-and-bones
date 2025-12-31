@@ -3,56 +3,49 @@
     <div class="gutter" :class="{ 'tab-b': !endMarkSketch}">
       <p class="fs-lg flesh manic">{{ kicker }}</p>
       <h1 class="h1 pad-b flesh rough-edges">
-        <!-- Check if the title has only one word -->
-        <span v-if="titleWords.length === 1" class="word">
-          <!-- Insert both sketches in the first and last word (since it's the only word) -->
-          <template v-if="sketches && sketches.sketch1">
-            <div
-              class="sketch1-holder"
-              :style="{
-                'aspect-ratio': `${sketches.sketch1.image.width}/${sketches.sketch1.image.height}`,
-                'background-image': `url(${sketches.sketch1.image.src})`
-              }"
-            ></div>
-          </template>
-          <template v-if="sketches && sketches.sketch2">
-            <div
-              class="sketch2-holder"
-              :style="{
-                'aspect-ratio': `${sketches.sketch2.image.width}/${sketches.sketch2.image.height}`,
-                'background-image': `url(${sketches.sketch2.image.src})`
-              }"
-            ></div>
-          </template>
-          {{ titleWords[0] }}
-        </span>
-
-        <!-- If there are multiple words, render each one separately -->
-        <span v-else v-for="(word, index) in titleWords" :key="index" class="word">
-          <!-- Insert .sketch1 only on the first word -->
-          <template v-if="index === 0 && sketches && sketches.sketch1">
-            <div
-              class="sketch1-holder"
-              :style="{
-                'aspect-ratio': `${sketches.sketch1.image.width}/${sketches.sketch1.image.height}`,
-                'background-image': `url(${sketches.sketch1.image.src})`
-              }"
-            ></div>
-          </template>
-
-          {{ word }}
-
-          <!-- Insert .sketch2 only on the last word -->
-          <template v-if="index === titleWords.length - 1 && sketches && sketches.sketch2">
-            <div
-              class="sketch2-holder"
-              :style="{
-                'aspect-ratio': `${sketches.sketch2.image.width}/${sketches.sketch2.image.height}`,
-                'background-image': `url(${sketches.sketch2.image.src})`
-              }"
-            ></div>
-          </template>
-        </span>
+        <template v-for="(line, index) in titleWords" :key="index">
+          <span v-for="(word, wordIndex) in line" :key="wordIndex">
+            {{ word }}
+            <template v-if="index === 0 && wordIndex === 0 && sketches && sketches.sketch1 && titleWords.length === 1">
+              <div
+                class="sketch1-holder"
+                :style="{
+                  'aspect-ratio': `${sketches.sketch1.image.width}/${sketches.sketch1.image.height}`,
+                  'background-image': `url(${sketches.sketch1.image.src})`
+                }"
+              ></div>
+            </template>
+            <template v-if="index === titleWords.length - 1 && wordIndex === line.length - 1 && sketches && sketches.sketch2 && titleWords.length === 1">
+              <div
+                class="sketch2-holder"
+                :style="{
+                  'aspect-ratio': `${sketches.sketch2.image.width}/${sketches.sketch2.image.height}`,
+                  'background-image': `url(${sketches.sketch2.image.src})`
+                }"
+              ></div>
+            </template>
+            <template v-if="index === 0 && wordIndex === 0 && sketches && sketches.sketch1 && titleWords.length > 1">
+              <div
+                class="sketch1-holder"
+                :style="{
+                  'aspect-ratio': `${sketches.sketch1.image.width}/${sketches.sketch1.image.height}`,
+                  'background-image': `url(${sketches.sketch1.image.src})`
+                }"
+              ></div>
+            </template>
+            <template v-if="index === titleWords.length - 1 && wordIndex === line.length - 1 && sketches && sketches.sketch2 && titleWords.length > 1">
+              <div
+                class="sketch2-holder"
+                :style="{
+                  'aspect-ratio': `${sketches.sketch2.image.width}/${sketches.sketch2.image.height}`,
+                  'background-image': `url(${sketches.sketch2.image.src})`
+                }"
+              ></div>
+            </template>
+            <template v-if="wordIndex < line.length - 1"> </template>
+          </span>
+          <template v-if="index < titleWords.length - 1"> <br></template>
+        </template>
       </h1>
       <RichTextSketch :copy="copy" appearance="brush" />
       <p class="h3 pad-t flesh rough-edges-light">{{ endMark }}</p>
@@ -99,8 +92,8 @@ const props = defineProps({
 });
 
 const titleWords = computed(() => {
-  // Trim it, then split on any whitespace, handling multiple spaces
-  return props.title.trim().split(/\s+/);
+  const lines = props.title.split('\n');
+  return lines.map(line => line.trim().split(/\s+/));
 });
 </script>
 
@@ -115,7 +108,6 @@ section.manifesto-hero {
 
     .h1 {
       position: relative;
-      white-space: pre-line;
 
       span {
         position: relative;
@@ -124,12 +116,13 @@ section.manifesto-hero {
       .sketch1-holder {
         position: absolute;
         top: 0.1em;
-        left: 0.96ch;
+        left: 1em;
         width: auto;
         height: 0.5em;
         background-repeat: no-repeat;
         background-size: contain;
         background-position: 50% 50%;
+        transform: translateX(-50%);
         opacity: 0.9;
       }
 
@@ -170,7 +163,7 @@ section.manifesto-hero {
 
       .h1 {
         .sketch1-holder {
-          top: 0px;
+          top: 0.04em;
         }
       }
 

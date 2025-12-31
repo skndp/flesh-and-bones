@@ -7,6 +7,7 @@
       <Paper />
       <HomeHero
         :title="page.heroHeading"
+        :sketches="page.heroHeadingSketches"
         :copy="page.heroCopy"
       />
       <Grid
@@ -27,6 +28,14 @@
 const homeQuery = groq`*[(_type == "home")][0]{
   heroVideo,
   heroHeading,
+  heroHeadingSketches {
+    sketch1 {
+      image ${imageProps}
+    },
+    sketch2 {
+      image ${imageProps}
+    }
+  },
   heroCopy,
   sketchnoteLeft,
   sketchnoteRight,
