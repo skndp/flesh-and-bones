@@ -1,6 +1,6 @@
 <template>
   <section class="manifesto-hero pad-t">
-    <div class="gutter">
+    <div class="gutter" :class="{ 'tab-b': !endMarkSketch}">
       <p class="fs-lg flesh manic">{{ kicker }}</p>
       <h1 class="h1 pad-b flesh rough-edges">
         <!-- Check if the title has only one word -->
@@ -11,7 +11,7 @@
               class="sketch1-holder"
               :style="{
                 'aspect-ratio': `${sketches.sketch1.image.width}/${sketches.sketch1.image.height}`,
-                'mask-image': `url(${sketches.sketch1.image.src})`
+                'background-image': `url(${sketches.sketch1.image.src})`
               }"
             ></div>
           </template>
@@ -20,7 +20,7 @@
               class="sketch2-holder"
               :style="{
                 'aspect-ratio': `${sketches.sketch2.image.width}/${sketches.sketch2.image.height}`,
-                'mask-image': `url(${sketches.sketch2.image.src})`
+                'background-image': `url(${sketches.sketch2.image.src})`
               }"
             ></div>
           </template>
@@ -35,7 +35,7 @@
               class="sketch1-holder"
               :style="{
                 'aspect-ratio': `${sketches.sketch1.image.width}/${sketches.sketch1.image.height}`,
-                'mask-image': `url(${sketches.sketch1.image.src})`
+                'background-image': `url(${sketches.sketch1.image.src})`
               }"
             ></div>
           </template>
@@ -48,20 +48,20 @@
               class="sketch2-holder"
               :style="{
                 'aspect-ratio': `${sketches.sketch2.image.width}/${sketches.sketch2.image.height}`,
-                'mask-image': `url(${sketches.sketch2.image.src})`
+                'background-image': `url(${sketches.sketch2.image.src})`
               }"
             ></div>
           </template>
         </span>
       </h1>
       <RichTextSketch :copy="copy" appearance="brush" />
-      <p class="h3 pad-t flesh rough-edges">{{ endMark }}</p>
+      <p class="h3 pad-t flesh rough-edges-light">{{ endMark }}</p>
       <div v-if="endMarkSketch" class="end-mark-sketch pad-t h1">
         <div
           class="sketch-holder"
           :style="{
             'aspect-ratio': `${endMarkSketch.image.width}/${endMarkSketch.image.height}`,
-            'mask-image': `url(${endMarkSketch.image.src})`
+            'background-image': `url(${endMarkSketch.image.src})`
           }"
         ></div>
       </div>
@@ -127,10 +127,9 @@ section.manifesto-hero {
         left: 0.96ch;
         width: auto;
         height: 0.5em;
-        background-color: $bone;
-        mask-repeat: no-repeat;
-        mask-size: contain;
-        mask-position: 50% 50%;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: 50% 50%;
         opacity: 0.9;
       }
 
@@ -140,10 +139,9 @@ section.manifesto-hero {
         right: -0.5ch;
         width: auto;
         height: 1.3em;
-        background-color: $bone;
-        mask-repeat: no-repeat;
-        mask-size: contain;
-        mask-position: 50% 50%;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: 50% 50%;
         opacity: 0.96;
       }
     }
@@ -157,16 +155,19 @@ section.manifesto-hero {
         position: relative;
         width: auto;
         height: 100%;
-        background-color: $flesh;
-        mask-repeat: no-repeat;
-        mask-size: contain;
-        mask-position: 50% 50%;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: 50% 50%;
       }
     }
   }
 
   @include respond-to($tablet) {
     .gutter {
+      &.tab-b {
+        padding-bottom: span(1);
+      }
+
       .h1 {
         .sketch1-holder {
           top: 0px;

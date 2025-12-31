@@ -14,7 +14,19 @@
         <RichTextSketch :copy="sketchHeading" />
       </h1>
       <div class="directors">
-        <span v-if="sketchnoteLeft" class="sketchnote manic md" inert :data-label="sketchnoteLeft"></span>
+        <div v-if="sketchnoteLeft" class="sketchnote manic md" inert>
+          <span>
+            <span
+              v-if="sketchnoteLeftSketch"
+              class="sketch-holder"
+              :style="{
+                'aspect-ratio': `${sketchnoteLeftSketch.image.width}/${sketchnoteLeftSketch.image.height}`,
+                'background-image': `url(${sketchnoteLeftSketch.image.src})`
+              }"
+            ></span>
+            <span>{{ sketchnoteLeft }}</span>
+          </span>
+        </div>
         <ul>
           <li v-for="(item, index) in directors">
             <NuxtLink
@@ -30,6 +42,15 @@
             </NuxtLink>
           </li>
         </ul>
+      </div>
+      <div v-if="endMarkSketch" class="end-mark-sketch pad-t h1">
+        <div
+          class="sketch-holder"
+          :style="{
+            'aspect-ratio': `${endMarkSketch.image.width}/${endMarkSketch.image.height}`,
+            'background-image': `url(${endMarkSketch.image.src})`
+          }"
+        ></div>
       </div>
     </div>
   </section>
@@ -47,12 +68,20 @@ const props = defineProps({
     type: String,
     required: false
   },
+  sketchnoteLeftSketch: {
+    type: Object,
+    required: false
+  },
   sketchHeading: {
     type: Array,
     required: true
   },
   directors: {
     type: Array,
+    required: false
+  },
+  endMarkSketch: {
+    type: Object,
     required: false
   }
 });
@@ -119,7 +148,7 @@ section.directors-hero {
   padding-bottom: span(2);
   display: flex;
   flex-direction: column;
-  
+
   .background-videos {
     @include abs-fill;
     overflow: hidden;
@@ -229,8 +258,25 @@ section.directors-hero {
         }
       }
     }
+
+    .end-mark-sketch {
+      height: 1.5em;
+      margin: -0.5em 0;
+      padding-bottom: span(2);
+      display: flex;
+      justify-content: center;
+
+      .sketch-holder {
+        position: relative;
+        width: auto;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: 50% 50%;
+      }
+    }
   }
-  
+
   @include respond-to($tablet) {
     padding-bottom: $space-48;
 
@@ -239,7 +285,7 @@ section.directors-hero {
         @include header-ht(padding-top);
       }
 
-    .directors {
+      .directors {
         .sketchnote {
           position: absolute;
           top: 0px;
@@ -248,16 +294,35 @@ section.directors-hero {
           height: 100%;
           display: flex;
 
-          &:after {
-            content: attr(data-label);
+          > span {
             position: absolute;
             top: 50%;
             left: 50%;
             white-space: nowrap;
             transform-origin: 0% 0%;
             transform: rotate(-90deg) translateX(-50%) translateY(-50%);
+
+            > span {
+              display: inline-flex;
+            }
+
+            .sketch-holder {
+              position: absolute;
+              top: 50%;
+              left: 0px;
+              width: auto;
+              height: 2em;
+              background-repeat: no-repeat;
+              background-position: 50% 50%;
+              background-size: contain;
+              transform: rotate(90deg) translateX(-50%) translateY(150%);
+            }
           }
         }
+      }
+
+      .end-mark-sketch {
+        padding-bottom: 0px;
       }
     }
   }

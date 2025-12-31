@@ -65,23 +65,13 @@ export default defineType({
       ]
     }),
     defineField({
-      name: 'pageTexture',
-      title: 'PAGE TEXTURE',
+      name: 'footerPaper',
+      title: 'FOOTER PAPER',
       type: 'image'
     }),
     defineField({
-      name: 'menuTexture',
-      title: 'MENU TEXTURE',
-      type: 'image'
-    }),
-    defineField({
-      name: 'menuButton',
-      title: 'MENU BUTTON',
-      type: 'image'
-    }),
-    defineField({
-      name: 'playButton',
-      title: 'PLAY BUTTON',
+      name: 'menuPaper',
+      title: 'MENU PAPER',
       type: 'image'
     })
   ]

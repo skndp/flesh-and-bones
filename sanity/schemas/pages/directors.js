@@ -41,6 +41,12 @@ export default defineType({
     }),
     defineField({
       fieldset: 'hero',
+      name: 'sketchnoteLeftSketch',
+      title: 'Sketchnote Sketch (left gutter)',
+      type: 'sketchImage'
+    }),
+    defineField({
+      fieldset: 'hero',
       name: 'directors',
       title: 'Directors',
       type: 'array',
@@ -84,6 +90,12 @@ export default defineType({
           }
         }
       ]
+    }),
+    defineField({
+      fieldset: 'hero',
+      name: 'heroEndMarkSketch',
+      title: 'End Mark Sketch',
+      type: 'sketchImage'
     })
   ]
 });

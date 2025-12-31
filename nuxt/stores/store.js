@@ -15,7 +15,9 @@ export const useSiteStore = defineStore('site', {
     ogImage: '',
     ogUrl: '',
     locations: [],
-    socials: []
+    socials: [],
+    footerPaper: null,
+    menuPaper: null
   }),
   actions: {
     setRipMask(blob) {
@@ -56,6 +58,8 @@ export const useSiteStore = defineStore('site', {
       this.ogUrl = 'https://www.wearefleshandbones.com';
       this.locations = settings.locations;
       this.socials = settings.socials;
+      this.footerPaper = settings.footerPaper?.src || '';
+      this.menuPaper = settings.menuPaper?.src || '';
     }
   }
 });
