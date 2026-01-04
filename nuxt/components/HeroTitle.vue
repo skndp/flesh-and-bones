@@ -77,10 +77,6 @@ const titleWords = computed(() => {
 
   return lines;
 });
-
-onMounted(() => {
-  console.log('subsketch:', props.subSketch);
-})
 </script>
 
 <style lang='scss'>
