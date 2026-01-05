@@ -141,7 +141,7 @@ function onItemHover(e) {
     .footer-paper {
       @include abs-fill;
       background-repeat: no-repeat;
-      background-position: 50% 0%;
+      background-position: 50% 100%;
       background-size: cover;
     }
   }
