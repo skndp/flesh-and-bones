@@ -13,7 +13,6 @@
             <ClientOnly>
               <Swiper
                 class="titles-swiper"
-                ref="titlesSwiperRef"
                 direction="vertical"
                 slides-per-view="auto"
                 :modules="[Controller]"
@@ -32,7 +31,6 @@
             <ClientOnly>
               <Swiper
                 class="directors-swiper brush sm"
-                ref="directorsSwiperRef"
                 direction="vertical"
                 slides-per-view="auto"
                 :modules="[Controller]"
@@ -56,7 +54,6 @@
                 <ClientOnly>
                   <Swiper
                     class="main-swiper"
-                    ref="mainSwiperRef"
                     slides-per-view="auto"
                     :modules="[Controller]"
                     :grab-cursor="store.modalProjects.length > 1"
@@ -125,9 +122,6 @@ const route = useRoute();
 const store = useSiteStore();
 
 const modalRef = ref(null);
-const mainSwiperRef = ref(null);
-const titlesSwiperRef = ref(null);
-const directorsSwiperRef = ref(null);
 const videoRefs = ref([]);
 
 let mainSwiper = null;
@@ -156,8 +150,8 @@ function onMainSwiperReady(swiper) {
     store.setModalIndex(mainSwiper.realIndex);
 
     videoRefs.value.forEach((vid) => {
-      if (vid && vid.stopPlayer) {
-        vid.stopPlayer();
+      if (vid && vid.pausePlayer) {
+        vid.pausePlayer();
       }
     });
   })
@@ -452,6 +446,7 @@ watch(route, () => {
       }
 
       .controls-block {
+        position: relative;
         padding: $space-16 0;
         display: flex;
         flex: 0 0 auto;
