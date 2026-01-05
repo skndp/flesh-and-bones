@@ -90,7 +90,6 @@ function onItemHover(e) {
 }
 
 function reflow() {
-  console.log('REFLOW');
   if(paper.value && imgTop.value) {
     const b = imgTop.value.$el.getBoundingClientRect(),
           w = b.width,
