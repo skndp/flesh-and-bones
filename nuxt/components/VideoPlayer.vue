@@ -170,7 +170,7 @@ async function resetPlayer() {
   playingMode.value = false;
   
   if (player.value) {
-    player.value.update(props.vimeo.id);
+    // player.value.update(props.vimeo.id);
   }
 }
 </script>
