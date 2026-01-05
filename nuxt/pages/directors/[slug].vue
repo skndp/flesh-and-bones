@@ -67,10 +67,4 @@ const directorQuery = groq`*[_type == 'director' && slug.current == $slug][0]{
 // Async data
 const { data } = await useSanityQuery(directorQuery, { slug: params.slug });
 const page = data.value;
-
-// Mounted
-onMounted(() => {
-  console.log('Director:', page);
-});
-
 </script>

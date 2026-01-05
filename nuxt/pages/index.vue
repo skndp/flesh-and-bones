@@ -84,11 +84,6 @@ const homeQuery = groq`*[(_type == "home")][0]{
 // Async
 const { data } = await useAsyncData('home', () => useSanity().fetch(homeQuery));
 const page = data.value;
-
-// Mounted
-onMounted(() => {
-  console.log('Home:', page);
-});
 </script>
 
 <style lang='scss'>

@@ -34,11 +34,6 @@ const directorsQuery = groq`*[(_type == "directors")][0]{
 // Async
 const { data } = await useAsyncData('directors', () => useSanity().fetch(directorsQuery));
 const page = data.value;
-
-// Mounted
-onMounted(() => {
-  console.log('Directors:', page);
-});
 </script>
 
 <style lang="scss">
