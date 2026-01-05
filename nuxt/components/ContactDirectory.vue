@@ -54,6 +54,16 @@ section.contact-directory {
           &:not(:last-child) {
             margin-bottom: $space-8;
           }
+
+          a:not([href^="tel:"]) {
+            position: relative;
+            padding-bottom: 5px;
+            background-image: url('/images/underline.png');
+            background-repeat: no-repeat;
+            background-position: 50% 100%;
+            background-size: 100% 5px;
+            display: inline-flex;
+          }
         }
       }
     }

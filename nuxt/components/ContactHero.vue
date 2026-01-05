@@ -72,9 +72,30 @@ section.contact-hero {
         }
 
         p {
-          text-decoration: line-through;
+          position: relative;
           display: inline-flex;
           align-items: center;
+
+          &:after {
+            content: '';
+            position: absolute;
+            top: 0px;
+            left: -0.5em;
+            right: -0.5em;
+            bottom: 0px;
+            background-image: url('/images/underline.png');
+            background-repeat: no-repeat;
+            background-position: 50% 50%;
+            background-size: 100% 5px;
+          }
+        }
+
+        &:first-child {
+          p {
+            &:after {
+              background-image: url('/images/underline-2.png');
+            }
+          }
         }
       }
     }

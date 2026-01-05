@@ -1,11 +1,15 @@
 <template>
-  <section class="boneyard pad-b">
-    <div class="cutout">
-      <div class="cutout-torn-edge bg-bone" ref="topEdge">
-        
+  <section class="boneyard">
+    <div class="cutout" ref="cutout">
+      <div class="cutout-top-edge">
+        <div
+          v-if="store.lightPaper"
+          class="cutout-paper"
+          :style="{ 'background-image': `url('${store.lightPaper}')` }"
+        ></div>
       </div>
-      <div class="cutout-inner flesh" ref="cutout">
-        <div class="cutout-content bg-bone">
+      <div class="cutout-inner flesh">
+        <div class="cutout-content">
           <div v-scroll-container>
             <div
               v-for="(skeleton, index) in skeletons"
@@ -27,27 +31,23 @@
 </template>
 
 <script setup>
-const cutout = ref(null);
-const topEdge = ref(null);
-let resize_to = 0;
+import { useSiteStore } from '~/stores/store';
+const store = useSiteStore();
 
 // Props
 const props = defineProps({
-  skeletons: {
-    type: Array,
-    required: true
-  },
-  tagline: {
-    type: String,
-    required: true
-  },
-  title: {
-    type: String
-  }
+  skeletons: { type: Array, required: true },
+  tagline: { type: String, required: true },
+  title: { type: String }
 });
+
+const cutout = ref(null);
+let resizeTo = 0;
+let lastWidth = 0;
 
 // Lifecycle
 onMounted(() => {
+  lastWidth = window.innerWidth;
   window.addEventListener('resize', onResize);
   setMask();
 });
@@ -57,14 +57,20 @@ onBeforeUnmount(() => {
 });
 
 // Methods
-function onResize(e) {
-  clearTimeout(resize_to);
-  resize_to = setTimeout(() => {
+function onResize() {
+  // Ignore iOS scroll resizes (height-only changes)
+  if (window.innerWidth === lastWidth) return;
+
+  clearTimeout(resizeTo);
+  resizeTo = setTimeout(() => {
+    lastWidth = window.innerWidth;
     setMask();
   }, 250);
 }
 
 function setMask() {
+  if (!cutout.value) return;
+
   const b = cutout.value.getBoundingClientRect();
   const mask1 = createTornEdge({
     width: b.width,
@@ -83,33 +89,46 @@ function setMask() {
     edgeRoughness: 6
   });
 
-  topEdge.value.style.maskImage = `url(${mask1}), linear-gradient(#000 0 0)`;
-  cutout.value.style.maskImage = `url(${mask2})`;
+  cutout.value.style.setProperty('--mask-top', `url(${mask1}), linear-gradient(#000 0 0)`);
+  cutout.value.style.setProperty('--mask-bottom', `url(${mask2})`);
 }
 </script>
 
 <style lang='scss'>
 .boneyard {
+  position: relative;
+  overflow: hidden;
+
   .cutout {
     position: relative;
     text-align: center;
+    mask-image: var(--mask-bottom);
+    mask-size: 101% auto;
+    mask-position: bottom center;
+    mask-repeat: no-repeat;
+    will-change: mask-image;
 
-    .cutout-torn-edge {
-      position: absolute;
-      top: 0px;
-      left: 0px;
-      width: 100%;
-      height: 200px;
+    .cutout-top-edge {
+      @include abs-fill;
+      mask-image: var(--mask-top);
+      mask-repeat: no-repeat;
+      mask-position: top center;
       mask-size: 101% auto;
       mask-composite: exclude;
-      mask-repeat: no-repeat;
+      pointer-events: none;
+
+      .cutout-paper {
+        @include abs-fill;
+        background-repeat: no-repeat;
+        background-position: 50% 0%;
+        background-size: cover;
+      }
     }
 
     .cutout-inner {
+      position: relative;
       padding-top: 200px;
-      mask-size: 101% auto;
-      mask-position: bottom center;
-      mask-repeat: no-repeat;
+      overflow: visible;
 
       .cutout-content {
         position: relative;
@@ -129,7 +148,6 @@ function setMask() {
           left: 25%;
           width: span(9);
           margin-left: span(-4.5);
-          z-index: 1;
           will-change: transform;
 
           &:nth-child(2) {
@@ -147,9 +165,9 @@ function setMask() {
     .cutout-tagline {
       position: absolute;
       top: 150px;
-      left: 50%;
+      left: 48%;
       white-space: pre-line;
-      transform: translate(-50%, -50%) rotate(-7deg);
+      transform: translate(-50%, -50%) rotate(-7deg) scale(0.56);
     }
 
     .h1 {
@@ -158,7 +176,7 @@ function setMask() {
       left: 50%;
       white-space: nowrap;
       transform: translate(-50%, -50%);
-      z-index: 2;
+      z-index: 1;
 
       span {
         padding: 0.125em 0.25em;
@@ -169,7 +187,7 @@ function setMask() {
   @include respond-to($small-tablet) {
     .cutout {
       .cutout-tagline {
-        top: 50%;
+        top: 40%;
 
         &.single {
           top: 40%;
@@ -181,10 +199,6 @@ function setMask() {
 
   @include respond-to($tablet) {
     .cutout {
-      .cutout-torn-edge {
-        height: 300px;
-      }
-
       .cutout-inner {
         padding-top: 300px;
 
@@ -204,6 +218,17 @@ function setMask() {
             width: span(6.5);
             margin-left: span(-3.25);
           }
+        }
+      }
+
+      .cutout-tagline {
+        top: 48%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(-7deg);
+
+        &.single {
+          top: 48%;
+          left: 75%;
         }
       }
     }

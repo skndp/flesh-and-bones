@@ -34,15 +34,31 @@ section.contact-founders {
   position: relative;
   
   .cols {
-    padding-top: span(1);
+    margin-top: -$space-40;
 
     .col {
       &:not(:last-child) {
         margin-bottom: $space-48;
+
+        p {
+          a {
+            background-image: url('/images/underline-2.png');
+          }
+        }
       }
 
       p {
         margin-bottom: 0.25em;
+
+        a {
+          position: relative;
+          padding-bottom: 2px;
+          background-image: url('/images/underline.png');
+          background-repeat: no-repeat;
+          background-position: 50% 100%;
+          background-size: 100% 5px;
+          display: inline-flex;
+        }
 
         &.bio {
           max-width: 666px;
@@ -64,6 +80,14 @@ section.contact-founders {
       .col {
         &:not(:last-child) {
           margin-bottom: 0px;
+        }
+
+        p {
+          a {
+            position: relative;
+            margin-bottom: 2px;
+            padding-bottom: 4px;
+          }
         }
       }
     }

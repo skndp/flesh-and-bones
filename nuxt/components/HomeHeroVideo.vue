@@ -1,5 +1,9 @@
 <template>
-  <section ref="heroVideoRef" class="home-hero-video" :class="{ 'passed': passed }">
+  <section
+    ref="heroVideoRef"
+    class="home-hero-video"
+    :class="{ 'passed': passed }"
+  >
     <VideoPlayer
       ref="videoPlayerRef"
       :vimeo="video"

@@ -1,7 +1,11 @@
 <template>
   <footer id="footer">
     <div class="footer-mask bg-bone pad-b" :class="{ 'cover': cover }" ref="foot">
-      <div v-if="store.footerPaper" class="footer-paper" :style="{ 'background-image': `url('${store.footerPaper}')` }"></div>
+      <div
+        v-if="store.lightPaper"
+        class="footer-paper"
+        :style="{ 'background-image': `url('${store.lightPaper}')` }"
+      ></div>
       <div class="gutter">
         <ul class="locations manic md">
           <li v-for="location in store.locations">
@@ -57,10 +61,12 @@ const props = defineProps({
 const route = useRoute();
 const store = useSiteStore();
 const foot = ref(null);
-let resize_to = 0;
+let resizeTo = 0;
+let lastWidth = 0;
 
 // Lifecycle
 onMounted(() => {
+  lastWidth = window.innerWidth;
   window.addEventListener('resize', onResize);
   setMask();
 });
@@ -78,9 +84,13 @@ function onClickNavLink(e) {
   }
 }
 
-function onResize(e) {
-  clearTimeout(resize_to);
-  resize_to = setTimeout(() => {
+function onResize() {
+  // Ignore iOS scroll resizes (height-only changes)
+  if (window.innerWidth === lastWidth) return;
+
+  clearTimeout(resizeTo);
+  resizeTo = setTimeout(() => {
+    lastWidth = window.innerWidth;
     setMask();
   }, 250);
 }
@@ -164,9 +174,30 @@ function onItemHover(e) {
         }
 
         p {
-          text-decoration: line-through;
+          position: relative;
           display: inline-flex;
           align-items: center;
+
+          &:after {
+            content: '';
+            position: absolute;
+            top: 0px;
+            left: -0.5em;
+            right: -0.5em;
+            bottom: 0px;
+            background-image: url('/images/underline.png');
+            background-repeat: no-repeat;
+            background-position: 50% 50%;
+            background-size: 100% 4px;
+          }
+        }
+
+        &:last-child {
+          p {
+            &:after {
+              background-image: url('/images/underline-2.png');
+            }
+          }
         }
       }
     }

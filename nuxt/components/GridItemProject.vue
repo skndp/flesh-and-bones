@@ -33,6 +33,9 @@ const paper = ref(null);
 const imgTop = ref(null);
 const isSmallScreen = ref(false);
 
+let resizeTo = 0;
+let lastWidth = 0;
+
 // Props
 const props = defineProps({
   item: {
@@ -47,9 +50,11 @@ const props = defineProps({
 
 // Lifecycle
 onMounted(() => {
+  lastWidth = window.innerWidth;
   window.addEventListener('resize', onResize);
+
   nextTick(() => {
-    onResize();
+    reflow();
   });
 });
 
@@ -61,9 +66,14 @@ onBeforeUnmount(() => {
 function onResize() {
   isSmallScreen.value = window.innerWidth < 540;
 
-  nextTick(() => {
+  // Ignore iOS scroll resizes (height-only changes)
+  if (window.innerWidth === lastWidth) return;
+
+  clearTimeout(resizeTo);
+  resizeTo = setTimeout(() => {
+    lastWidth = window.innerWidth;
     reflow();
-  });
+  }, 250);
 }
 
 function onItemHover(e) {
@@ -80,6 +90,7 @@ function onItemHover(e) {
 }
 
 function reflow() {
+  console.log('REFLOW');
   if(paper.value && imgTop.value) {
     const b = imgTop.value.$el.getBoundingClientRect(),
           w = b.width,

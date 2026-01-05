@@ -63,7 +63,7 @@
 
       span.tear {
         top: 15%;
-        aspect-ratio: 73/1709;
+        aspect-ratio: 73/1688;
         mask-image: url('/images/left-edge-tear.png');
       }
     }
@@ -73,7 +73,7 @@
 
       span.tear {
         bottom: 20%;
-        aspect-ratio: 49/877;
+        aspect-ratio: 49/874;
         mask-image: url('/images/right-edge-tear.png');
       }
     }

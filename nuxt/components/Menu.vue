@@ -3,7 +3,11 @@
     <div id="menu-inner">
       <div id="menu-content" ref="contentRef" @click="closeMenu">
         <nav id="menu-mask" class="bg-bone" ref="maskRef">
-          <div v-if="store.menuPaper" id="menu-paper" :style="{ 'background-image': `url('${store.menuPaper}')` }"></div>
+          <div
+            v-if="store.lightPaper"
+            id="menu-paper"
+            :style="{ 'background-image': `url('${store.lightPaper}')` }"
+          ></div>
           <ul class="primary h1 sm midnight">
             <li>
               <NuxtLink to="/work" @click.native="onClickNavLink" @mouseenter="onItemHover" @mouseleave="onItemHover">
@@ -64,11 +68,12 @@ const store = useSiteStore();
 const contentRef = ref(null);
 const offset = ref(false);
 const maskRef = ref(null);
-let resize_to = 0;
+let resizeTo = 0;
+let lastWidth = 0;
 
 // Lifecycle
 onMounted(() => {
-  //offset.value = window.pageYOffset > 0;
+  lastWidth = window.innerWidth;
   window.addEventListener('resize', onResize);
   setMask();
 });
@@ -94,9 +99,12 @@ function closeMenu(e) {
   }
 }
 
-function onResize(e) {
-  clearTimeout(resize_to);
-  resize_to = setTimeout(() => {
+function onResize() {
+  if (window.innerWidth === lastWidth) return;
+
+  clearTimeout(resizeTo);
+  resizeTo = setTimeout(() => {
+    lastWidth = window.innerWidth;
     setMask();
   }, 250);
 }
@@ -427,9 +435,31 @@ watch(() => store.menuOpen, (isOpen, wasOpen) => {
                 }
 
                 p {
-                  // text-decoration: line-through;
+                  position: relative;
                   display: inline-flex;
                   align-items: center;
+
+                  &:after {
+                    content: '';
+                    position: absolute;
+                    top: 0px;
+                    left: -0.5em;
+                    right: -0.5em;
+                    bottom: 0px;
+                    background-image: url('/images/underline.png');
+                    background-repeat: no-repeat;
+                    background-position: 50% 50%;
+                    background-size: 100% 5px;
+                    transform: scaleX(-1);
+                  }
+                }
+
+                &:last-child {
+                  p {
+                    &:after {
+                      background-image: url('/images/underline-2.png');
+                    }
+                  }
                 }
               }
             }

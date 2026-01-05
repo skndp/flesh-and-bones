@@ -16,8 +16,7 @@ export const useSiteStore = defineStore('site', {
     ogUrl: '',
     locations: [],
     socials: [],
-    menuPaper: null,
-    footerPaper: null,
+    lightPaper: null,
     modalPaper: null
   }),
   actions: {
@@ -59,8 +58,7 @@ export const useSiteStore = defineStore('site', {
       this.ogUrl = 'https://www.wearefleshandbones.com';
       this.locations = settings.locations;
       this.socials = settings.socials;
-      this.menuPaper = settings.menuPaper?.src || '';
-      this.footerPaper = settings.footerPaper?.src || '';
+      this.lightPaper = settings.lightPaper?.src || '';
       this.modalPaper = settings.modalPaper?.src || '';
     }
   }

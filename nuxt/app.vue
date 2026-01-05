@@ -60,8 +60,7 @@ const settingsQuery = groq`*[(_type == "settings")][0]{
   },
   locations[],
   socials[],
-  menuPaper ${imageProps},
-  footerPaper ${imageProps},
+  lightPaper ${imageProps},
   modalPaper ${imageProps}
 }`;
 

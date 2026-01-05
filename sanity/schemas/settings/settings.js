@@ -65,13 +65,9 @@ export default defineType({
       ]
     }),
     defineField({
-      name: 'menuPaper',
-      title: 'MENU PAPER',
-      type: 'image'
-    }),
-    defineField({
-      name: 'footerPaper',
-      title: 'FOOTER PAPER',
+      name: 'lightPaper',
+      title: 'LIGHT PAPER',
+      description: 'Base paper used in menu, footer, and cutouts',
       type: 'image'
     }),
     defineField({
