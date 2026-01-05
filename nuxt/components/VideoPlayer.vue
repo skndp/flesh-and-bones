@@ -59,11 +59,14 @@ defineExpose({
 
 const emit = defineEmits(['ready']);
 const wrapperRef = ref(null);
-const player = ref(null);
+const sdkPlayer = shallowRef(null);
+
 const playerWidth = ref(0);
 const playerHeight = ref(0);
+const originalVideoWidth = ref(16);
+const originalVideoHeight = ref(9);
+
 const playingMode = ref(false);
-const playerReady = ref(false);
 const playerOptions = {
   controls: props.controls,
   loop: !props.controls,
@@ -79,12 +82,9 @@ const hasVideo = computed(() => {
 });
 
 // Mounted
-onMounted(() => {
+onMounted(async () => {
+  await nextTick();
   window.addEventListener('resize', onResize);
-
-  nextTick(() => {
-    onResize();
-  });
 });
 
 // Before Unmount
@@ -94,83 +94,92 @@ onBeforeUnmount(() => {
 
 // Methods
 function onResize() {
-  if (wrapperRef.value && playerReady.value) {
-    const wrapper_width = wrapperRef.value.clientWidth;
-    const wrapper_height = wrapperRef.value.clientHeight;
-    const video_w = props.vimeo ? props.vimeo.play.progressive[0].width : 16;
-    const video_h = props.vimeo ? props.vimeo.play.progressive[0].height : 9;
-    const video_ratio = video_w / video_h;
+  if (!wrapperRef.value) return;
 
-    let new_width = wrapper_width;
-    let new_height = wrapper_height;
+  const wrapperWidth = wrapperRef.value.clientWidth;
+  const wrapperHeight = wrapperRef.value.clientHeight;
+  const videoRatio = originalVideoWidth.value / originalVideoHeight.value;
 
-    if (wrapper_width / wrapper_height > video_ratio) {
-      new_height = wrapper_width / video_ratio;
-    } else {
-      new_width = wrapper_height * video_ratio;
-    }
+  let newWidth = wrapperWidth;
+  let newHeight = wrapperHeight;
 
-    playerWidth.value = new_width + 6;
-    playerHeight.value = new_height + 6;
+  if (wrapperWidth / wrapperHeight > videoRatio) {
+    newHeight = wrapperWidth / videoRatio;
+  } else {
+    newWidth = wrapperHeight * videoRatio;
+  }
+
+  playerWidth.value = Math.ceil(newWidth);
+  playerHeight.value = Math.ceil(newHeight);
+}
+
+async function onLoaded(evt, vimeoPlayer) {
+  sdkPlayer.value = vimeoPlayer;
+
+  try {
+    const [w, h] = await Promise.all([
+      vimeoPlayer.getVideoWidth(),
+      vimeoPlayer.getVideoHeight()
+    ]);
+
+    originalVideoWidth.value = w;
+    originalVideoHeight.value = h;
+  } catch (e) {
+    console.warn('Failed to get video dimensions (loaded)', e);
+  }
+
+  onResize();
+
+  // Call ready in parent component
+  emit('ready');
+
+  // Now 'autoplay' for looping autoplay videos...
+  if (!props.controls && !props.manualPlay) {
+    playPlayer();
   }
 }
 
-function onLoaded() {
-  if (player.value) {
-    playerReady.value = true;
-    // Now that the video is loaded, call resize again to be safe
-    onResize();
-
-    // Pause video by default
-    pausePlayer();
-
-    // Call ready in parent component
-    emit('ready');
-
-    // Now 'autoplay' for looping autoplay videos...
-    if (!props.controls && !props.manualPlay) {
-      playPlayer();
-    }
+function clickToPlay() {
+  if (sdkPlayer.value) {
+    sdkPlayer.value.play().catch(() => {});
+    playingMode.value = true;
   }
 }
 
 function isPlaying() {
-  if (player.value) {
+  if (sdkPlayer.value) {
     playingMode.value = true;
   }
 }
 
 function onEnded() {
-  if (player.value) {
-    player.value.pause();
+  if (sdkPlayer.value) {
+    sdkPlayer.value.pause().catch(() => {});
     playingMode.value = false;
   }
 }
 
-function clickToPlay() {
-  if (player.value) {
-    player.value.play().catch(() => {});
-    playingMode.value = true;
-  }
-}
-
 function playPlayer() {
-  if (player.value) {
-    player.value.play().catch(() => {});
+  if (sdkPlayer.value) {
+    sdkPlayer.value.play().catch(() => {});
   }
 }
 
 function pausePlayer() {
-  if (player.value) {
-    player.value.pause().catch(() => {})
+  if (sdkPlayer.value) {
+    sdkPlayer.value.pause().catch(() => {});
   }
 }
 
 async function resetPlayer() {
   playingMode.value = false;
-  
-  if (player.value) {
-    // player.value.update(props.vimeo.id);
+  if (!sdkPlayer.value) return;
+
+  try {
+    await sdkPlayer.value.pause();
+    await sdkPlayer.value.setCurrentTime(0);
+  } catch (e) {
+    console.warn('Failed to reset Vimeo player', e);
   }
 }
 </script>

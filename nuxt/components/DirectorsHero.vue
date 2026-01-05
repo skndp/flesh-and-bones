@@ -1,9 +1,10 @@
 <template>
   <section class="directors-hero pad-t">
     <div v-if="!isTouchDevice" class="background-videos">
-      <div v-for="(item, index) in directors" class="background-video" :class="{ '--active': index === activeIndex }">
+      <div v-for="(item, index) in directors" class="background-video" :class="{ '--active': index === activeIndex }" :key="index">
         <VideoPlayer
           v-if="item.backgroundVideo && item.backgroundVideo.vimeo"
+          ref="videoRefs"
           :vimeo="item.backgroundVideo.vimeo"
           :cover="true"
         />
@@ -88,7 +89,7 @@ const props = defineProps({
 
 const isTouchDevice = ref(false);
 const activeIndex = ref(null);
-const players = ref([]);
+const videoRefs = ref([]);
 const emit = defineEmits(['hover-update']);
 
 // Mounted
@@ -123,10 +124,8 @@ function onMouseleave(e) {
 }
 
 function onHoverChange(index) {
-  // pause previous player (if any)
-  if (activeIndex.value !== null && players.value[activeIndex.value]) {
-    players.value[activeIndex.value].pause();
-  }
+  // Pause any/all videos
+  resetPlayers();
 
   // set the new active index
   activeIndex.value = index;
@@ -134,11 +133,16 @@ function onHoverChange(index) {
   // if null (mouseleave) — we're done
   if (index === null) return;
 
-  // if the new player is ready, play it
-  const player = players.value[index];
-  if (player) {
-    player.play();
-  }
+  const currentPlayer = videoRefs.value[index];
+  currentPlayer.playPlayer();
+}
+
+function resetPlayers() {
+  videoRefs.value.forEach((vid) => {
+    if (vid) {
+      vid.resetPlayer();
+    }
+  });
 }
 </script>
 
@@ -156,9 +160,9 @@ section.directors-hero {
     .background-video {
       @include abs-fill;
       overflow: hidden;
-      opacity: 0;
       visibility: hidden;
-      transition: visibility 0ms linear $speed-666, opacity $speed-333 $ease-out;
+      opacity: 0;
+      transition: visibility 0ms linear $speed-333, opacity $speed-333 $ease-out;
 
       &.--active {
         visibility: visible;
