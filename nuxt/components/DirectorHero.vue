@@ -42,12 +42,6 @@ const props = defineProps({
     required: false
   }
 });
-
-// Mounted
-onMounted(() => {
-  console.log('DIRECTOR:', props.reelVideo, props.reelPoster);
-  
-});
 </script>
 
 <style lang='scss'>

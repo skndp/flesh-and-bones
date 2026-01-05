@@ -42,6 +42,7 @@ section.contact-hero {
   position: relative;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 
   .gutter {
     position: relative;

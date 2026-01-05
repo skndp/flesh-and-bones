@@ -33,6 +33,7 @@ section.home-hero {
   position: relative;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 
   &:before {
     content: '';

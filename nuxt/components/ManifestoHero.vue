@@ -56,6 +56,7 @@ section.manifesto-hero {
   position: relative;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 
   .gutter {
     text-align: center;

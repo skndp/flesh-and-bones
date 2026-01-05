@@ -39,9 +39,8 @@
             }"
           ></div>
         </template>
-        <template v-if="wordIndex < line.length - 1"> </template>
       </span>
-      <template v-if="index < titleWords.length - 1"> <br></template>
+      <template v-if="index < titleWords.length - 1"><br></template>
     </template>
     <div
       v-if="subSketch"
@@ -82,9 +81,21 @@ const titleWords = computed(() => {
 <style lang='scss'>
 .hero-title {
   position: relative;
+  margin-left: 0.2em;
+  white-space: normal;
 
-  span {
+  > span {
     position: relative;
+    margin-right: 0.2em;
+    display: inline-block;
+
+    .rough-edges {
+      position: relative;
+    }
+  }
+
+  br {
+    display: none;
   }
 
   .sketch1-holder {
@@ -126,6 +137,12 @@ const titleWords = computed(() => {
   @include respond-to($tablet) {
     .sketch1-holder {
       top: 0.04em;
+    }
+  }
+
+  @include respond-to($desktop) {
+    br {
+      display: inline;
     }
   }
 }

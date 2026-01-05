@@ -29,7 +29,7 @@
   }
 
   &:after {
-    background-image: url('/images/test.png');
+    background-image: url('/images/specks.png');
     opacity: 0.18;
   }
 
