@@ -97,7 +97,6 @@ function setMask() {
 <style lang='scss'>
 .boneyard {
   position: relative;
-  overflow: hidden;
 
   .cutout {
     position: relative;
@@ -128,7 +127,7 @@ function setMask() {
     .cutout-inner {
       position: relative;
       padding-top: 200px;
-      overflow: visible;
+      overflow: hidden;
 
       .cutout-content {
         position: relative;
@@ -166,8 +165,14 @@ function setMask() {
       position: absolute;
       top: 150px;
       left: 48%;
+      min-width: 180px;
       white-space: pre-line;
       transform: translate(-50%, -50%) rotate(-7deg) scale(0.56);
+
+      &.single {
+        top: 180px;
+        left: 80%;
+      }
     }
 
     .h1 {
@@ -191,7 +196,7 @@ function setMask() {
 
         &.single {
           top: 40%;
-          left: 75%;
+          left: 85%;
         }
       }
     }
@@ -224,10 +229,10 @@ function setMask() {
       .cutout-tagline {
         top: 48%;
         left: 50%;
-        transform: translate(-50%, -50%) rotate(-7deg);
+        transform: translate(-50%, -50%) rotate(-7deg) scale(0.85);
 
         &.single {
-          top: 48%;
+          top: 42%;
           left: 75%;
         }
       }
@@ -242,6 +247,10 @@ function setMask() {
             bottom: -20px;
           }
         }
+      }
+
+      .cutout-tagline {
+        transform: translate(-50%, -50%) rotate(-7deg);
       }
     }
   }

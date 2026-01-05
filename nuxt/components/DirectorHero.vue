@@ -54,6 +54,10 @@ onMounted(() => {
 section.director-hero {
   position: relative;
 
+  .boneyard {
+    margin-top: -75px;
+  }
+
   .hero-video-wrapper {
     position: relative;
     width: 100%;
@@ -69,6 +73,12 @@ section.director-hero {
     p {
       position: relative;
       margin: 0 span(0.5);
+    }
+  }
+
+  @include respond-to($tablet) {
+    .boneyard {
+      margin-top: -100px;
     }
   }
 }
