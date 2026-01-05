@@ -172,7 +172,6 @@ function pausePlayer() {
 }
 
 async function resetPlayer() {
-  playingMode.value = false;
   if (!sdkPlayer.value) return;
 
   try {

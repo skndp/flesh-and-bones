@@ -162,12 +162,12 @@ section.directors-hero {
       overflow: hidden;
       visibility: hidden;
       opacity: 0;
-      transition: visibility 0ms linear $speed-333, opacity $speed-333 $ease-out;
+      transition: visibility 0ms linear $speed-666, opacity $speed-666 $ease-out;
 
       &.--active {
         visibility: visible;
         opacity: 1;
-        transition: opacity $speed-333 $ease-out;
+        transition: opacity $speed-666 $ease-out;
       }
     }
   }
