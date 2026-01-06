@@ -48,6 +48,10 @@
                     v-if="item.type[0].type === 'articleItem'"
                     :item="item.type[0].article"
                   />
+                  <GridItemSketch
+                    v-if="item.type[0].type === 'sketchItem'"
+                    :image="item.type[0].image"
+                  />
                 </template>
               </div>
             </div>
@@ -273,7 +277,6 @@ section.grid {
           grid-template-columns: repeat(2, 1fr);
           gap: span(1);
 
-          // 1 item — landscape → full width
           &:has(.item:only-child) {
             grid-template-columns: 1fr;
           }

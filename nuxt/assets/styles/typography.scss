@@ -134,7 +134,7 @@ strong {
   }
 
   &.xs {
-    @include fluid-type($min, $max, 30px, 80px);
+    @include fluid-type($min, $max, 24px, 80px);
     line-height: 1.2em;
   }
 

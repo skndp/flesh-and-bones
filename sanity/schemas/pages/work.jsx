@@ -165,40 +165,15 @@ export default defineType({
                               };
                             }
                           }
+                        },
+                        {
+                          name: 'sketchItem',
+                          title: 'Sketch',
+                          type: 'singleImage',
+                          validation: [
+                            Rule => Rule.required()
+                          ]
                         }
-                        // NOTE: Are we maybe adding a random graphic grid items like "Always Walking the Line"hippoe skater?
-                        // {
-                        //   name: 'articleItem',
-                        //   title: 'Article',
-                        //   type: 'object',
-                        //   icon: ProjectsIcon,
-                        //   fields: [
-                        //     {
-                        //       name: 'article',
-                        //       title: 'Select a Zine Article',
-                        //       type: 'reference',
-                        //       to: [{ type: 'article' }],
-                        //       validation: [
-                        //         Rule => Rule.required()
-                        //       ]
-                        //     }
-                        //   ],
-                        //   preview: {
-                        //     select: {
-                        //       title: 'article.title',
-                        //       slug: 'article.slug',
-                        //       image: 'article.ctaCardImages.landscapeImage.asset'
-                        //     },
-                        //     prepare(selection) {
-                        //       const { title, slug, image } = selection;
-                        //       return {
-                        //         title: title ? title : 'Untitled',
-                        //         subtitle: slug ? `/zine/${slug.current}` : '/zine/untitled',
-                        //         media: image ? image : ImageIcon
-                        //       };
-                        //     }
-                        //   }
-                        // }
                       ]
                     }
                   ],
@@ -208,18 +183,16 @@ export default defineType({
                       projectTitle: 'type.0.project.title',
                       projectImgLandscape: 'type.0.project.ctaCardImages.landscapeImage.image.asset',
                       projectImgSquare: 'type.0.project.ctaCardImages.squareImage.image.asset',
-                      // articleTitle: 'type.0.article.title',
-                      // articleSlug: 'type.0.article.slug.current',
-                      // articleImage: 'type.0.article.ctaCardImages.landscapeImage.asset'
+                      sketchTitle: 'type.0.image.asset.originalFilename',
+                      sketchImage: 'type.0.image.asset',
                     },
                     prepare({
                       type0,
                       projectTitle,
                       projectImgLandscape,
-                      projectImgSquare
-                      // articleTitle,
-                      // articleSlug,
-                      // articleImage
+                      projectImgSquare,
+                      sketchTitle,
+                      sketchImage
                     }) {
                       let projectImage = projectImgLandscape ? projectImgLandscape : projectImgSquare ? projectImgSquare : null;
                       let title = 'No items selected';
@@ -228,14 +201,13 @@ export default defineType({
 
                       switch (type0) {
                         case 'projectItem':
-                          title = projectTitle || '';
+                          title = projectTitle || 'Untitled';
                           media = projectImage ? projectImage : ImageIcon;
                           break;
-                        // case 'articleItem':
-                        //   title = articleTitle || '';
-                        //   subtitle = `/zine/${articleSlug || 'untitled'}`;
-                        //   media = articleImage ? articleImage : ImageIcon;
-                        //   break;
+                        case 'sketchItem':
+                          title = sketchTitle || 'Untitled';
+                          media = sketchImage || ImageIcon;
+                          break;
                       }
 
                       return {
@@ -256,15 +228,15 @@ export default defineType({
               projectTitle1: 'items.0.type.0.project.title',
               projectImgLandscape1: 'items.0.type.0.project.ctaCardImages.landscapeImage.image.asset',
               projectImgSquare1: 'items.0.type.0.project.ctaCardImages.squareImage.image.asset',
-              // articleTitle1: 'items.0.type.0.article.title',
-              // articleImage1: 'items.0.type.0.article.ctaCardImages.landscapeImage.asset',
+              sketchTitle1: 'items.0.type.0.image.asset.originalFilename',
+              sketchImage1: 'items.0.type.0.image.asset',
               // Item 2
               type2: 'items.1.type.0._type',
               projectTitle2: 'items.1.type.0.project.title',
               projectImgLandscape2: 'items.1.type.0.project.ctaCardImages.landscapeImage.image.asset',
-              projectImgSquare2: 'items.1.type.0.project.ctaCardImages.squareImage.image.asset'
-              // articleTitle2: 'items.1.type.0.article.title',
-              // articleImage2: 'items.1.type.0.article.ctaCardImages.landscapeImage.asset'
+              projectImgSquare2: 'items.1.type.0.project.ctaCardImages.squareImage.image.asset',
+              sketchTitle2: 'items.1.type.0.image.asset.originalFilename',
+              sketchImage2: 'items.1.type.0.image.asset'
             },
             prepare(selection) {
               const parseItem = (type, data) => {
@@ -278,10 +250,10 @@ export default defineType({
                     title = data.projectTitle ? `[Project] ${data.projectTitle}` : 'Project';
                     media = data.projectImage || null;
                     break;
-                  // case 'articleItem':
-                  //   title = data.articleTitle ? `[Article] ${data.articleTitle}` : 'Article';
-                  //   media = data.articleImage || null;
-                  //   break;
+                  case 'sketchItem':
+                    title = data.sketchTitle ? `[Sketch] ${data.sketchTitle}` : 'Sketch';
+                    media = data.sketchImage || null;
+                    break;
                 }
 
                 return { title, media };
@@ -296,9 +268,9 @@ export default defineType({
                     ? selection.projectImgLandscape1
                     : selection.projectImgSquare1
                     ? selection.projectImgSquare1
-                    : null
-                  // articleTitle: selection.articleTitle1,
-                  // articleImage: selection.articleImage1
+                    : null,
+                  sketchTitle: selection.sketchTitle1,
+                  sketchImage: selection.sketchImage1
                 });
                 if (item1) items.push(item1);
               }
@@ -311,9 +283,9 @@ export default defineType({
                     ? selection.projectImgLandscape2
                     : selection.projectImgSquare2
                     ? selection.projectImgSquare2
-                    : null
-                  // articleTitle: selection.articleTitle2,
-                  // articleImage: selection.articleImage2
+                    : null,
+                  sketchTitle: selection.sketchTitle2,
+                  sketchImage: selection.sketchImage2
                 });
                 if (item2) items.push(item2);
               }
