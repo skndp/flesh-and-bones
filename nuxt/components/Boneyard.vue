@@ -17,7 +17,7 @@
               data-fx='[{"prop":"y","from":0,"to":-100},{"prop":"s","from":0.9,"to":1}]'
               class="cutout-skeleton"
             >
-              <ResponsiveImage v-bind="skeleton.profileImage" fit="contain" :priority="true" />
+              <ResponsiveImage v-bind="skeleton.profileImage" fit="auto" :priority="true" />
             </div>
           </div>
         </div>

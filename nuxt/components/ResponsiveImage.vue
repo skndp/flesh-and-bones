@@ -2,7 +2,8 @@
   <div
     class="responsive-image-wrapper"
     :class="{
-      '--fill': fit !== 'contain',
+      '--fit': fit === 'contain',
+      '--fill': fit === 'cover',
       'responsive-image-picture--is-loaded': isLoaded,
       'responsive-image-picture--is-errored': isErrored
     }"
@@ -227,7 +228,8 @@ export default {
   user-select: none;
   pointer-events: none;
   
-  &.--fill {
+  &.--fill,
+  &.--fit {
     @include abs-fill;
     overflow: hidden;
 
@@ -238,6 +240,14 @@ export default {
         @include abs-fill;
         object-fit: cover;
         object-position: 50% 50%;
+      }
+    }
+  }
+
+  &.--fit {
+    picture.responsive-image-picture {
+      img {
+        object-fit: contain;
       }
     }
   }

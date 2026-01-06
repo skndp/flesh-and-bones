@@ -257,11 +257,11 @@ export default defineType({
 
                       switch (type0) {
                         case 'projectItem':
-                          title = projectTitle || '';
+                          title = projectTitle || 'Untitled';
                           media = projectImage ? projectImage : ImageIcon;
                           break;
                         case 'articleItem':
-                          title = articleTitle || '';
+                          title = articleTitle || 'Untitled';
                           subtitle = `/zine/${articleSlug || 'untitled'}`;
                           media = articleImage ? articleImage : ImageIcon;
                           break;

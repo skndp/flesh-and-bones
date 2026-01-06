@@ -104,10 +104,17 @@ function onItemHover(e) {
   }
 
   @include respond-to($small-tablet) {
-    aspect-ratio: 1/1;
+    aspect-ratio: auto;
+
+    .item-image {
+      aspect-ratio: auto;
+      flex-grow: 1;
+    }
 
     &:only-child {
-      aspect-ratio: 2/1;
+      .item-image {
+        aspect-ratio: 1/1;
+      }
     }
   }
 
@@ -146,18 +153,22 @@ function onItemHover(e) {
   }
 
   @include respond-to($macbook) {
-    aspect-ratio: 4/3;
-
-    &:only-child {
-      aspect-ratio: 8/3;
-    }
-
     .item-image {
       width: 66%;
     }
 
     .item-details {
       width: 66%;
+    }
+
+    &:only-child {
+      .item-image {
+        width: 83.333%;
+      }
+
+      .item-details {
+        width: 83.333%;
+      }
     }
   }
 }
