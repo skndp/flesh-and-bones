@@ -134,7 +134,9 @@ function onHoverChange(index) {
   if (index === null) return;
 
   const currentPlayer = videoRefs.value[index];
-  currentPlayer.restartPlayer();
+  if (currentPlayer) {
+    currentPlayer.restartPlayer();
+  }
 }
 
 function pausePlayers() {

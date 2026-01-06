@@ -1,7 +1,7 @@
 <template>
-  <section class="contact-founders pad-b">
+  <section class="contact-founders">
     <Boneyard :tagline="cutoutTitle" :skeletons="founders" />
-    <div class="gutter cols pad-b">
+    <div class="gutter cols">
       <div v-for="founder in founders" class="col">
         <p class="flesh brush">{{ founder.name }}</p>
         <p class="manic sm">{{ founder.role }}</p>
@@ -72,6 +72,8 @@ section.contact-founders {
   }
 
   @include respond-to($tablet) {
+    padding-bottom: span(1);
+
     .cols {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
