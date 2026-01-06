@@ -78,7 +78,8 @@ function onItemHover(e) {
       top: 50%;
       left: 0%;
       width: 100px;
-      transform: translate(-36%, -50%);
+      backface-visibility: hidden;
+      transform: translate(-36%, -50%) translateZ(0);
     }
   }
 
