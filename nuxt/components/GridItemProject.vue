@@ -67,7 +67,6 @@ onBeforeUnmount(() => {
 function onResize() {
   isSmallScreen.value = window.innerWidth < 540;
 
-  // Ignore iOS scroll resizes (height-only changes)
   if (window.innerWidth === lastWidth) return;
 
   clearTimeout(resizeTo);

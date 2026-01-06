@@ -59,7 +59,6 @@ onBeforeUnmount(() => {
 
 // Methods
 function onResize() {
-  // Ignore iOS scroll resizes (height-only changes)
   if (window.innerWidth === lastWidth) return;
 
   clearTimeout(resizeTo);
