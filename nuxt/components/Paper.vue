@@ -1,5 +1,5 @@
 <template>
-  <div class="paper">
+  <div class="paper" :class="{ 'offset': offset }">
     <div class="edge left">
       <span class="distress"></span>
       <span class="tear"></span>
@@ -9,6 +9,16 @@
     </div>
   </div>
 </template>
+
+<script setup>
+// Props
+const props = defineProps({
+  offset: {
+    type: Boolean,
+    required: false
+  }
+});
+</script>
 
 <style lang="scss">
 .paper {
@@ -79,11 +89,41 @@
     }
   }
 
+  &.offset {
+    .edge {
+      &.left {
+        span.distress {
+          top: 100svh;
+        }
+
+        span.tear {
+          top: calc(100svh + 15%);
+        }
+      }
+
+      &.right {
+        span.tear {
+          bottom: calc(100svh + 20%);
+        }
+      }
+    }
+  }
+
   @include respond-to($tablet) {
     .edge {
       &.left {
         span.tear {
           top: 66%;
+        }
+      }
+    }
+
+    &.offset {
+      .edge {
+        &.left {
+          span.tear {
+            top: calc(100svh + 66%);
+          }
         }
       }
     }

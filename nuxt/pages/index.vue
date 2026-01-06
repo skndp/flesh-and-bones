@@ -1,10 +1,10 @@
 <template>
   <div id="home-page" class="page">
-    <HomeHeroVideo
-      :video="page.heroVideo.vimeo"
-    />
     <div id="home-page-inner">
-      <Paper />
+      <Paper :offset="true" />
+      <HomeHeroVideo
+        :video="page.heroVideo.vimeo"
+      />
       <HomeHero
         :title="page.heroHeading"
         :sketches="page.heroHeadingSketches"

@@ -1,5 +1,5 @@
 <template>
-  <section class="home-hero pad-t pad-b">
+  <section class="home-hero pad-b">
     <div class="gutter">
       <HeroTitle
         :title="title"

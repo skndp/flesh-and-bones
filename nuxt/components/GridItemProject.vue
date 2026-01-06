@@ -59,6 +59,7 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
+  clearTimeout(resizeTo);
   window.removeEventListener('resize', onResize);
 });
 

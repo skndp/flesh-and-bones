@@ -32,11 +32,18 @@ const siteLoaded = ref(false);
 let readyDelayTimer = null;
 let fallbackTimer = null;
 
+let resizeTo = 0;
+let lastWidth = 0;
+
 let observer;
 let percentOutOfView = 100;
 let thresholdVal = (100 - percentOutOfView) / 100;
 
 onMounted(() => {
+  lastWidth = window.innerWidth;
+  window.addEventListener('resize', onResize);
+  setMask();
+
   observer = new IntersectionObserver(([entry]) => {
       passed.value = entry.intersectionRatio <= thresholdVal && entry.boundingClientRect.top < 0;
     }, { threshold: thresholdVal }
@@ -52,13 +59,40 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  if (heroVideoRef.value) {
+  clearTimeout(resizeTo);
+  window.removeEventListener('resize', onResize);
+
+  if (observer && heroVideoRef.value) {
     observer.unobserve(heroVideoRef.value);
   }
 
   clearTimeout(readyDelayTimer);
   clearTimeout(fallbackTimer);
 });
+
+function onResize() {
+  if (window.innerWidth === lastWidth) return;
+
+  clearTimeout(resizeTo);
+  resizeTo = setTimeout(() => {
+    lastWidth = window.innerWidth;
+    setMask();
+  }, 250);
+}
+
+function setMask() {
+  const b = heroVideoRef.value.getBoundingClientRect();
+  const mask = createTornEdge({
+    width: b.width,
+    height: b.height,
+    startY: b.height - 100,
+    endY: b.height - 100,
+    wobble: 0.2,
+    edgeRoughness: 6
+  });
+
+  heroVideoRef.value.style.maskImage = `url(${mask})`;
+}
 
 function onPlayerReady() {
   if (siteLoaded.value) return;
@@ -99,7 +133,7 @@ watch(passed, (isPassed) => {
 section.home-hero-video {
   position: relative;
   width: 100%;
-  height: 100svh;
+  height: calc(100svh + 50px);
   overflow: hidden;
 }
 

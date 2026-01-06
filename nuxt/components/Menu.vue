@@ -79,6 +79,7 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
+  clearTimeout(resizeTo);
   window.removeEventListener('resize', onResize);
 });
 
@@ -297,14 +298,6 @@ watch(() => store.menuOpen, (isOpen, wasOpen) => {
                 visibility: hidden;
                 transition: visibility 0ms linear 1s;
               }
-
-              // @include can-hover {
-              //   &:hover {
-              //     span.bg {
-              //       visibility: visible;
-              //     }
-              //   }
-              // }
             }
           }
         }
