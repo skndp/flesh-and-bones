@@ -3,7 +3,7 @@
     <div class="gutter">
       <div v-for="row in directory" class="row">
         <div class="note">
-          <p class="flesh manic xs-reg">{{ row.sketchnote }}</p>
+          <p class="flesh manic md-reg">{{ row.sketchnote }}</p>
         </div>
         <ul v-for="list in row.lists" class="bone brush">
           <li><p class="flesh brush lg">{{ list.label }}</p></li>
@@ -41,8 +41,35 @@ section.contact-directory {
         margin-bottom: $space-48;
       }
 
+      &:nth-child(2) {
+        .note {
+          p {
+            &:after {
+              content: '';
+              position: absolute;
+              top: 0.1em;
+              left: 100%;
+              margin-left: 1em;
+              height: 1.6em;
+              aspect-ratio: 73/87;
+              background-color: $bone;
+              mask-image: url('/images/smile.png');
+              mask-repeat: no-repeat;
+              mask-position: 50% 50%;
+              mask-size: contain;
+            }
+          }
+        }
+      }
+
       .note {
+        position: relative;
         margin-bottom: 1em;
+        display: inline-flex;
+
+        p {
+          position: relative;
+        }
       }
 
       ul {
@@ -75,6 +102,18 @@ section.contact-directory {
         display: flex;
         flex-wrap: nowrap;
 
+        &:nth-child(2) {
+          .note {
+            p {
+              &:after {
+                top: 0.7em;
+                height: 1.2em;
+                margin-left: -0.1em;
+              }
+            }
+          }
+        }
+
         .note {
           width: 33.333%;
           margin-top: 1em;
@@ -90,6 +129,24 @@ section.contact-directory {
           &:not(:last-child) {
             margin-bottom: 0px;
             margin-right: span(1);
+          }
+        }
+      }
+    }
+  }
+
+  @include respond-to($large-tablet) {
+    .gutter {
+      .row {
+        &:nth-child(2) {
+          .note {
+            p {
+              &:after {
+                top: 0.2em;
+                height: 1.3em;
+                margin-left: span(0.25);
+              }
+            }
           }
         }
       }

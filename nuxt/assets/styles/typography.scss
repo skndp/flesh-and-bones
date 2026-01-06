@@ -88,16 +88,16 @@ strong {
   line-height: 1.2em;
   text-transform: uppercase;
 
-  &.xs-reg {
-    @include fluid-type($min, $max, 14px, 30px);
-  }
-
   &.sm {
     @include fluid-type($min, $max, 14px, 20px);
   }
 
   &.md {
     @include fluid-type($min, $max, 16px, 24px);
+  }
+
+  &.md-reg {
+    @include fluid-type($min, $max, 16px, 30px);
   }
 }
 
