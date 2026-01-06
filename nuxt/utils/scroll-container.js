@@ -101,7 +101,7 @@ class ScrollContainer {
       const fx = this.parseFx(t)
 
       return {
-        from: (rect.top - window.innerHeight) + window.pageYOffset,
+        from: Math.max(0, ((rect.top - window.innerHeight) + window.pageYOffset)),
         to: ((rect.bottom) + window.pageYOffset),
         fx,
       }

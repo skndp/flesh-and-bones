@@ -1,15 +1,13 @@
 <template>
-  <section
-    ref="heroVideoRef"
-    class="home-hero-video"
-    :class="{ 'passed': passed }"
-  >
+  <section ref="heroVideoRef" class="home-hero-video" :class="{ 'passed': passed }" v-scroll-container>
     <VideoPlayer
       ref="videoPlayerRef"
       :vimeo="video"
       :cover="true"
       :manualPlay="true"
       @ready="onPlayerReady"
+      data-scroll="parallax"
+      data-fx='[{"prop":"y","from":0,"to":500}]'
     />
   </section>
 </template>
