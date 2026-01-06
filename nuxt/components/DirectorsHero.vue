@@ -125,7 +125,7 @@ function onMouseleave(e) {
 
 function onHoverChange(index) {
   // Pause any/all videos
-  resetPlayers();
+  pausePlayers();
 
   // set the new active index
   activeIndex.value = index;
@@ -134,13 +134,13 @@ function onHoverChange(index) {
   if (index === null) return;
 
   const currentPlayer = videoRefs.value[index];
-  currentPlayer.playPlayer();
+  currentPlayer.restartPlayer();
 }
 
-function resetPlayers() {
+function pausePlayers() {
   videoRefs.value.forEach((vid) => {
     if (vid) {
-      vid.resetPlayer();
+      vid.pausePlayer();
     }
   });
 }

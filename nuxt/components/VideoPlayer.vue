@@ -54,7 +54,8 @@ const props = defineProps({
 defineExpose({
   playPlayer,
   pausePlayer,
-  resetPlayer
+  resetPlayer,
+  restartPlayer
 });
 
 const emit = defineEmits(['ready']);
@@ -179,6 +180,18 @@ async function resetPlayer() {
     await sdkPlayer.value.setCurrentTime(0);
   } catch (e) {
     console.warn('Failed to reset Vimeo player', e);
+  }
+}
+
+async function restartPlayer() {
+  if (!sdkPlayer.value) return;
+
+  try {
+    await sdkPlayer.value.pause();
+    await sdkPlayer.value.setCurrentTime(0);
+    await sdkPlayer.value.play();
+  } catch (e) {
+    console.warn('Failed to restart Vimeo player', e);
   }
 }
 </script>
