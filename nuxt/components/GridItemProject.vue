@@ -52,6 +52,7 @@ const props = defineProps({
 onMounted(() => {
   lastWidth = window.innerWidth;
   window.addEventListener('resize', onResize);
+  onResize();
 
   nextTick(() => {
     reflow();
