@@ -162,9 +162,13 @@ button {
 // --------------------------------------------
 
 .rough-edges {
+  backface-visibility: hidden;
   filter: url(#roughEdges);
+  transform: translateZ(0);
 }
 
 .rough-edges-light {
+  backface-visibility: hidden;
   filter: url(#roughEdgesLight);
+  transform: translateZ(0);
 }

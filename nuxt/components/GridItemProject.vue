@@ -1,7 +1,7 @@
 <template>
   <div ref="itemRef" class="item project flesh" :class="[ layout ]">
     <div ref="infoRef" class="item-info">
-      <h3 class="h3">{{ item.title }}</h3>
+      <h3 class="h3 rough-edges-light">{{ item.title }}</h3>
       <div class="meta">
         <p class="brush xs"><strong>Director - {{ item.director.title }}</strong></p>
       </div>
