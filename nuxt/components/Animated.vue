@@ -55,10 +55,11 @@ watch(() => props.autoplay, (newVal) => {
   mask-size: contain;
   mask-repeat: no-repeat;
   pointer-events: none;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 
   &.hidden {
     display: none;
-    background-color: none;
   }
 
   &.circle {
