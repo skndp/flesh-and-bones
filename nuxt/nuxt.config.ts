@@ -64,6 +64,13 @@ export default defineNuxtConfig({
         { rel: 'shortcut icon', href: '/favicon.ico' },
         { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
         { rel: 'manifest', href: '/site.webmanifest' },
+        // Self-hosted
+        { rel: 'preload', href: '/fonts/Graphik-Semibold-Web.woff2', as: 'font', type: 'font/woff2', crossorigin: 'anonymous' },
+        { rel: 'preload', href: '/fonts/Graphik-Black-Web.woff2', as: 'font', type: 'font/woff2', crossorigin: 'anonymous' },
+        { rel: 'preload', href: '/fonts/MANIC-Regular.woff2', as: 'font', type: 'font/woff2', crossorigin: 'anonymous' },
+        { rel: 'preload', href: '/fonts/MANIC-Alternates1.woff2', as: 'font', type: 'font/woff2', crossorigin: 'anonymous' },
+        { rel: 'preload', href: '/fonts/MANIC-Alternates3.woff2', as: 'font', type: 'font/woff2', crossorigin: 'anonymous' },
+        // Typekit
         { rel: 'preconnect', href: 'https://use.typekit.net' },
         { rel: 'stylesheet', href: 'https://use.typekit.net/pqr6rij.css' }
       ]
@@ -78,6 +85,7 @@ export default defineNuxtConfig({
   //
   css: [
     '~/assets/styles/reset.scss',
+    '~/assets/styles/fonts.scss',
     '~/assets/styles/main.scss',
     '~/assets/styles/typography.scss'
   ],
@@ -86,7 +94,6 @@ export default defineNuxtConfig({
       preprocessorOptions: {
         scss: {
           additionalData: `
-            @use "~/assets/styles/_fonts.scss" as *;
             @use "~/assets/styles/_vars.scss" as *;
             @use "~/assets/styles/_mixins.scss" as *;
           `

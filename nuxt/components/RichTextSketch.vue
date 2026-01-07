@@ -77,7 +77,7 @@ const copyHtml = customCopyHtml.replace(/<br\/>/gi, '<br\/> ');
 
   .sketch-bold {
     position: relative;
-    font-family: $graphic-black;
+    font-family: $graphik-black;
     transform: rotate(-1.3deg);
     display: inline-flex;
   }

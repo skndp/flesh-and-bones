@@ -124,7 +124,7 @@ strong {
 }
 
 .h1 {
-  font-family: $graphic-black;
+  font-family: $graphik-black;
   @include fluid-type($min, $max, 44px, 102px);
   line-height: 1em;
   text-transform: uppercase;
@@ -144,7 +144,7 @@ strong {
 }
 
 .h2 {
-  font-family: $graphic-black;
+  font-family: $graphik-black;
   @include fluid-type($min, $max, 30px, 76px);
   line-height: 1em;
   text-transform: uppercase;
@@ -155,21 +155,21 @@ strong {
 }
 
 .h3 {
-  font-family: $graphic-black;
+  font-family: $graphik-black;
   @include fluid-type($min, $max, 30px, 48px);
   line-height: 1em;
   text-transform: uppercase;
 }
 
 .h4 {
-  font-family: $graphic-black;
+  font-family: $graphik-black;
   @include fluid-type($min, $max, 24px, 36px);
   line-height: 1em;
   text-transform: uppercase;
 }
 
 .h5 {
-  font-family: $graphic-black;
+  font-family: $graphik-black;
   @include fluid-type($min, $max, 20px, 30px);
   line-height: 1em;
   text-transform: uppercase;
