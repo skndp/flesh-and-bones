@@ -90,11 +90,9 @@ onMounted(() => {
   setTimeout(() => {
     // If not home page, go ahead and set loader complete
     // (HomeHeroVideo has it's own video loadeer to trigger it's own setLoaderComplete)
-    // if (route.name !== 'index') {
-    //   store.setLoaderComplete();
-    // }
-
-    store.setLoaderComplete();
+    if (route.name !== 'index') {
+      store.setLoaderComplete();
+    }
   }, 100);
 });
 

@@ -2,19 +2,19 @@
   <div id="home-page" class="page">
     <div id="home-page-inner">
       <Paper :offset="true" />
-      <!-- <HomeHeroVideo
+      <HomeHeroVideo
         :video="page.heroVideo.vimeo"
-      /> -->
+      />
       <HomeHero
         :title="page.heroHeading"
         :sketches="page.heroHeadingSketches"
         :copy="page.heroCopy"
       />
-      <!-- <Grid
+      <Grid
         :grid="page.featuredGrid"
         :sketchnoteLeft="page.sketchnoteLeft"
         :sketchnoteRight="page.sketchnoteRight"
-      /> -->
+      />
       <BigCta
         path="/work"
         label="View All Work"
