@@ -4,9 +4,9 @@
       <template v-if="item.ctaCardImages.squareImage">
         <ResponsiveImage v-bind="item.ctaCardImages.squareImage.image" />
       </template>
-      <!-- <div class="item-hover">
+      <div class="item-hover">
         <Animated :autoplay="false" type="news-flash" :loop="true" background="bg-bone" ref="hoverAnimation" />
-      </div> -->
+      </div>
     </div>
     <div class="item-details">
       <div class="meta">
