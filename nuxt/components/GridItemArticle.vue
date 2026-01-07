@@ -4,9 +4,9 @@
       <template v-if="item.ctaCardImages.squareImage">
         <ResponsiveImage v-bind="item.ctaCardImages.squareImage.image" />
       </template>
-      <div class="item-hover">
+      <!-- <div class="item-hover">
         <Animated :autoplay="false" type="news-flash" :loop="true" background="bg-bone" ref="hoverAnimation" />
-      </div>
+      </div> -->
     </div>
     <div class="item-details">
       <div class="meta">
@@ -78,8 +78,7 @@ function onItemHover(e) {
       top: 50%;
       left: 0%;
       width: 100px;
-      backface-visibility: hidden;
-      transform: translate(-36%, -50%) translateZ(0);
+      transform: translate(-36%, -50%);
     }
   }
 
