@@ -57,7 +57,7 @@ watch(() => props.autoplay, (newVal) => {
   pointer-events: none;
 
   &.hidden {
-    visibility: hidden;
+    display: none;
   }
 
   &.circle {
