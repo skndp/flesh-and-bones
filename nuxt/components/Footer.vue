@@ -14,23 +14,23 @@
         </ul>
         <ul class="pages midnight brush">
           <li><NuxtLink to="/work" @click.native="onClickNavLink" @mouseenter="onItemHover" @mouseleave="onItemHover">
-            <span class="rough-edges-light"></span>
+            <span class="rough-edges"></span>
             <span>Work</span></NuxtLink>
           </li>
           <li><NuxtLink to="/directors" @click.native="onClickNavLink" @mouseenter="onItemHover" @mouseleave="onItemHover">
-            <span class="rough-edges-light"></span>
+            <span class="rough-edges"></span>
             <span>Directors</span></NuxtLink>
           </li>
           <li><NuxtLink to="/manifesto" @click.native="onClickNavLink" @mouseenter="onItemHover" @mouseleave="onItemHover">
-            <span class="rough-edges-light"></span>
+            <span class="rough-edges"></span>
             <span>Manifesto</span></NuxtLink>
           </li>
           <li><NuxtLink to="/zine" @click.native="onClickNavLink" @mouseenter="onItemHover" @mouseleave="onItemHover">
-            <span class="rough-edges-light"></span>
+            <span class="rough-edges"></span>
             <span>Zine</span></NuxtLink>
           </li>
           <li><NuxtLink to="/contact" @click.native="onClickNavLink" @mouseenter="onItemHover" @mouseleave="onItemHover">
-            <span class="rough-edges-light"></span>
+            <span class="rough-edges"></span>
             <span>Contact</span></NuxtLink>
           </li>
         </ul>
@@ -111,7 +111,7 @@ function setMask() {
 
 function onItemHover(e) {
   const t = e.currentTarget,
-        bg = t.querySelector('.rough-edges-light');
+        bg = t.querySelector('.rough-edges');
 
   if(e.type === 'mouseenter') {
     bg.style.maskComposite = 'unset';
@@ -133,6 +133,8 @@ function onItemHover(e) {
     mask-size: 101% auto;
     mask-composite: exclude;
     mask-repeat: no-repeat;
+    backface-visibility: hidden;
+    transform: translateZ(0);
 
     &.cover {
       margin-top: -200px;
@@ -219,7 +221,7 @@ function onItemHover(e) {
           display: inline-flex;
           justify-content: center;
 
-          span.rough-edges-light {
+          span.rough-edges {
             @include abs-fill;
             background-color: $flesh;
             mask-size: cover;
@@ -231,12 +233,8 @@ function onItemHover(e) {
             will-change: transform, mask-image, mask-composite;
           }
 
-          span:not(.rough-edges-light) {
+          span:not(.rough-edges) {
             position: relative;
-          }
-
-          &.router-link-exact-active {
-            // TODO: do we want this?
           }
         }
       }
