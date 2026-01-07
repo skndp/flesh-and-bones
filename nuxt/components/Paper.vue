@@ -25,8 +25,6 @@ const props = defineProps({
   @include abs-fill;
   overflow: hidden;
   pointer-events: none;
-  backface-visibility: hidden;
-  transform: translateZ(0);
 
   &:before,
   &:after {

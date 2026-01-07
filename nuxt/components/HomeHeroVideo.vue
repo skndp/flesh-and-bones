@@ -135,8 +135,6 @@ section.home-hero-video {
   width: 100%;
   height: calc(100svh + 50px);
   overflow: hidden;
-  backface-visibility: hidden;
-  transform: translateZ(0);
 
   &.passed {
     visibility: hidden;

@@ -39,7 +39,7 @@ const page = data.value;
 <style lang="scss">
 #directors-page {
   &:before {
-    display: none;
+    height: 0px;
   }
 }
 </style>

@@ -89,7 +89,7 @@ const page = data.value;
 <style lang='scss'>
 #home-page {
   &:before {
-    display: none;
+    height: 0px;
   }
 
   #home-page-inner {

@@ -199,7 +199,7 @@ function reflow() {
       mask-size: cover;
 
       &:nth-child(3) {
-        display: none;
+        visibility: hidden;
       }
 
       @include can-hover {

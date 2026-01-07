@@ -133,8 +133,6 @@ function onItemHover(e) {
     mask-size: 101% auto;
     mask-composite: exclude;
     mask-repeat: no-repeat;
-    backface-visibility: hidden;
-    transform: translateZ(0);
 
     &.cover {
       margin-top: -200px;
