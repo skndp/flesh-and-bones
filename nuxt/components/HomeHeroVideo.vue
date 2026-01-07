@@ -1,6 +1,6 @@
 <template>
   <section ref="heroVideoRef" class="home-hero-video" :class="{ 'passed': passed }" v-scroll-container>
-    <VideoPlayer
+    <!-- <VideoPlayer
       ref="videoPlayerRef"
       :vimeo="video"
       :cover="true"
@@ -8,7 +8,7 @@
       @ready="onPlayerReady"
       data-scroll="parallax"
       data-fx='[{"prop":"y","from":0,"to":500}]'
-    />
+    /> -->
   </section>
 </template>
 
@@ -99,7 +99,7 @@ function onPlayerReady() {
 
   playerReady.value = true;
 
-  readyDelayTimer = setTimeout(() => {    
+  readyDelayTimer = setTimeout(() => {
     triggerSiteLoaded();
   }, 1000);
 }
