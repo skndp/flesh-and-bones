@@ -1,5 +1,10 @@
 <template>
-  <section ref="heroVideoRef" class="home-hero-video" :class="{ 'passed': passed }" v-scroll-container>
+  <section
+    ref="heroVideoRef"
+    class="home-hero-video"
+    :class="{ 'passed': passed, 'init': playerReady }"
+    v-scroll-container
+  >
     <VideoPlayer
       ref="videoPlayerRef"
       :vimeo="video"
@@ -9,6 +14,11 @@
       data-scroll="parallax"
       data-fx='[{"prop":"y","from":0,"to":500}]'
     />
+    <Transition name="loading">
+      <div v-if="!playerReady" class="loading-label">
+        <span class="h3 flesh rough-edges-light">LOADING</span>
+      </div>
+    </Transition>
   </section>
 </template>
 
@@ -133,11 +143,78 @@ watch(passed, (isPassed) => {
 section.home-hero-video {
   position: relative;
   width: 100%;
-  height: calc(100svh + 50px);
+  background-color: #000;
+  height: calc(100svh + 50px); // a quarter of the 200px tear height
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &.passed {
     visibility: hidden;
+  }
+
+  &.init {
+    .video-player-wrapper {
+      opacity: 1;
+      transition: opacity $speed-666 $ease-out 2s;
+    }
+  }
+
+  .video-player-wrapper {
+    opacity: 0;
+  }
+
+  .loading-label {
+    position: relative;
+    margin-top: -25px; // half of 50px offset of tear line
+    white-space: nowrap;
+    display: flex;
+
+    span {
+      position: relative;
+      display: flex;
+      animation: vibrate $speed-666 steps(1) infinite;
+
+      &:after {
+        content: '';
+        position: absolute;
+        top: 0px;
+        left: 100%;
+        height: 0.8em;
+        aspect-ratio: 203/184;
+        background-color: $bone;
+        mask-image: url('/images/bolts.png');
+        mask-repeat: no-repeat;
+        mask-position: 50% 50%;
+        mask-size: contain;
+        transform: translateX(0.1em) translateY(-27%) scaleX(-1);
+      }
+    }
+
+    @keyframes vibrate {
+      0% { transform: translate(0px, 0px); }
+      10% { transform: translate(0.5px, -0.5px); }
+      20% { transform: translate(-0.5px, 0.5px); }
+      30% { transform: translate(0.5px, 0px); }
+      40% { transform: translate(-0.5px, -0.5px); }
+      50% { transform: translate(0px, 0.5px); }
+      60% { transform: translate(0.5px, 0.5px); }
+      70% { transform: translate(-0.5px, 0px); }
+      80% { transform: translate(0px, -0.5px); }
+      90% { transform: translate(0.5px, 0px); }
+      100% { transform: translate(0px, 0px); }
+    }
+
+    &.loading-enter-active,
+    &.loading-leave-active {
+      transition: opacity $speed-666 $ease-out 1.333s;
+    }
+
+    &.loading-enter-from,
+    &.loading-leave-to {
+      opacity: 0;
+    }
   }
 }
 

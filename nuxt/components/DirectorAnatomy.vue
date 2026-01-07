@@ -2,11 +2,11 @@
   <section class="director-anatomy pad-b">
     <div class="gutter cols">
       <div class="col">
-        <p class="flesh manic md">{{ label }}</p>
+        <p class="flesh manic md"><span></span>{{ label }}</p>
         <p class="bio">{{ bio }}</p>
       </div>
       <div class="col">
-        <p class="brush md">{{ location }}</p>
+        <p class="brush md"><span>{{ location }}</span></p>
         <ul class="brush xs">
           <li v-for="item in tags">{{ item.tag }}</li>
         </ul>
@@ -49,6 +49,37 @@ section.director-anatomy {
       &:first-child {
         order: 2;
 
+        .manic {
+          position: relative;
+          display: flex;
+          align-items: center;
+
+          span {
+            position: relative;
+            width: 1.4em;
+            aspect-ratio: 1/1;
+            display: inline-flex;
+            margin-right: 0.7em;
+            flex-shrink: 0;
+
+            &:before,
+            &:after {
+              content: '';
+              @include abs-fill;
+              background-color: $flesh;
+              mask-image: url('/images/bone.png');
+              mask-repeat: no-repeat;
+              mask-position: 50% 50%;
+              mask-size: contain;
+              transform: rotate(-45deg);
+            }
+
+            &:after {
+              transform: rotate(45deg) scaleX(-1);
+            }
+          }
+        }
+
         .bio {
           margin-top: 0.5em;
           line-height: 1.666em;
@@ -58,6 +89,31 @@ section.director-anatomy {
       &:last-child {
         order: 1;
         margin-bottom: $space-32;
+
+        .brush {
+          position: relative;
+
+          &.md {
+            &:before {
+              content: '';
+              position: absolute;
+              top: 0px;
+              left: 0px;
+              height: 2.8em;
+              aspect-ratio: 417/209;
+              background-color: $flesh;
+              mask-image: url('/images/double-circle.png');
+              mask-repeat: no-repeat;
+              mask-position: 50% 50%;
+              mask-size: contain;
+              transform: translateX(-18%) translateY(-27%);
+            }
+
+            span {
+              position: relative;
+            }
+          }
+        }
 
         ul {
           margin-top: 0.5em;
