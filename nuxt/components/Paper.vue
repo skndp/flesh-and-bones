@@ -1,10 +1,10 @@
 <template>
   <div class="paper" :class="{ 'offset': offset }">
-    <div class="edge left">
+    <div v-if="edges" class="edge left">
       <span class="distress"></span>
       <span class="tear"></span>
     </div>
-    <div class="edge right">
+    <div v-if="edges" class="edge right">
       <span class="tear"></span>
     </div>
   </div>
@@ -16,6 +16,11 @@ const props = defineProps({
   offset: {
     type: Boolean,
     required: false
+  },
+  edges: {
+    type: Boolean,
+    required: false,
+    default: true
   }
 });
 </script>
