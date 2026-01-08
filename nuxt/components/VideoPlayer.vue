@@ -3,7 +3,7 @@
     <div
       class="video-holder"
       :aria-label="poster ? poster.alt : ''"
-      :class="{'--show': playingMode, '--cover': cover}"
+      :class="{'--show': hoverToPlay || playingMode, '--cover': cover}"
       :style="[cover && {'width': `${playerWidth}px`, 'height': `${playerHeight}px`}]"
     >
       <ClientOnly>
@@ -51,16 +51,18 @@ const props = defineProps({
   },
   manualPlay: {
     type: Boolean,
-    default: false,
-    required: false
+    default: false
+  },
+  hoverToPlay: {
+    type: Boolean,
+    default: false
   }
 });
 
 defineExpose({
   playPlayer,
   pausePlayer,
-  resetPlayer,
-  restartPlayer
+  resetPlayer
 });
 
 const emit = defineEmits(['ready']);
@@ -177,29 +179,19 @@ function pausePlayer() {
   }
 }
 
-async function resetPlayer() {
+function resetPlayer() {
   if (!sdkPlayer.value) return;
 
-  playingMode.value = false;
-  
-  try {
-    await sdkPlayer.value.pause();
-    await sdkPlayer.value.setCurrentTime(0);
-  } catch (e) {
-    console.warn('Failed to reset Vimeo player', e);
+  if (!props.hoverToPlay) {
+    playingMode.value = false;
   }
-}
 
-async function restartPlayer(index) {
-  if (!sdkPlayer.value) return;
+  sdkPlayer.value.pause().catch(() => {});
+  sdkPlayer.value.setCurrentTime(0).catch(() => {});
 
-  try {
-    await sdkPlayer.value.pause();
-    await sdkPlayer.value.setCurrentTime(0);
-    await sdkPlayer.value.play();
+  if (props.hoverToPlay) {
+    sdkPlayer.value.play().catch(() => {});
     playingMode.value = true;
-  } catch (e) {
-    console.warn('Failed to restart Vimeo player', e);
   }
 }
 </script>

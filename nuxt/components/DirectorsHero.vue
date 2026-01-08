@@ -7,6 +7,8 @@
           ref="videoRefs"
           :vimeo="item.backgroundVideo.vimeo"
           :cover="true"
+          :hoverToPlay="true"
+          :key="index"
         />
       </div>
     </div>
@@ -135,7 +137,7 @@ function onHoverChange(index) {
 
   const currentPlayer = videoRefs.value[activeIndex.value];
   if (currentPlayer) {
-    currentPlayer.restartPlayer(activeIndex.value);
+    currentPlayer.resetPlayer();
   }
 }
 
@@ -164,12 +166,12 @@ section.directors-hero {
       overflow: hidden;
       visibility: hidden;
       opacity: 0;
-      transition: visibility 0ms linear $speed-333, opacity $speed-333 $ease-out;
+      transition: visibility 0ms linear $speed-666, opacity $speed-666 $ease-out;
 
       &.--active {
         visibility: visible;
         opacity: 1;
-        transition: opacity $speed-333 $ease-out;
+        transition: opacity $speed-666 $ease-out $speed-333;
       }
     }
   }
@@ -225,7 +227,7 @@ section.directors-hero {
 
               span.bg {
                 @include abs-fill;
-                background-color: $midnight;
+                background-color: $flesh;
                 mask-size: cover;
                 mask-composite: exclude;
                 mask-image: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
@@ -250,7 +252,7 @@ section.directors-hero {
 
                 &:hover {
                   .h4 {
-                    color: $flesh;
+                    color: rgba($midnight, 1);
 
                     span.bg {
                       opacity: 1;
