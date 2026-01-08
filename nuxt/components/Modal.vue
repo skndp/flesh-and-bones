@@ -14,7 +14,7 @@
               <Swiper
                 class="titles-swiper"
                 direction="vertical"
-                slides-per-view="auto"
+                slides-per-view="1"
                 :modules="[Controller]"
                 :grab-cursor="false"
                 :allow-touch-move="false"
@@ -200,6 +200,12 @@ function onClickNext() {
 }
 
 function closeModal() {
+  videoRefs.value.forEach((vid) => {
+    if (vid && vid.pausePlayer) {
+      vid.pausePlayer();
+    }
+  });
+
   store.setModalClose(false);
 }
 
