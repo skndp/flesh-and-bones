@@ -133,9 +133,9 @@ function onHoverChange(index) {
   // if null (mouseleave) — we're done
   if (index === null) return;
 
-  const currentPlayer = videoRefs.value[index];
+  const currentPlayer = videoRefs.value[activeIndex.value];
   if (currentPlayer) {
-    currentPlayer.restartPlayer();
+    currentPlayer.restartPlayer(activeIndex.value);
   }
 }
 
@@ -164,12 +164,12 @@ section.directors-hero {
       overflow: hidden;
       visibility: hidden;
       opacity: 0;
-      transition: visibility 0ms linear $speed-666, opacity $speed-666 $ease-out;
+      transition: visibility 0ms linear $speed-333, opacity $speed-333 $ease-out;
 
       &.--active {
         visibility: visible;
         opacity: 1;
-        transition: opacity $speed-666 $ease-out;
+        transition: opacity $speed-333 $ease-out;
       }
     }
   }

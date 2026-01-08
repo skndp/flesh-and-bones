@@ -1,6 +1,11 @@
 <template>
   <div ref="wrapperRef" class="video-player-wrapper" :class="{'--no-controls': !controls}">
-    <div class="video-holder" :aria-label="poster ? poster.alt : ''" :class="{'--show': playingMode, '--cover': cover}" :style="[cover && {'width': `${playerWidth}px`, 'height': `${playerHeight}px`}]">
+    <div
+      class="video-holder"
+      :aria-label="poster ? poster.alt : ''"
+      :class="{'--show': playingMode, '--cover': cover}"
+      :style="[cover && {'width': `${playerWidth}px`, 'height': `${playerHeight}px`}]"
+    >
       <ClientOnly>
         <vueVimeoPlayer
           v-if="hasVideo"
@@ -154,7 +159,7 @@ function isPlaying() {
 }
 
 function onEnded() {
-  if (sdkPlayer.value) {
+  if (props.controls && sdkPlayer.value) {
     sdkPlayer.value.pause().catch(() => {});
     playingMode.value = false;
   }
@@ -175,6 +180,8 @@ function pausePlayer() {
 async function resetPlayer() {
   if (!sdkPlayer.value) return;
 
+  playingMode.value = false;
+  
   try {
     await sdkPlayer.value.pause();
     await sdkPlayer.value.setCurrentTime(0);
@@ -183,13 +190,14 @@ async function resetPlayer() {
   }
 }
 
-async function restartPlayer() {
+async function restartPlayer(index) {
   if (!sdkPlayer.value) return;
 
   try {
     await sdkPlayer.value.pause();
     await sdkPlayer.value.setCurrentTime(0);
     await sdkPlayer.value.play();
+    playingMode.value = true;
   } catch (e) {
     console.warn('Failed to restart Vimeo player', e);
   }

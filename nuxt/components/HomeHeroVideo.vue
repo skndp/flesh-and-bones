@@ -107,17 +107,17 @@ function setMask() {
 function onPlayerReady() {
   if (siteLoaded.value) return;
 
-  playerReady.value = true;
-
   readyDelayTimer = setTimeout(() => {
     triggerSiteLoaded();
   }, 1000);
 }
 
 function triggerSiteLoaded() {
-  if (siteLoaded.value) return;
+  playerReady.value = true;
 
+  if (siteLoaded.value) return;
   siteLoaded.value = true;
+
   clearTimeout(readyDelayTimer);
   clearTimeout(fallbackTimer);
 
