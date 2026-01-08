@@ -37,14 +37,11 @@ body {
   background-color: $midnight;
   display: flex;
   flex-direction: column;
-
-  &.fade-out {
-    pointer-events: none;
-  }
-
+  
   &.fade-out,
   &.page-enter-active,
   &.page-leave-active {
+    pointer-events: none;
     transition: opacity $speed-666 $evil-ease;
   }
 
