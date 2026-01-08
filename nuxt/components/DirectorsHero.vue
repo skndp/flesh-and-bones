@@ -107,22 +107,22 @@ function onMouseenter(index, e) {
   const t = e.currentTarget,
         bg = t.querySelector('.bg');
 
-  onHoverChange(index);
-  activeIndex.value = index;
-
   bg.style.maskComposite = 'unset';
   bg.style.maskImage = `url('${store.getRipMask()}')`;
+
+  onHoverChange(index);
+  activeIndex.value = index;
 }
 
 function onMouseleave(e) {
   const t = e.currentTarget,
         bg = t.querySelector('.bg');
 
-  onHoverChange(null);
-  activeIndex.value = null;
-
   bg.style.maskComposite = 'exclude';
   bg.style.maskImage = `url('${store.getRipMask()}'), linear-gradient(#000 0 0)`;
+
+  onHoverChange(null);
+  activeIndex.value = null;
 }
 
 function onHoverChange(index) {
@@ -234,9 +234,7 @@ section.directors-hero {
                 pointer-events: none;
                 backface-visibility: hidden;
                 transform: translateZ(0);
-                will-change: transform, mask-image, mask-composite;
-                opacity: 0;
-                transition: opacity $speed-333 $ease-out;
+                will-change: mask-image, mask-composite;
               }
             }
           }
@@ -253,11 +251,6 @@ section.directors-hero {
                 &:hover {
                   .h4 {
                     color: rgba($midnight, 1);
-
-                    span.bg {
-                      opacity: 1;
-                      transition: opacity $speed-333 $ease-out;
-                    }
                   }
                 }
               }

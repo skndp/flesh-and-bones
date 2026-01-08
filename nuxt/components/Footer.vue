@@ -228,7 +228,7 @@ function onItemHover(e) {
             pointer-events: none;
             backface-visibility: hidden;
             transform: translateZ(0);
-            will-change: transform, mask-image, mask-composite;
+            will-change: mask-image, mask-composite;
           }
 
           span:not(.rough-edges) {
