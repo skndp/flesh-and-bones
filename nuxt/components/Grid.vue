@@ -215,8 +215,8 @@ section.grid {
 
       .row {
         width: 100%;
-        display: grid;
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
 
         &:not(:last-child) {
           margin-bottom: span(1);
@@ -274,6 +274,8 @@ section.grid {
 
       .rows {
         .row {
+          display: grid;
+          flex-direction: unset;
           grid-template-columns: repeat(2, 1fr);
           gap: span(1);
 
