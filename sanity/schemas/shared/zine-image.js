@@ -3,7 +3,7 @@ import { getExtension, getImageDimensions } from '@sanity/asset-utils';
 import { ImageIcon } from '@sanity/icons';
 
 export default defineType({
-  name: 'singleImage',
+  name: 'zineImage',
   title: 'Image',
   type: 'object',
   icon: ImageIcon,
@@ -21,7 +21,20 @@ export default defineType({
           const filetype = getExtension(value.asset._ref);
 
           if (filetype !== 'jpg' && filetype !== 'png') {
-            return 'Image must be a JPG or PNG'
+            return 'Image must be a JPG or PNG';
+          }
+
+          const dimensions = value.asset.metadata?.dimensions;
+          if (!dimensions) return true;
+
+          const { width, height } = dimensions;
+
+          if (width !== height) {
+            return 'Image must be square (e.g. 500 × 500)';
+          }
+
+          if (width > 1000 || height > 1000) {
+            return 'Image must be no larger than 1000 × 1000';
           }
 
           return true;

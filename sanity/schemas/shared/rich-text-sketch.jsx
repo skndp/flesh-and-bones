@@ -1,4 +1,3 @@
-import React from 'react';
 import { defineType } from 'sanity';
 import { CustomTextarea } from '../../components/custom-textarea';
 import { UnderlineIcon, EditIcon, BoldIcon, ActivityIcon } from '@sanity/icons';

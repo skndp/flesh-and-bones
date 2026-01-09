@@ -1,8 +1,12 @@
 <template>
   <div class="page">
     <Paper />
-    <Hero
+    <ZineHero
       :title="page.heroHeading"
+      :sketches="page.heroHeadingSketches"
+    />
+    <ZineGrid
+      :items="page.items"
     />
     <Footer />
   </div>
@@ -10,7 +14,28 @@
 
 <script setup>
 const zineQuery = groq`*[(_type == "zine")][0]{
-  heroHeading
+  heroHeading,
+  heroHeadingSketches {
+    sketch1 {
+      image ${imageProps}
+    },
+    sketch2 {
+      image ${imageProps}
+    }
+  },
+  items[]{
+    article->{
+      title,
+      slug
+    },
+    url,
+    zineImage{
+      image ${imageProps}
+    },
+    zineImageOverlay {
+      image ${pngProps}
+    }
+  }
 }`;
 
 // Async

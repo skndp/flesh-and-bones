@@ -18,10 +18,12 @@ import anatomyTag from './collections/anatomy-tag';
 
 // Shared
 import seoSocial from './shared/seo-social';
+import pngFile from './shared/png-file';
 import singleImage from './shared/single-image';
 import videoPlayer from './shared/video-player';
 import richTextSketch from './shared/rich-text-sketch';
 import sketchImage from './shared/sketch-image';
+import zineImage from './shared/zine-image';
 
 export const schemaTypes = [
   settings,
@@ -37,8 +39,10 @@ export const schemaTypes = [
   workFilter,
   anatomyTag,
   seoSocial,
+  pngFile,
   singleImage,
   videoPlayer,
   richTextSketch,
-  sketchImage
+  sketchImage,
+  zineImage
 ];

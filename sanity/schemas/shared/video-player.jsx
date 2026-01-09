@@ -1,4 +1,3 @@
-import React from 'react';
 import { defineField, defineType } from 'sanity';
 import { PlayIcon } from '@sanity/icons';
 

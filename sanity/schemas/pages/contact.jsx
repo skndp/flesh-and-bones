@@ -28,7 +28,7 @@ export default defineType({
       name: 'title',
       title: 'Page Title',
       type: 'string',
-      hidden: false
+      hidden: true
     }),
     defineField({
       fieldset: 'hero',

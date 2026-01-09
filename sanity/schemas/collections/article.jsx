@@ -58,11 +58,18 @@ export default defineType({
       name: 'ctaCardImages',
       title: 'Images',
       type: 'object',
+      validation: [
+        Rule => Rule.required()
+      ],
       fields: [
         {
           name: 'squareImage',
-          title: 'Square (1:1)',
-          type: 'singleImage'
+          title: 'Grid Image',
+          type: 'singleImage',
+          description: 'As seen in the home page grid',
+          validation: [
+            Rule => Rule.required()
+          ]
         }
       ]
     }),
