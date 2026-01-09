@@ -1,16 +1,16 @@
 <template>
   <div id="modal" class="bg-midnight" ref="modalRef">
-    <div id="modal-inner">
-      <div v-if="store.modalPaper" id="modal-paper" :style="{ 'background-image': `url('${store.modalPaper}')` }"></div>
-      <div id="btn-container">
-        <button id="close-modal-btn" @click="closeModal">
-          <span class="x"></span>
-        </button>
-      </div>
-      <div class="modal-content">
-        <div class="title-block">
-          <div class="title-row h2 sm">
-            <ClientOnly>
+    <ClientOnly>
+      <div id="modal-inner">
+        <div v-if="store.modalPaper" id="modal-paper" :style="{ 'background-image': `url('${store.modalPaper}')` }"></div>
+        <div id="btn-container">
+          <button id="close-modal-btn" @click="closeModal">
+            <span class="x"></span>
+          </button>
+        </div>
+        <div class="modal-content">
+          <div class="title-block">
+            <div class="title-row h2 sm">
               <Swiper
                 class="titles-swiper"
                 direction="vertical"
@@ -25,10 +25,8 @@
                   <h2 class="title rough-edges-light">{{ item.title }}</h2>
                 </SwiperSlide>
               </Swiper>
-            </ClientOnly>
-          </div>
-          <div v-if="store.modalShowDirectors" class="directors-row">
-            <ClientOnly>
+            </div>
+            <div v-if="store.modalShowDirectors" class="directors-row">
               <Swiper
                 class="directors-swiper brush xs"
                 direction="vertical"
@@ -44,14 +42,12 @@
                   <NuxtLink :to="`/directors/${item.director.slug.current}`" class="flesh">{{ item.director.title }}<span class="bg-flesh rough-edges-light"></span></NuxtLink>
                 </SwiperSlide>
               </Swiper>
-            </ClientOnly>
+            </div>
           </div>
-        </div>
-        <div ref="carouselBlockRef" class="carousel-block">
-          <div class="carousel-containent">
-            <div class="carousel-containment-flex">
-              <div class="main-swiper-box">
-                <ClientOnly>
+          <div ref="carouselBlockRef" class="carousel-block">
+            <div class="carousel-containent">
+              <div class="carousel-containment-flex">
+                <div class="main-swiper-box">
                   <Swiper
                     class="main-swiper"
                     slides-per-view="auto"
@@ -76,36 +72,36 @@
                       </div>
                     </SwiperSlide>
                   </Swiper>
-                </ClientOnly>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="controls-block">
-          <button
-            class="arrow prev"
-            :disabled="store.modalProjects.length <= 1"
-            :aria-hidden="store.modalProjects.length <= 1"
-            aria-label="Previous Slide"
-            @click="onClickPrev">
-          </button>
-          <div class="counter">
-            <p class="brush sm">
-              <span v-if="store.modalPaginationLabel">{{ store.modalPaginationLabel }}</span>
-              <span v-else>{{ store.modalProjects[0].director.title }}</span>
-              <span class="flesh">{{ String(store.modalIndex + 1).padStart(2, '0') }} / {{ String(store.modalProjects.length).padStart(2, '0') }}</span>
-            </p>
+          <div class="controls-block">
+            <button
+              class="arrow prev"
+              :disabled="store.modalProjects.length <= 1"
+              :aria-hidden="store.modalProjects.length <= 1"
+              aria-label="Previous Slide"
+              @click="onClickPrev">
+            </button>
+            <div class="counter">
+              <p class="brush sm">
+                <span v-if="store.modalPaginationLabel">{{ store.modalPaginationLabel }}</span>
+                <span v-else>{{ store.modalProjects[0].director.title }}</span>
+                <span class="flesh">{{ String(store.modalIndex + 1).padStart(2, '0') }} / {{ String(store.modalProjects.length).padStart(2, '0') }}</span>
+              </p>
+            </div>
+            <button
+              class="arrow"
+              :disabled="store.modalProjects.length <= 1"
+              :aria-hidden="store.modalProjects.length <= 1"
+              aria-label="Next Slide"
+              @click="onClickNext">
+            </button>
           </div>
-          <button
-            class="arrow"
-            :disabled="store.modalProjects.length <= 1"
-            :aria-hidden="store.modalProjects.length <= 1"
-            aria-label="Next Slide"
-            @click="onClickNext">
-          </button>
         </div>
       </div>
-    </div>
+    </ClientOnly>
   </div>
 </template>
 
