@@ -30,7 +30,7 @@
           <div v-if="store.modalShowDirectors" class="directors-row">
             <ClientOnly>
               <Swiper
-                class="directors-swiper brush sm"
+                class="directors-swiper brush xs"
                 direction="vertical"
                 slides-per-view="auto"
                 :modules="[Controller]"
@@ -317,7 +317,7 @@ watch(route, () => {
 
           .titles-swiper {
             position: relative;
-            height: 1em;
+            height: 0.9em;
             pointer-events: none;
             z-index: auto;
 
@@ -557,16 +557,16 @@ watch(route, () => {
       .modal-content {
         .title-block {
           &:has(.directors-row) {
-            padding-bottom: $space-24;
+            padding-bottom: $space-16;
           }
         }
 
         .carousel-block {
-          margin: 0 span(0.5);
+          margin: 0 $space-16;
         }
 
         .controls-block {
-          padding: $space-24 0;
+          padding: $space-16 0;
 
           .arrow {
             width: $space-40;
@@ -581,7 +581,18 @@ watch(route, () => {
       .modal-content {
         .title-block {
           .directors-row {
-            margin-top: -1.5em;
+            margin-top: -1.6em;
+
+            .directors-swiper {
+              height: 1.2em;
+
+              .swiper-slide {
+                span,
+                a {
+                  margin-top: -0.1em;
+                }
+              }
+            }
           }
         }
 
