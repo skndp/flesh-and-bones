@@ -21,7 +21,7 @@
             </div>
           </div>
         </div>
-        <p class="cutout-tagline flesh manic" :class="{'single': skeletons.length === 1}">{{ tagline }}</p>
+        <p v-if="tagline" class="cutout-tagline flesh manic" :class="{'single': skeletons.length === 1}">{{ tagline }}</p>
         <h1 v-if="title" class="h1 xs rough-edges-light">
           <span class="bg-midnight">{{ title }}</span>
         </h1>
@@ -37,8 +37,8 @@ const store = useSiteStore();
 // Props
 const props = defineProps({
   skeletons: { type: Array, required: true },
-  tagline: { type: String, required: true },
-  title: { type: String }
+  tagline: { type: String, required: false },
+  title: { type: String, required: false }
 });
 
 const cutout = ref(null);
