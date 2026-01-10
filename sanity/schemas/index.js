@@ -21,6 +21,7 @@ import seoSocial from './shared/seo-social';
 import pngFile from './shared/png-file';
 import singleImage from './shared/single-image';
 import videoPlayer from './shared/video-player';
+import richText from './shared/rich-text';
 import richTextSketch from './shared/rich-text-sketch';
 import sketchImage from './shared/sketch-image';
 import zineImage from './shared/zine-image';
@@ -42,6 +43,7 @@ export const schemaTypes = [
   pngFile,
   singleImage,
   videoPlayer,
+  richText,
   richTextSketch,
   sketchImage,
   zineImage

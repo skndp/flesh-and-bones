@@ -1,5 +1,5 @@
 <template>
-  <div class="big-cta-block pad-t pad-b">
+  <div class="big-cta-block pad-t tab-b">
     <NuxtLink :to="path" class="h3 flesh rough-edges-light">
       {{ label }}
     </NuxtLink>

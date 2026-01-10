@@ -36,12 +36,14 @@ section.hero {
     justify-content: center;
 
     .h1 {
+      width: 100%;
+      max-width: 900px;
       white-space: pre-line;
     }
 
     p {
       width: 100%;
-      max-width: 666px;
+      max-width: 900px;
       margin: 0 auto 2em;
     }
   }

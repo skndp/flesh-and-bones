@@ -1,8 +1,16 @@
 <template>
   <div class="page">
     <Paper />
-    <Hero
+    <ArticleHero
       :title="page.title"
+    />
+    <RichText
+      v-if="page.content"
+      :richText="page.content.content"
+    />
+    <BigCta
+      path="/zine"
+      label="Back to Zine"
     />
     <Footer />
   </div>
@@ -13,7 +21,15 @@ const route = useRoute();
 const params = { slug: route.params.slug };
 const articleQuery = groq`*[_type == 'article' && slug.current == $slug][0]{
   title,
-  slug
+  slug,
+  content {
+    content[] {
+      ...,
+      _type == 'singleImage' => {
+        image ${imageProps}
+      }
+    }
+  }
 }`;
 
 // Async data
