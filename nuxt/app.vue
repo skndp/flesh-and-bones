@@ -84,9 +84,6 @@ useSeoMeta({
 onMounted(() => {
   console.log(`Made with ☠️ by Seek and Deploy. https://seekanddeploy.com`);
 
-  window.addEventListener('resize', onResize);
-  onResize();
-
   setTimeout(() => {
     // If not home page, go ahead and set loader complete
     // (HomeHeroVideo has it's own video loadeer to trigger it's own setLoaderComplete)
@@ -96,22 +93,7 @@ onMounted(() => {
   }, 100);
 });
 
-// Before Unmount
-onBeforeUnmount(() => {
-  window.removeEventListener('resize', onResize);
-});
-
 // Methods
-function onResize() {
-  updateScrollbarWidth();
-};
-
-function updateScrollbarWidth() {
-  // NOTE: Store scrollbar width in css custom property to calculate grid spans properly
-  const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-  document.documentElement.style.setProperty('--scrollbar-width', `${scrollbarWidth}px`);
-};
-
 function modalCleanup() {
   store.setModalCleanup();
 }
