@@ -3,17 +3,16 @@
     ref="heroVideoRef"
     class="home-hero-video"
     :class="{ 'passed': passed, 'init': playerReady }"
-    v-scroll-container
   >
-    <VideoPlayer
-      ref="videoPlayerRef"
-      :vimeo="video"
-      :cover="true"
-      :manualPlay="true"
-      @ready="onPlayerReady"
-      data-scroll="parallax"
-      data-fx='[{"prop":"y","from":0,"to":500}]'
-    />
+    <div class="home-hero-video-inner" ref="inner">
+      <VideoPlayer
+        ref="videoPlayerRef"
+        :vimeo="video"
+        :cover="true"
+        :manualPlay="true"
+        @ready="onPlayerReady"
+      />
+    </div>
     <Transition name="loading">
       <div v-if="!playerReady" class="loading-label">
         <span class="h3 flesh rough-edges-light">LOADING</span>
@@ -23,6 +22,8 @@
 </template>
 
 <script setup>
+import { bgBoogie } from '~/utils/bg-boogie';
+
 const store = useSiteStore();
 
 // Props
@@ -38,6 +39,8 @@ const videoPlayerRef = ref(null);
 const playerReady = ref(false);
 const passed = ref(false);
 const siteLoaded = ref(false);
+const inner = ref(null);
+bgBoogie(inner, 0.2);
 
 let readyDelayTimer = null;
 let fallbackTimer = null;
@@ -155,14 +158,20 @@ section.home-hero-video {
   }
 
   &.init {
-    .video-player-wrapper {
-      opacity: 1;
-      transition: opacity $speed-666 $ease-out 2s;
+    .home-hero-video-inner {
+      .video-player-wrapper {
+        opacity: 1;
+        transition: opacity $speed-666 $ease-out 2s;
+      }
     }
   }
 
-  .video-player-wrapper {
-    opacity: 0;
+  .home-hero-video-inner {
+    @include abs-fill;
+
+    .video-player-wrapper {
+      opacity: 0;
+    }
   }
 
   .loading-label {

@@ -9,16 +9,12 @@
         ></div>
       </div>
       <div class="cutout-inner flesh">
-        <div class="cutout-content">
-          <div v-scroll-container>
-            <div
-              v-for="(skeleton, index) in skeletons"
-              data-scroll="parallax"
-              data-fx='[{"prop":"y","from":0,"to":-100},{"prop":"s","from":0.9,"to":1}]'
-              class="cutout-skeleton"
-            >
-              <ResponsiveImage v-bind="skeleton.profileImage" fit="auto" :priority="true" />
-            </div>
+        <div class="cutout-content" ref="content">
+          <div
+            v-for="(skeleton, index) in skeletons"
+            class="cutout-skeleton"
+          >
+            <ResponsiveImage v-bind="skeleton.profileImage" fit="auto" :priority="true" />
           </div>
         </div>
         <p class="cutout-tagline flesh manic" :class="{'single': skeletons.length === 1}">{{ tagline }}</p>
@@ -31,6 +27,7 @@
 </template>
 
 <script setup>
+import { bgBoogie } from '~/utils/bg-boogie';
 import { useSiteStore } from '~/stores/store';
 const store = useSiteStore();
 
@@ -42,8 +39,11 @@ const props = defineProps({
 });
 
 const cutout = ref(null);
+const content = ref(null);
 let resizeTo = 0;
 let lastWidth = 0;
+
+bgBoogie(content, -0.13);
 
 // Lifecycle
 onMounted(() => {
