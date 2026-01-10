@@ -66,7 +66,7 @@ $largest-screens:    '(min-width: 2000px)';
 // --------------------------------------------
 
 @function span($n) {
-  @return calc($n / 14 * (100vw - var(--scrollbar-width)));
+  @return calc($n / 14 * 100vw);
 }
 
 @function svgColorMaker($color) {
