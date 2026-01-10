@@ -85,6 +85,14 @@ export default defineType({
       name: 'ctaCardSummary',
       title: 'Summary',
       type: 'string'
+    }),
+    defineField({
+      name: 'content',
+      title: 'CONTENT',
+      type: 'richText',
+      validation: [
+        Rule => Rule.required()
+      ]
     })
   ],
   preview: {

@@ -79,10 +79,6 @@ section.manifesto-hero {
 
   @include respond-to($tablet) {
     .gutter {
-      &.tab-b {
-        padding-bottom: span(1);
-      }
-
       .end-mark-sketch {
         padding-bottom: 1em;
       }
