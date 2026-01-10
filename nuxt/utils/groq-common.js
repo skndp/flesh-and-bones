@@ -30,14 +30,3 @@ export const imageProps = `
     'palette': asset->metadata.palette
   }
 `;
-
-export const pngProps = `
-  {
-    'src': asset->url,
-    'dataFilename': asset->originalFilename,
-    'dataTitle': asset->title,
-    'dataAlt': asset->altText,
-    'width': 0,
-    'height': 0
-  }
-`;
