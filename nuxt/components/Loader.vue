@@ -50,7 +50,6 @@ onMounted(() => {
   const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
   if (scrollbarWidth > 0) {
     document.documentElement.classList.add('--has-track');
-    document.documentElement.style.setProperty('--scrollbar-width', `${scrollbarWidth}px`);
   }
 
   preload();
