@@ -94,7 +94,7 @@ function setMask() {
   const b = heroVideoRef.value.getBoundingClientRect();
   const mask = createTornEdge({
     width: b.width,
-    height: b.height,
+    height: Math.ceil(b.height), // Ceil up, pixel rounding issue for Safari
     startY: b.height - 100,
     endY: b.height - 100,
     wobble: 0.2,
@@ -143,7 +143,7 @@ watch(passed, (isPassed) => {
 section.home-hero-video {
   position: relative;
   width: 100%;
-  background-color: #000;
+  background-color: rgba(0,0,0,0.27);
   height: calc(100svh + 50px); // a quarter of the 200px tear height
   overflow: hidden;
   display: flex;
