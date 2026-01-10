@@ -127,10 +127,10 @@ function setMasks() {
     transition: opacity 4100ms linear;
 
     .loader-layer {
-      transition: transform 2s cubic-bezier(0.95, 0.05, 0.795, 0.035) 2s;
+      transition: transform 1s cubic-bezier(0.95, 0.05, 0.795, 0.035) 1s;
 
       &:nth-child(3) {
-        transition: clip-path 2s $ease-out;
+        transition: clip-path 1s $ease-out;
       }
     }
   }

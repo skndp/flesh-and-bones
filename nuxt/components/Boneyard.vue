@@ -43,7 +43,7 @@ const content = ref(null);
 let resizeTo = 0;
 let lastWidth = 0;
 
-bgBoogie(content, -0.13);
+bgBoogie(content, -0.07);
 
 // Lifecycle
 onMounted(() => {
@@ -131,7 +131,7 @@ function setMask() {
 
       .cutout-content {
         position: relative;
-        height: 200px;
+        aspect-ratio: 15 / 8;
 
         &:has(.cutout-skeleton:only-child) {
           .cutout-skeleton {
@@ -143,7 +143,7 @@ function setMask() {
 
         .cutout-skeleton {
           position: absolute;
-          bottom: -20px;
+          bottom: 40px;
           left: 25%;
           width: span(9);
           margin-left: span(-4.5);
@@ -191,6 +191,14 @@ function setMask() {
 
   @include respond-to($small-tablet) {
     .cutout {
+      .cutout-inner {
+        .cutout-content {
+          .cutout-skeleton {
+            bottom: 0px;
+          }
+        }
+      }
+
       .cutout-tagline {
         top: 40%;
 
@@ -205,23 +213,18 @@ function setMask() {
   @include respond-to($tablet) {
     .cutout {
       .cutout-inner {
-        padding-top: 300px;
-
         .cutout-content {
-          height: unset;
-          aspect-ratio: 3 / 1;
-
           &:has(.cutout-skeleton:only-child) {
             .cutout-skeleton {
-              width: span(6.5);
-              margin-left: span(-3.25);
+              width: span(9);
+              margin-left: span(-4.5);
             }
           }
 
           .cutout-skeleton {
             bottom: 0px;
-            width: span(6.5);
-            margin-left: span(-3.25);
+            width: span(7);
+            margin-left: span(-3.5);
           }
         }
       }
@@ -239,16 +242,33 @@ function setMask() {
     }
   }
 
-  @include respond-to($average-desktop) {
+  @include respond-to($desktop) {
     .cutout {
       .cutout-inner {
+        padding-top: 300px;
+
         .cutout-content {
+          aspect-ratio: 3 / 1;
+
+          &:has(.cutout-skeleton:only-child) {
+            .cutout-skeleton {
+              width: span(6.5);
+              margin-left: span(-3.25);
+            }
+          }
+
           .cutout-skeleton {
-            bottom: -20px;
+            bottom: 0px;
+            width: span(6.5);
+            margin-left: span(-3.25);
           }
         }
       }
+    }
+  }
 
+  @include respond-to($average-desktop) {
+    .cutout {
       .cutout-tagline {
         transform: translate(-50%, -50%) rotate(-7deg);
       }
@@ -260,7 +280,7 @@ function setMask() {
       .cutout-inner {
         .cutout-content {
           .cutout-skeleton {
-            bottom: -40px;
+            //bottom: -40px;
           }
         }
       }
