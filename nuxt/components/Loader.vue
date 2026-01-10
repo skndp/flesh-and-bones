@@ -46,6 +46,12 @@ const bolt8 = ref(null);
 const bolt9 = ref(null);
 
 onMounted(() => {
+  // FIRST THINGS FIRST... Is there a scrollbar track?
+  const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+  if (scrollbarWidth > 0) {
+    document.documentElement.classList.add('--has-track');
+  }
+
   preload();
 
   if (loaderRef.value) {

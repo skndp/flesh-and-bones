@@ -114,7 +114,7 @@ function setMask() {
   const b = maskRef.value.getBoundingClientRect();
   const mask = createTornEdge({
     width: b.width,
-    height: b.height,
+    height: Math.ceil(b.height), // Ceil up, pixel rounding issue for Safari
     startY: b.height - 100,
     endY: b.height - 100,
     wobble: 0.6,
@@ -162,8 +162,8 @@ watch(() => store.menuOpen, (isOpen, wasOpen) => {
   z-index: 27;
 
   &.open {
-    transition: visibility 0ms linear;
     visibility: visible;
+    transition: visibility 0ms linear;
 
     #menu-inner {
       &:before {

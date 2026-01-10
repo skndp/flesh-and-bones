@@ -1,5 +1,10 @@
-:root {
-  --scrollbar-width: 0px;
+// Special cases for persistent scrollbars
+html.--has-track {
+  overflow-y: scroll;
+
+  #menu-mask {
+    margin-top: -2px; // strange pixel rounding issue
+  }
 }
 
 html, body {

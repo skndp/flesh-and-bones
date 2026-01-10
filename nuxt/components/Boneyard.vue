@@ -82,7 +82,7 @@ function setMask() {
   });
   const mask2 = createTornEdge({
     width: b.width,
-    height: b.height,
+    height: Math.ceil(b.height), // Ceil up, pixel rounding issue for Safari
     startY: b.width < 768 ? b.height - 100 : b.height - 150,
     endY: b.width < 768 ? b.height - 100 : b.height - 150,
     wobble: 0.8,

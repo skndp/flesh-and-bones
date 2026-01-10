@@ -33,7 +33,7 @@ const zineQuery = groq`*[(_type == "zine")][0]{
       image ${imageProps}
     },
     zineImageOverlay {
-      image ${pngProps}
+      image ${imageProps}
     }
   }
 }`;
