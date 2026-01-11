@@ -43,7 +43,7 @@ const content = ref(null);
 let resizeTo = 0;
 let lastWidth = 0;
 
-bgBoogie(content, -0.07);
+bgBoogie(content, -0.0666);
 
 // Lifecycle
 onMounted(() => {
@@ -153,6 +153,11 @@ function setMask() {
             left: 75%;
           }
 
+          // NOTE: adjustment for founders being visible longer
+          .contact-founders & {
+            margin-bottom: -10%;
+          }
+
           img {
             width: 100%;
             aspect-ratio: 1 / 1;
@@ -195,6 +200,11 @@ function setMask() {
         .cutout-content {
           .cutout-skeleton {
             bottom: 0px;
+
+            // NOTE: adjustment for founders being visible longer
+            .contact-founders & {
+              margin-bottom: -5%;
+            }
           }
         }
       }
@@ -225,6 +235,11 @@ function setMask() {
             bottom: 0px;
             width: span(7);
             margin-left: span(-3.5);
+
+            // NOTE: adjustment for founders being visible longer
+            .contact-founders & {
+              margin-bottom: 0%;
+            }
           }
         }
       }
@@ -269,20 +284,19 @@ function setMask() {
 
   @include respond-to($average-desktop) {
     .cutout {
-      .cutout-tagline {
-        transform: translate(-50%, -50%) rotate(-7deg);
-      }
-    }
-  }
-
-  @include respond-to($macbook) {
-    .cutout {
       .cutout-inner {
         .cutout-content {
           .cutout-skeleton {
-            //bottom: -40px;
+            // NOTE: adjustment for founders being visible longer
+            .contact-founders & {
+              margin-bottom: -5%;
+            }
           }
         }
+      }
+
+      .cutout-tagline {
+        transform: translate(-50%, -50%) rotate(-7deg);
       }
     }
   }
