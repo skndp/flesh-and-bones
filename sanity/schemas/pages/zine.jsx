@@ -77,7 +77,7 @@ export default defineType({
             {
               name: 'zineImageOverlay',
               title: 'Zine Grid Image (Overlay)',
-              type: 'pngFile'
+              type: 'zineImage'
             }
           ],
           preview: {
@@ -85,20 +85,9 @@ export default defineType({
               title: 'article.title',
               slug: 'article.slug',
               baseImage: 'zineImage.image.asset.url',
-              overlayImage: 'zineImageOverlay.image'
+              overlayImage: 'zineImageOverlay.image.asset.url'
             },
             prepare({ title, slug, baseImage, overlayImage }) {
-              const projectId = process.env.SANITY_STUDIO_PROJECT_ID;
-              const dataset = process.env.SANITY_STUDIO_DATASET;
-
-              const overlayRef = overlayImage?.asset?._ref;
-              let overlayUrl = null;
-
-              if (overlayImage) {
-                const id = overlayRef.replace('file-', '').replace(/-.+$/, '');
-                overlayUrl = `https://cdn.sanity.io/files/${projectId}/${dataset}/${id}.png`;
-              }
-
               const mediaItems = (
                 <div className="media-items-stacked">
                   {baseImage ? (
@@ -108,9 +97,9 @@ export default defineType({
                   ) : (
                     <div className="media-item --empty" />
                   )}
-                  {overlayUrl && (
+                  {overlayImage && (
                     <div className="media-item --overlay">
-                      <img src={overlayUrl} alt="" />
+                      <img src={overlayImage} alt="" />
                     </div>
                   )}
                 </div>
@@ -146,7 +135,7 @@ export default defineType({
             {
               name: 'zineImageOverlay',
               title: 'Zine Grid Image (Overlay)',
-              type: 'pngFile'
+              type: 'zineImage'
             }
           ],
           preview: {
@@ -154,20 +143,9 @@ export default defineType({
               title: 'url',
               slug: 'article.slug',
               baseImage: 'zineImage.image.asset.url',
-              overlayImage: 'zineImageOverlay.image'
+              overlayImage: 'zineImageOverlay.asset.url'
             },
-            prepare({ title, baseImage, overlayImage }) {
-              const projectId = process.env.SANITY_STUDIO_PROJECT_ID;
-              const dataset = process.env.SANITY_STUDIO_DATASET;
-
-              const overlayRef = overlayImage?.asset?._ref;
-              let overlayUrl = null;
-
-              if (overlayImage) {
-                const id = overlayRef.replace('file-', '').replace(/-.+$/, '');
-                overlayUrl = `https://cdn.sanity.io/files/${projectId}/${dataset}/${id}.png`;
-              }
-
+            prepare({ title, slug, baseImage, overlayImage }) {
               const mediaItems = (
                 <div className="media-items-stacked">
                   {baseImage ? (
@@ -177,17 +155,17 @@ export default defineType({
                   ) : (
                     <div className="media-item --empty" />
                   )}
-                  {overlayUrl && (
+                  {overlayImage && (
                     <div className="media-item --overlay">
-                      <img src={overlayUrl} alt="" />
+                      <img src={overlayImage} alt="" />
                     </div>
                   )}
                 </div>
               );
 
               return {
-                title: 'External link',
-                subtitle: title ? title : 'No link provided',
+                title: title || 'Untitled',
+                subtitle: slug ? `/zine/${slug.current}` : '/zine/untitled',
                 media: mediaItems
               }
             }

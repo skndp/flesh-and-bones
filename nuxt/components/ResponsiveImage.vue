@@ -9,7 +9,21 @@
     }"
   >
     <picture class="responsive-image-picture picture">
-      <source :srcset="src.endsWith('.png') ? generateSrcSet('png') : generateSrcSet('jpg')" :type="src.endsWith('.png') ? 'image/png' : 'image/jpeg'" :sizes="`${effectiveWidth}px`">
+      <source
+        :srcset="
+          src.endsWith('.webp')
+            ? generateSrcSet('webp')
+            : src.endsWith('.png')
+              ? generateSrcSet('png')
+              : generateSrcSet('jpg')"
+        :type="
+          src.endsWith('.webp')
+            ? 'image/webp'
+            : src.endsWith('.png')
+              ? 'image/png'
+              : 'image/jpeg'"
+        :sizes="`${effectiveWidth}px`"
+      >
       <img
         :src="generateSrc()"
         :alt="alt ? alt : dataAlt ? dataAlt : dataFilename"

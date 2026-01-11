@@ -1,5 +1,5 @@
 import { defineField, defineType } from 'sanity';
-import { getExtension, getImageDimensions } from '@sanity/asset-utils';
+import { getExtension } from '@sanity/asset-utils';
 import { ImageIcon } from '@sanity/icons';
 
 export default defineType({
@@ -20,8 +20,8 @@ export default defineType({
 
           const filetype = getExtension(value.asset._ref);
 
-          if (filetype !== 'jpg' && filetype !== 'png') {
-            return 'Image must be a JPG or PNG';
+          if (filetype !== 'jpg' && filetype !== 'png' && filetype !== 'webp') {
+            return 'Image must be a JPG, PNG, or WEBP';
           }
 
           const dimensions = value.asset.metadata?.dimensions;

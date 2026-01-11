@@ -18,7 +18,6 @@ import anatomyTag from './collections/anatomy-tag';
 
 // Shared
 import seoSocial from './shared/seo-social';
-import pngFile from './shared/png-file';
 import singleImage from './shared/single-image';
 import videoPlayer from './shared/video-player';
 import richText from './shared/rich-text';
@@ -40,7 +39,6 @@ export const schemaTypes = [
   workFilter,
   anatomyTag,
   seoSocial,
-  pngFile,
   singleImage,
   videoPlayer,
   richText,
