@@ -41,9 +41,4 @@ const zineQuery = groq`*[(_type == "zine")][0]{
 // Async
 const { data } = await useAsyncData('zine', () => useSanity().fetch(zineQuery));
 const page = data.value;
-
-// Mounted
-onMounted(() => {
-  console.log('Zine:', page);
-});
 </script>

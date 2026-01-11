@@ -70,8 +70,4 @@ const workQuery = groq`*[(_type == "work")][0]{
 // Async
 const { data } = await useAsyncData('work', () => useSanity().fetch(workQuery));
 const page = data.value;
-
-onMounted(() => {
-  console.log('Work', page);
-});
 </script>

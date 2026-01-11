@@ -35,10 +35,4 @@ const articleQuery = groq`*[_type == 'article' && slug.current == $slug][0]{
 // Async data
 const { data } = await useSanityQuery(articleQuery, { slug: params.slug });
 const page = data.value;
-
-// Mounted
-onMounted(() => {
-  console.log('Article:', page);
-});
-
 </script>

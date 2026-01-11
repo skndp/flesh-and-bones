@@ -55,9 +55,4 @@ const contactQuery = groq`*[(_type == "contact")][0]{
 // Async
 const { data } = await useAsyncData('contact', () => useSanity().fetch(contactQuery));
 const page = data.value;
-
-// Mounted
-onMounted(() => {
-  console.log('Contact:', page);
-});
 </script>
