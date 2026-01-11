@@ -17,7 +17,12 @@ const directorsQuery = groq`*[(_type == "directors")][0]{
   heroHeading,
   sketchnoteLeft,
   sketchnoteLeftSketch {
-    image ${imageProps}
+    image ${imageProps},
+    properties {
+      height,
+      offsetX,
+      offsetY
+    }
   },
   directors[]{
     director->{
@@ -27,7 +32,12 @@ const directorsQuery = groq`*[(_type == "directors")][0]{
     backgroundVideo
   },
   heroEndMarkSketch {
-    image ${imageProps}
+    image ${imageProps},
+    properties {
+      height,
+      offsetX,
+      offsetY
+    }
   }
 }`;
 

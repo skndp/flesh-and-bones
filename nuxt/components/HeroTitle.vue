@@ -6,37 +6,25 @@
         <template v-if="index === 0 && wordIndex === 0 && sketches && sketches.sketch1 && titleWords.length === 1">
           <div
             class="sketch1-holder"
-            :style="{
-              'aspect-ratio': `${sketches.sketch1.image.width}/${sketches.sketch1.image.height}`,
-              'background-image': `url(${sketches.sketch1.image.src})`
-            }"
+            :style="sketchStyles(sketches.sketch1)"
           ></div>
         </template>
         <template v-if="index === titleWords.length - 1 && wordIndex === line.length - 1 && sketches && sketches.sketch2 && titleWords.length === 1">
           <div
             class="sketch2-holder"
-            :style="{
-              'aspect-ratio': `${sketches.sketch2.image.width}/${sketches.sketch2.image.height}`,
-              'background-image': `url(${sketches.sketch2.image.src})`
-            }"
+            :style="sketchStyles(sketches.sketch2, true)"
           ></div>
         </template>
         <template v-if="index === 0 && wordIndex === 0 && sketches && sketches.sketch1 && titleWords.length > 1">
           <div
             class="sketch1-holder"
-            :style="{
-              'aspect-ratio': `${sketches.sketch1.image.width}/${sketches.sketch1.image.height}`,
-              'background-image': `url(${sketches.sketch1.image.src})`
-            }"
+            :style="sketchStyles(sketches.sketch1)"
           ></div>
         </template>
         <template v-if="index === titleWords.length - 1 && wordIndex === line.length - 1 && sketches && sketches.sketch2 && titleWords.length > 1">
           <div
             class="sketch2-holder"
-            :style="{
-              'aspect-ratio': `${sketches.sketch2.image.width}/${sketches.sketch2.image.height}`,
-              'background-image': `url(${sketches.sketch2.image.src})`
-            }"
+            :style="sketchStyles(sketches.sketch2, true)"
           ></div>
         </template>
       </span>
@@ -45,10 +33,7 @@
     <div
       v-if="subSketch"
       class="sub-sketch-holder"
-      :style="{
-        'aspect-ratio': `${subSketch.image.width}/${subSketch.image.height}`,
-        'background-image': `url(${subSketch.image.src})`
-      }"
+      :style="sketchStyles(subSketch)"
     ></div>
   </h1>
 </template>
@@ -76,6 +61,31 @@ const titleWords = computed(() => {
 
   return lines;
 });
+
+const sketchStyles = (sketch, fromRight) => {
+  const styles = {
+    'aspect-ratio': `${sketch.image.width}/${sketch.image.height}`,
+    'background-image': `url(${sketch.image.src})`
+  }
+
+  if (sketch.properties) {
+    if (sketch.properties.height) {
+      styles.height = `${sketch.properties.height / 100}em`;
+    }
+    if (sketch.properties.offsetX) {
+      if (fromRight) {
+        styles.right = `${-sketch.properties.offsetX}%`;
+      } else {
+        styles.left = `${sketch.properties.offsetX}%`;
+      }
+    }
+    if (sketch.properties.offsetY) {
+      styles.marginTop = `${sketch.properties.offsetY / 100}em`;
+    }
+  }
+
+  return styles;
+};
 </script>
 
 <style lang='scss'>
@@ -100,44 +110,33 @@ const titleWords = computed(() => {
 
   .sketch1-holder {
     position: absolute;
-    top: 0.1em;
-    left: 1em;
+    top: 0px;
+    left: 0px;
     width: auto;
     height: 0.5em;
     background-repeat: no-repeat;
     background-size: contain;
     background-position: 50% 50%;
-    transform: translateX(-50%);
-    opacity: 0.9;
   }
 
   .sketch2-holder {
     position: absolute;
-    bottom: -0.1em;
+    top: 0px;
     right: 0px;
     width: auto;
-    height: 1.3em;
+    height: 50%;
     background-repeat: no-repeat;
     background-size: contain;
     background-position: 50% 50%;
-    transform: translateX(30%);
   }
 
   .sub-sketch-holder {
     position: relative;
     width: auto;
-    height: 1.4em;
-    margin-top: -0.3em;
-    margin-left: 11%;
+    height: 0.5em;
     background-repeat: no-repeat;
     background-size: contain;
     background-position: 50% 50%;
-  }
-
-  @include respond-to($tablet) {
-    .sketch1-holder {
-      top: 0.04em;
-    }
   }
 
   @include respond-to($desktop) {

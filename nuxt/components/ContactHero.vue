@@ -100,21 +100,6 @@ section.contact-hero {
         }
       }
     }
-
-    .hero-title {
-      .sketch1-holder {
-        top: 50%;
-        left: 66%;
-        transform: translateX(-50%) translateY(-48%);
-      }
-
-      .sketch2-holder {
-        bottom: -0.35em;
-        height: 0.88em;
-        right: -1ch;
-        transform: none;
-      }
-    }
   }
 }
 

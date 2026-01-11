@@ -22,14 +22,29 @@ const contactQuery = groq`*[(_type == "contact")][0]{
   heroHeading,
   heroHeadingSketches {
     sketch1 {
-      image ${imageProps}
+      image ${imageProps},
+      properties {
+        height,
+        offsetX,
+        offsetY
+      }
     },
     sketch2 {
-      image ${imageProps}
+      image ${imageProps},
+      properties {
+        height,
+        offsetX,
+        offsetY
+      }
     }
   },
   subHeadingSketch {
-    image ${imageProps}
+    image ${imageProps},
+    properties {
+      height,
+      offsetX,
+      offsetY
+    }
   },
   directory[] {
     sketchnote,
