@@ -19,16 +19,31 @@ const manifestoQuery = groq`*[(_type == "manifesto")][0]{
   heroHeading,
   heroHeadingSketches {
     sketch1 {
-      image ${imageProps}
+      image ${imageProps},
+      properties {
+        height,
+        offsetX,
+        offsetY
+      }
     },
     sketch2 {
-      image ${imageProps}
+      image ${imageProps},
+      properties {
+        height,
+        offsetX,
+        offsetY
+      }
     }
   },
   heroCopy,
   heroEndMark,
   heroEndMarkSketch {
-    image ${imageProps}
+    image ${imageProps},
+    properties {
+      height,
+      offsetX,
+      offsetY
+    }
   }
 }`;
 

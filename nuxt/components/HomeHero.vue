@@ -50,14 +50,6 @@ section.home-hero {
     align-items: center;
     justify-content: center;
 
-    .hero-title {
-      .sketch2-holder {
-        bottom: -0.3em;
-        height: 2.3em;
-        transform: translateX(80%);
-      }
-    }
-
     p {
       width: 100%;
       max-width: 666px;

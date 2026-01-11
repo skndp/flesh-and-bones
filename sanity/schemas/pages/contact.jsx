@@ -48,12 +48,12 @@ export default defineType({
       fields: [
         {
           name: 'sketch1',
-          title: ' ',
+          title: 'Sketch 1',
           type: 'sketchImage'
         },
         {
           name: 'sketch2',
-          title: ' ',
+          title: 'Sketch 2',
           type: 'sketchImage'
         }
       ]

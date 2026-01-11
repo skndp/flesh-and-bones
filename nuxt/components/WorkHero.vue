@@ -43,39 +43,11 @@ section.work-hero {
     align-items: center;
     justify-content: center;
 
-    .hero-title {
-      .sketch1-holder {
-        top: auto;
-        left: 0px;
-        bottom: 0.1em;
-        height: 0.44em;
-        transform: translateX(-130%);
-      }
-
-      .sketch2-holder {
-        height: 1.5em;
-        bottom: 0px;
-        transform: translateX(47%);
-      }
-    }
-
     p {
       position: relative;
       width: 100%;
       margin: 0 auto 2em;
       transform: rotate(-1.8deg);
-    }
-  }
-
-  @include respond-to($tablet) {
-    .gutter {
-      .hero-title {
-        .sketch1-holder {
-          top: auto;
-          bottom: 0.05em;
-          transform: translateX(-180%);
-        }
-      }
     }
   }
 }

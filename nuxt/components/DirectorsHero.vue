@@ -22,10 +22,7 @@
             <span
               v-if="sketchnoteLeftSketch"
               class="sketch-holder"
-              :style="{
-                'aspect-ratio': `${sketchnoteLeftSketch.image.width}/${sketchnoteLeftSketch.image.height}`,
-                'background-image': `url(${sketchnoteLeftSketch.image.src})`
-              }"
+              :style="sketchStyles(sketchnoteLeftSketch)"
             ></span>
             <span>{{ sketchnoteLeft }}</span>
           </span>
@@ -49,10 +46,7 @@
       <div v-if="endMarkSketch" class="end-mark-sketch pad-t h1">
         <div
           class="sketch-holder"
-          :style="{
-            'aspect-ratio': `${endMarkSketch.image.width}/${endMarkSketch.image.height}`,
-            'background-image': `url(${endMarkSketch.image.src})`
-          }"
+          :style="sketchStyles(endMarkSketch)"
         ></div>
       </div>
     </div>
@@ -93,6 +87,27 @@ const isTouchDevice = ref(false);
 const activeIndex = ref(null);
 const videoRefs = ref([]);
 const emit = defineEmits(['hover-update']);
+
+const sketchStyles = (sketch) => {
+  const styles = {
+    'aspect-ratio': `${sketch.image.width}/${sketch.image.height}`,
+    'background-image': `url(${sketch.image.src})`
+  }
+
+  if (sketch.properties) {
+    if (sketch.properties.height) {
+      styles.height = `${sketch.properties.height / 100}em`;
+    }
+    if (sketch.properties.offsetX) {
+      styles.left = `${sketch.properties.offsetX}%`;
+    }
+    if (sketch.properties.offsetY) {
+      styles.marginTop = `${sketch.properties.offsetY / 100}em`;
+    }
+  }
+
+  return styles;
+};
 
 // Mounted
 onMounted(() => {
@@ -261,7 +276,6 @@ section.directors-hero {
     }
 
     .end-mark-sketch {
-      height: 1.5em;
       margin: -0.5em 0;
       padding-bottom: span(2);
       display: flex;
@@ -270,7 +284,7 @@ section.directors-hero {
       .sketch-holder {
         position: relative;
         width: auto;
-        height: 100%;
+        height: 0.5em;
         background-repeat: no-repeat;
         background-size: contain;
         background-position: 50% 50%;
@@ -312,7 +326,7 @@ section.directors-hero {
               top: 50%;
               left: 0px;
               width: auto;
-              height: 2em;
+              height: 0.5em;
               background-repeat: no-repeat;
               background-position: 50% 50%;
               background-size: contain;

@@ -11,10 +11,7 @@
       <div v-if="endMarkSketch" class="end-mark-sketch pad-t h1">
         <div
           class="sketch-holder"
-          :style="{
-            'aspect-ratio': `${endMarkSketch.image.width}/${endMarkSketch.image.height}`,
-            'background-image': `url(${endMarkSketch.image.src})`
-          }"
+          :style="sketchStyles(endMarkSketch)"
         ></div>
       </div>
     </div>
@@ -49,6 +46,27 @@ const props = defineProps({
     required: false
   }
 });
+
+const sketchStyles = (sketch) => {
+  const styles = {
+    'aspect-ratio': `${sketch.image.width}/${sketch.image.height}`,
+    'background-image': `url(${sketch.image.src})`
+  }
+
+  if (sketch.properties) {
+    if (sketch.properties.height) {
+      styles.height = `${sketch.properties.height / 100}em`;
+    }
+    if (sketch.properties.offsetX) {
+      styles.left = `${sketch.properties.offsetX}%`;
+    }
+    if (sketch.properties.offsetY) {
+      styles.marginTop = `${sketch.properties.offsetY / 100}em`;
+    }
+  }
+
+  return styles;
+};
 </script>
 
 <style lang='scss'>
@@ -62,14 +80,13 @@ section.manifesto-hero {
     text-align: center;
 
     .end-mark-sketch {
-      height: 1em;
       display: flex;
       justify-content: center;
-
+      
       .sketch-holder {
         position: relative;
         width: auto;
-        height: 100%;
+        height: 0.5em;
         background-repeat: no-repeat;
         background-size: contain;
         background-position: 50% 50%;

@@ -17,10 +17,20 @@ const zineQuery = groq`*[(_type == "zine")][0]{
   heroHeading,
   heroHeadingSketches {
     sketch1 {
-      image ${imageProps}
+      image ${imageProps},
+      properties {
+        height,
+        offsetX,
+        offsetY
+      }
     },
     sketch2 {
-      image ${imageProps}
+      image ${imageProps},
+      properties {
+        height,
+        offsetX,
+        offsetY
+      }
     }
   },
   items[]{
