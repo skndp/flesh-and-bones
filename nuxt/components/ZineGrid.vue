@@ -9,7 +9,7 @@
           :key="index"
         >
           <ResponsiveImage v-if="item.zineImage" v-bind="item.zineImage.image" />
-          <img v-if="item.zineImageOverlay" :src="item.zineImageOverlay.image.src" alt="" />
+          <ResponsiveImage v-if="item.zineImageOverlay" v-bind="item.zineImageOverlay.image" />
         </NuxtLink>
       </div>
     </div>

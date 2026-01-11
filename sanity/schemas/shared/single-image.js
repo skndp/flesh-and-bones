@@ -20,8 +20,8 @@ export default defineType({
 
           const filetype = getExtension(value.asset._ref);
 
-          if (filetype !== 'jpg' && filetype !== 'png') {
-            return 'Image must be a JPG or PNG'
+          if (filetype !== 'jpg' && filetype !== 'png' && filetype !== 'webp') {
+            return 'Image must be a JPG, PNG, or WEBP';
           }
 
           return true;
