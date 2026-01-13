@@ -13,7 +13,15 @@
 </template>
 
 <script setup>
+import { useSiteStore } from '~/stores/store';
+
+const store = useSiteStore();
+
 const directorsQuery = groq`*[(_type == "directors")][0]{
+  seoSocial {
+    description,
+    image ${imageProps}
+  },
   heroHeading,
   sketchnoteLeft,
   sketchnoteLeftSketch {
@@ -44,6 +52,15 @@ const directorsQuery = groq`*[(_type == "directors")][0]{
 // Async
 const { data } = await useAsyncData('directors', () => useSanity().fetch(directorsQuery));
 const page = data.value;
+
+useSeoMeta({
+  title: `Directors | ${store.siteName}`,
+  description: page.seoSocial?.description ? page.seoSocial.description : store.siteDescription,
+  ogTitle: `Directors | ${store.siteName}`,
+  ogDescription: page.seoSocial?.description ? page.seoSocial.description : store.siteDescription,
+  ogImage: page.seoSocial?.image?.src ? page.seoSocial.image.src : store.ogImage,
+  ogUrl: `${store.ogUrl}/directors`
+})
 </script>
 
 <style lang="scss">

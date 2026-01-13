@@ -14,7 +14,15 @@
 </template>
 
 <script setup>
+import { useSiteStore } from '~/stores/store';
+
+const store = useSiteStore();
+
 const manifestoQuery = groq`*[(_type == "manifesto")][0]{
+  seoSocial {
+    description,
+    image ${imageProps}
+  },
   heroKicker,
   heroHeading,
   heroHeadingSketches {
@@ -50,4 +58,13 @@ const manifestoQuery = groq`*[(_type == "manifesto")][0]{
 // Async
 const { data } = await useAsyncData('manifesto', () => useSanity().fetch(manifestoQuery));
 const page = data.value;
+
+useSeoMeta({
+  title: `Manifesto | ${store.siteName}`,
+  description: page.seoSocial?.description ? page.seoSocial.description : store.siteDescription,
+  ogTitle: `Manifesto | ${store.siteName}`,
+  ogDescription: page.seoSocial?.description ? page.seoSocial.description : store.siteDescription,
+  ogImage: page.seoSocial?.image?.src ? page.seoSocial.image.src : store.ogImage,
+  ogUrl: `${store.ogUrl}/manifesto`
+})
 </script>

@@ -27,7 +27,11 @@
 </template>
 
 <script setup>
+import { useSiteStore } from '~/stores/store';
+
 const route = useRoute();
+const store = useSiteStore();
+
 const params = { slug: route.params.slug };
 const directorQuery = groq`*[_type == 'director' && slug.current == $slug][0]{
   title,
@@ -67,4 +71,13 @@ const directorQuery = groq`*[_type == 'director' && slug.current == $slug][0]{
 // Async data
 const { data } = await useSanityQuery(directorQuery, { slug: params.slug });
 const page = data.value;
+
+useSeoMeta({
+  title: `${page.title} | ${store.siteName}`,
+  description: page.tagline ? page.tagline : store.siteDescription,
+  ogTitle: `${page.title} | ${store.siteName}`,
+  ogDescription: page.tagline ? page.tagline : store.siteDescription,
+  ogImage: page.profileImage?.image?.src ? page.profileImage.image.src : store.ogImage,
+  ogUrl: page.slug?.current ? `${store.ogUrl}/directors/${page.slug.current}` : store.ogUrl
+})
 </script>
