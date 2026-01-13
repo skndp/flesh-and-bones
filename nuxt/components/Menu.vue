@@ -276,28 +276,28 @@ watch(() => store.menuOpen, (isOpen, wasOpen) => {
                 will-change: transform, mask-image, mask-composite;
               }
 
-              &.router-link-exact-active {
-                &:after {
-                  visibility: visible;
-                }
-              }
+              // &.router-link-exact-active {
+              //   &:after {
+              //     visibility: visible;
+              //   }
+              // }
 
-              &:after {
-                content: "";
-                position: absolute;
-                top: 50%;
-                left: 100%;
-                width: 40px;
-                aspect-ratio: 96 / 31;
-                margin-left: $space-8;
-                mask-image: url('/images/bolt.png');
-                mask-size: contain;
-                mask-repeat: no-repeat;
-                background-color: $flesh;
-                transform: translate(0px, -100%) rotate(-5deg);
-                visibility: hidden;
-                transition: visibility 0ms linear 1s;
-              }
+              // &:after {
+              //   content: "";
+              //   position: absolute;
+              //   top: 50%;
+              //   left: 100%;
+              //   width: 40px;
+              //   aspect-ratio: 96 / 31;
+              //   margin-left: $space-8;
+              //   mask-image: url('/images/bolt.png');
+              //   mask-size: contain;
+              //   mask-repeat: no-repeat;
+              //   background-color: $flesh;
+              //   transform: translate(0px, -100%) rotate(-5deg);
+              //   visibility: hidden;
+              //   transition: visibility 0ms linear 1s;
+              // }
             }
           }
         }

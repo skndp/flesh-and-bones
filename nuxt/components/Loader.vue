@@ -93,6 +93,13 @@ function preload() {
     .then(blob => {
       store.setRipMask(blob);
     });
+
+  // Page mask
+  fetch('/images/page-mask.png')
+    .then(res => res.blob())
+    .then(blob => {
+      store.setPageMask(blob);
+    });
 }
 
 function setMasks() {

@@ -1,6 +1,5 @@
 <template>
   <div id="page-to-page-loader">
-    <Paper />
     <div id="spinner" class="rough-edges"></div>
   </div>
 </template>
@@ -12,12 +11,11 @@
   left: 0px;
   width: 100%;
   height: 100%;
-  background-color: $midnight;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 333;
+  z-index: 10;
 
   #spinner {
     position: relative;

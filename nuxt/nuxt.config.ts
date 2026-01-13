@@ -75,10 +75,7 @@ export default defineNuxtConfig({
         { rel: 'stylesheet', href: 'https://use.typekit.net/pqr6rij.css' }
       ]
     },
-    pageTransition: {
-      name: 'page',
-      mode: 'out-in'
-    }
+    pageTransition: false
   },
   //
   // CSS
