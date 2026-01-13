@@ -77,7 +77,7 @@ useSeoMeta({
   description: page.tagline ? page.tagline : store.siteDescription,
   ogTitle: `${page.title} | ${store.siteName}`,
   ogDescription: page.tagline ? page.tagline : store.siteDescription,
-  ogImage: page.profileImage?.image?.src ? page.profileImage.image.src : store.ogImage,
+  ogImage: page.profileImage?.src ? page.profileImage.src : store.ogImage,
   ogUrl: page.slug?.current ? `${store.ogUrl}/directors/${page.slug.current}` : store.ogUrl
 })
 </script>

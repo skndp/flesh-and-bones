@@ -26,6 +26,11 @@ const params = { slug: route.params.slug };
 const articleQuery = groq`*[_type == 'article' && slug.current == $slug][0]{
   title,
   slug,
+  ctaCardImages {
+    squareImage {
+      image ${imageProps}
+    }
+  },
   content {
     content[] {
       ...,
@@ -42,10 +47,10 @@ const page = data.value;
 
 useSeoMeta({
   title: `${page.title} | ${store.siteName}`,
-  description: '',
+  description: store.siteDescription,
   ogTitle: `${page.title} | ${store.siteName}`,
-  ogDescription: '',
-  ogImage: store.ogImage,
+  ogDescription: store.siteDescription,
+  ogImage: page.ctaCardImages?.squareImage?.image?.src ? page.ctaCardImages.squareImage.image.src : store.ogImage,
   ogUrl: page.slug?.current ? `${store.ogUrl}/zine/${page.slug.current}` : store.ogUrl
 })
 </script>
