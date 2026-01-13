@@ -85,8 +85,8 @@ store.setSettings(settings);
 // Now, set default SEO
 useSeoMeta({
   title: store.siteName,
-  description: store.siteDescription,
   ogTitle: store.siteName,
+  description: store.siteDescription,
   ogDescription: store.siteDescription,
   ogImage: store.ogImage,
   ogUrl: store.ogUrl

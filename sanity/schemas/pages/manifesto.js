@@ -22,6 +22,11 @@ export default defineType({
       hidden: true
     }),
     defineField({
+      name: 'seoSocial',
+      title: 'SEO / Social Sharing',
+      type: 'seoSocial'
+    }),
+    defineField({
       fieldset: 'hero',
       name: 'heroKicker',
       title: 'Kicker',

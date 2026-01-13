@@ -15,7 +15,15 @@
 </template>
 
 <script setup>
+import { useSiteStore } from '~/stores/store';
+
+const store = useSiteStore();
+
 const workQuery = groq`*[(_type == "work")][0]{
+  seoSocial {
+    description,
+    image ${imageProps}
+  },
   heroHeading,
   heroHeadingSketches {
     sketch1 {
@@ -80,4 +88,13 @@ const workQuery = groq`*[(_type == "work")][0]{
 // Async
 const { data } = await useAsyncData('work', () => useSanity().fetch(workQuery));
 const page = data.value;
+
+useSeoMeta({
+  title: `Work | ${store.siteName}`,
+  description: page.seoSocial?.description ? page.seoSocial.description : store.siteDescription,
+  ogTitle: `Work | ${store.siteName}`,
+  ogDescription: page.seoSocial?.description ? page.seoSocial.description : store.siteDescription,
+  ogImage: page.seoSocial?.image?.src ? page.seoSocial.image.src : store.ogImage,
+  ogUrl: `${store.ogUrl}/work`
+})
 </script>
