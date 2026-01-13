@@ -1,5 +1,5 @@
 <template>
-  <div id="directors-page" :class="page">
+  <div id="directors-page" class="page">
     <Paper :edges="false" />
     <DirectorsHero
       :sketchHeading="page.heroHeading"

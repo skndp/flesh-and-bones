@@ -3,9 +3,6 @@
     <Transition name="loading">
       <Loader v-if="store.loading" />
     </Transition>
-    <Transition name="p2p-loading">
-      <PageToPageLoader v-if="pageToPageLoader" />
-    </Transition>
     <DevOnly>
       <GridOverlay />
     </DevOnly>
@@ -15,7 +12,11 @@
     <Header />
     <Menu />
     <SvgFilters />
-    <NuxtPage :class="{ 'fade-out': isFading }" />
+    <NuxtPage />
+    <div id="page-mask" ref="pageMask" inert></div>
+    <Transition name="p2p-loading">
+      <PageToPageLoader v-if="pageToPageLoader" />
+    </Transition>
   </div>
 </template>
 
@@ -29,26 +30,37 @@ const router = useRouter();
 const route = useRoute();
 const store = useSiteStore();
 
-const isFading = ref(false);
+const pageMask = ref(null);
 const pageToPageLoader = ref(false);
 let pageToPageLoaderTimeout = null;
 
 router.beforeEach((to, from, next) => {
-  isFading.value = true;
+  pageMask.value.style.visibility = 'visible';
+  pageMask.value.style.opacity = 1;
   next();
 });
 
 router.beforeResolve((to, from, next) => {
+  setTimeout(() => {
+    // setTimeout(() => next(), 1000); for testing
+    next();
+  }, 333); // allow time for fade
+
   pageToPageLoaderTimeout = setTimeout(() => {
     pageToPageLoader.value = true;
-  }, 333); // only show loader if page takes > 333ms
-  next();
+  }, 350); // only show loader if page takes > 350ms
 });
 
 nuxtApp.hook('page:finish', () => {
   clearTimeout(pageToPageLoaderTimeout);
   pageToPageLoader.value = false;
-  isFading.value = false;
+  if(store.pageMask !== '') pageMask.value.style.maskImage = `url('${store.getPageMask()}'), linear-gradient(#000 0 0)`;
+
+  setTimeout(() => {
+    pageMask.value.style.visibility = 'hidden';
+    pageMask.value.style.opacity = 0;
+    pageMask.value.style.maskImage = `unset`;
+  }, 1000);
 });
 
 // Async data
