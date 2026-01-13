@@ -49,8 +49,6 @@ section.zine-grid {
   .gutter {
     .grid-cells {
       width: 100%;
-      max-width: 900px;
-      margin: 0 auto;
       display: flex;
       flex-wrap: wrap;
   
@@ -68,6 +66,15 @@ section.zine-grid {
         }
       }
     }
+  }
+
+  @include respond-to($macbook) {
+    .gutter {
+      .grid-cells {
+        width: 1300px;
+        margin: 0 auto;
+      }
+    }  
   }
 }
 </style>

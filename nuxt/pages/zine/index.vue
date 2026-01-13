@@ -4,6 +4,7 @@
     <ZineHero
       :title="page.heroHeading"
       :sketches="page.heroHeadingSketches"
+      :copy="page.heroCopy"
     />
     <ZineGrid
       :items="page.items"
@@ -41,6 +42,7 @@ const zineQuery = groq`*[(_type == "zine")][0]{
       }
     }
   },
+  heroCopy,
   items[]{
     article->{
       title,

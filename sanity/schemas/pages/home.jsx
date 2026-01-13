@@ -71,10 +71,7 @@ export default defineType({
       fieldset: 'hero',
       name: 'heroCopy',
       title: 'Copy',
-      type: 'string',
-      validation: [
-        Rule => Rule.required()
-      ]
+      type: 'string'
     }),
     defineField({
       fieldset: 'featured',

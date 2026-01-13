@@ -55,6 +55,12 @@ export default defineType({
       ]
     }),
     defineField({
+      fieldset: 'hero',
+      name: 'heroCopy',
+      title: 'Copy',
+      type: 'string'
+    }),
+    defineField({
       name: 'items',
       title: 'GRID',
       type: 'array',

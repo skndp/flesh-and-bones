@@ -5,6 +5,7 @@
         :title="title"
         :sketches="sketches"
       />
+      <p v-if="copy" class="manic">{{ copy }}</p>
     </div>
   </section>
 </template>
@@ -19,6 +20,10 @@ const props = defineProps({
   sketches: {
     type: Object,
     required: false
+  },
+  copy: {
+    type: String,
+    required: false
   }
 });
 </script>
@@ -32,6 +37,10 @@ section.zine-hero {
 
   .gutter {
     text-align: center;
+
+    p {
+      margin-top: 1em;
+    }
   }
 }
 
