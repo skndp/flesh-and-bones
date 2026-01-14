@@ -4,7 +4,10 @@ export default defineType({
   name: 'seoSocial',
   title: 'SEO / Social Sharing',
   type: 'object',
-  description: 'Preview at: https://www.opengraph.xyz',
+  options: {
+    collapsible: true,
+    collapsed: true
+  },
   fields: [
     defineField({
       name: 'description',
@@ -20,7 +23,21 @@ export default defineType({
       name: 'image',
       title: 'Social Sharing Image',
       type: 'image',
-      description: 'For search engines and social media sharing previews (Best at 2400 × 1260)',
+      description: 'Must be under 1.2MB (best at 1200 × 630)',
+      validation: [
+        Rule => Rule.custom(async (value, context) => {
+          if (!value?.asset?._ref) return true;
+
+          const client = context.getClient({ apiVersion: '2023-10-01' });
+          const asset = await client.fetch(
+            `*[_id == $id][0]{size}`,
+            { id: value.asset._ref }
+          );
+
+          const maxSize = 1.2 * 1024 * 1024;
+          return asset?.size <= maxSize ? true : 'Image must be under 1.2MB';
+        })
+      ]
     })
   ]
 });

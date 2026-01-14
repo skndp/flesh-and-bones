@@ -34,6 +34,10 @@ const store = useSiteStore();
 
 const params = { slug: route.params.slug };
 const directorQuery = groq`*[_type == 'director' && slug.current == $slug][0]{
+  seoSocial {
+    description,
+    image ${imageProps}
+  },
   title,
   slug,
   tagline,
@@ -74,10 +78,10 @@ const page = data.value;
 
 useSeoMeta({
   title: `${page.title} | ${store.siteName}`,
-  description: page.tagline ? page.tagline : store.siteDescription,
+  description: page.seoSocial?.description ? page.seoSocial.description : page.tagline ? page.tagline : store.siteDescription,
   ogTitle: `${page.title} | ${store.siteName}`,
-  ogDescription: page.tagline ? page.tagline : store.siteDescription,
-  ogImage: page.profileImage?.src ? page.profileImage.src : store.ogImage,
+  ogDescription: page.seoSocial?.description ? page.seoSocial.description : page.tagline ? page.tagline : store.siteDescription,
+  ogImage: page.seoSocial?.image?.src ? page.seoSocial.image.src : page.profileImage?.src ? page.profileImage.src : store.ogImage,
   ogUrl: page.slug?.current ? `${store.ogUrl}/directors/${page.slug.current}` : store.ogUrl
 })
 </script>

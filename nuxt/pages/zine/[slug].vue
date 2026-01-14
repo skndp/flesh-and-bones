@@ -24,6 +24,10 @@ const store = useSiteStore();
 
 const params = { slug: route.params.slug };
 const articleQuery = groq`*[_type == 'article' && slug.current == $slug][0]{
+  seoSocial {
+    description,
+    image ${imageProps}
+  },
   title,
   slug,
   ctaCardImages {
@@ -47,10 +51,15 @@ const page = data.value;
 
 useSeoMeta({
   title: `${page.title} | ${store.siteName}`,
-  description: store.siteDescription,
+  description: page.seoSocial?.description ? page.seoSocial.description : store.siteDescription,
   ogTitle: `${page.title} | ${store.siteName}`,
-  ogDescription: store.siteDescription,
-  ogImage: page.ctaCardImages?.squareImage?.image?.src ? page.ctaCardImages.squareImage.image.src : store.ogImage,
+  ogDescription: page.seoSocial?.description ? page.seoSocial.description : store.siteDescription,
+  ogImage:
+    page.seoSocial?.image?.src
+      ? page.seoSocial.image.src
+      : page.ctaCardImages?.squareImage?.image?.src
+        ? page.ctaCardImages.squareImage.image.src
+        : store.ogImage,
   ogUrl: page.slug?.current ? `${store.ogUrl}/zine/${page.slug.current}` : store.ogUrl
 })
 </script>

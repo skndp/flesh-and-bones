@@ -20,6 +20,11 @@ export default defineType({
   ],
   fields: [
     defineField({
+      name: 'seoSocial',
+      title: 'SEO / Social Sharing',
+      type: 'seoSocial'
+    }),
+    defineField({
       fieldset: 'hero',
       name: 'title',
       title: 'Title',

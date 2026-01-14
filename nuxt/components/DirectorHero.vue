@@ -1,18 +1,14 @@
 <template>
-  <section class="director-hero pad-b">
+  <section class="director-hero" :class="{ 'pad-b': reelVideo && reelVideo.vimeo && reelPoster }">
     <Boneyard :tagline="tagline" :title="title" :skeletons="skeletons" />
-    <div class="gutter">
-      <div v-if="reelVideo && reelVideo.vimeo && reelPoster" class="hero-video-wrapper">
+    <div v-if="reelVideo && reelVideo.vimeo && reelPoster" class="gutter">
+      <div class="hero-video-wrapper">
         <VideoPlayer
           :vimeo="reelVideo.vimeo"
           :poster="reelPoster"
           :controls="true"
           :cover="false"
         />
-      </div>
-      <div v-else class="hero-video-wrapper">
-        <span class="bg-flesh"></span>
-        <p class="h5 bone">Reel / Video Player</p>
       </div>
     </div>
   </section>
