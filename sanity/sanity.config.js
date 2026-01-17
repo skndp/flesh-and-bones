@@ -1,7 +1,7 @@
 import { defineConfig } from 'sanity';
 import { structureTool } from 'sanity/structure';
 import { schemaTypes } from './schemas';
-import { presentationTool, defineDocuments, defineLocations, } from 'sanity/presentation';
+import { presentationTool } from 'sanity/presentation';
 
 import { media } from 'sanity-plugin-media';
 import { simplerColorInput } from 'sanity-plugin-simpler-color-input';
@@ -28,6 +28,8 @@ const singletonListItem = (S, typeName, title) => {
 const defaultDocumentNode = (S, { schemaType }) => {
   return S.document()
 };
+
+const enablePresentation = process.env.SANITY_STUDIO_ENABLE_PRESENTATION === 'true';
 
 export default defineConfig({
   name: 'default',
@@ -75,6 +77,17 @@ export default defineConfig({
           ]);
       }
     }),
+    ...(enablePresentation ? [
+      presentationTool({
+        previewUrl: {
+          origin: process.env.SANITY_STUDIO_PREVIEW_ORIGIN,
+          previewMode: {
+            enable: '/api/preview/enable',
+            disable: '/api/preview/disable'
+          }
+        }
+      })
+    ] : []),
     media(),
     simplerColorInput(),
     vimeoField({

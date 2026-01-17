@@ -2,18 +2,29 @@ const site_name = 'Flesh and Bones';
 const site_description = 'We are Flesh and Bones, a digital creative agency.';
 const site_url = 'https://www.wearefleshandbones.com'
 
+const nitroPreset = process.env.NITRO_PRESET || 'netlify-static';
+const previewHost = 'flesh-and-bones-preview.netlify.app';
+const enableVisualEditing =
+  nitroPreset === 'netlify' &&
+  process.env.NODE_ENV === 'production' &&
+  process.env.URL?.includes(previewHost);
+
 export default defineNuxtConfig({
   compatibilityDate: '2025-04-30',
   devtools: {
     enabled: false
   },
   nitro: {
-    preset: 'netlify-static'
+    preset: nitroPreset
   },
   //
   // Runtime config
   //
   runtimeConfig: {
+    sanityProjectId: process.env.SANITY_STUDIO_PROJECT_ID,
+    sanityDataset: process.env.SANITY_STUDIO_DATASET,
+    sanityApiVersion: process.env.SANITY_STUDIO_API_VERSION,
+    sanityPreviewToken: process.env.SANITY_STUDIO_PREVIEW_TOKEN,
     public: {
       isDev: process.env.NODE_ENV === 'development'
     }
@@ -121,11 +132,18 @@ export default defineNuxtConfig({
     dataset: process.env.SANITY_STUDIO_DATASET,
     apiVersion: process.env.SANITY_STUDIO_API_VERSION,
     useCdn: false,
-    visualEditing: {
-      token: process.env.SANITY_STUDIO_PREVIEW_TOKEN,
-      studioUrl: process.env.SANITY_STUDIO_URL,
-      stega: false
-    }
+    visualEditing: enableVisualEditing
+      ? {
+          token: process.env.SANITY_STUDIO_PREVIEW_TOKEN,
+          studioUrl: process.env.SANITY_STUDIO_URL,
+          stega: false,
+          mode: 'visual-editing',
+          previewMode: {
+            enable: '/api/preview/enable',
+            disable: '/api/preview/disable',
+          },
+        }
+      : false
   },
   //
   // Generate
