@@ -17,6 +17,9 @@ export default defineNuxtConfig({
   nitro: {
     preset: nitroPreset
   },
+  features: {
+    noScripts: enableVisualEditing === true ? true : false,
+  },
   //
   // Runtime config
   //
@@ -136,7 +139,7 @@ export default defineNuxtConfig({
       ? {
           token: process.env.SANITY_STUDIO_PREVIEW_TOKEN,
           studioUrl: process.env.SANITY_STUDIO_URL,
-          stega: true,
+          stega: false,
           mode: 'visual-editing',
           previewMode: {
             enable: '/api/preview/enable',
