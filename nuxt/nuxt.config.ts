@@ -17,9 +17,6 @@ export default defineNuxtConfig({
   nitro: {
     preset: nitroPreset
   },
-  features: {
-    noScripts: enableVisualEditing === true ? true : false,
-  },
   //
   // Runtime config
   //
