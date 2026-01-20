@@ -4,7 +4,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   const req = nuxtApp.ssrContext?.event?.node?.req;
   const cookieHeader = req?.headers?.cookie || '';
-  const isPreview = cookieHeader.includes('__sanity_preview');
+  const isPreview = cookieHeader.includes('sanity-preview-id=');
 
   if (!isPreview) return;
 
