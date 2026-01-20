@@ -107,7 +107,14 @@ export default defineNuxtConfig({
           `
         }
       }
-    }
+    },
+    // https://github.com/nuxt-modules/sanity/issues/1277
+    optimizeDeps: {
+        include: ['react-compiler-runtime', 'react', 'react-dom'],
+    },
+    ...(process.env.NODE_ENV === 'production' && {
+      ssr: { noExternal: ['vue'] }
+    })
   },
   //
   // Build modules
