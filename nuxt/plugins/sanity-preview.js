@@ -1,5 +1,6 @@
 export default defineNuxtPlugin((nuxtApp) => {
   const previewEnabled = useState('sanityPreviewEnabled', () => false);
+  const cfg = useRuntimeConfig();
 
   if (process.server) {
     const req = nuxtApp.ssrContext?.event?.node?.req;
@@ -11,26 +12,26 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   if (!previewEnabled.value) return;
 
-  if(process.server) {
-    const sanity = useSanity();
+  const sanity = nuxtApp.$sanity || useSanity();
+
+  if (process.server) {
     const previewClient = sanity.client.withConfig({
       token: cfg.sanityPreviewToken,
       perspective: 'drafts',
       useCdn: false
     });
 
-    sanity.fetch = (query, params) => {
-      return previewClient.fetch(query, params);
+    sanity.fetch = (query, params, options) => {
+      return previewClient.fetch(query, params, options);
     }
+    return;
   }
 
-  if (process.client) {
-    const sanity = useSanity();
-    sanity.fetch = (query, params, options) => {
-      return $fetch('/api/sanity/preview-fetch', {
-        method: 'POST',
-        body: { query, params, options }
-      });
-    };
+  sanity.fetch = (query, params, options) => {
+    return $fetch('/api/sanity/preview-fetch', {
+      method: 'POST',
+      body: { query, params, options }
+    });
   }
-});
+})
+
