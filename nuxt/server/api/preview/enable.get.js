@@ -1,32 +1,31 @@
-import { createClient } from '@sanity/client'
-import { validatePreviewUrl } from '@sanity/preview-url-secret'
-import { setCookie, sendRedirect } from 'h3'
+import { createClient } from '@sanity/client';
+import { validatePreviewUrl } from '@sanity/preview-url-secret';
 
 export default defineEventHandler(async (event) => {
-  const cfg = useRuntimeConfig()
+  const cfg = useRuntimeConfig();
 
-  const client = createClient({
-    projectId: cfg.sanityProjectId,
-    dataset: cfg.sanityDataset,
-    apiVersion: cfg.sanityApiVersion,
+  const clientWithToken = createClient({
+    projectId: cfg.public.sanityProjectId,
+    dataset: cfg.public.sanityDataset,
+    apiVersion: cfg.public.sanityApiVersion,
+    token: cfg.sanityPreviewToken,
     useCdn: false,
-    token: cfg.sanityPreviewToken
-  })
+  });
 
-  const url = getRequestURL(event).toString()
-  const { isValid, redirectTo = '/' } = await validatePreviewUrl(client, url)
+  const url = getRequestURL(event).toString();
+  const { isValid, redirectTo = '/' } = await validatePreviewUrl(clientWithToken, url);
 
   if (!isValid) {
-    throw createError({ statusCode: 401, statusMessage: 'Invalid preview secret' })
+    throw createError({ statusCode: 401, statusMessage: 'Invalid preview secret' });
   }
 
-  setCookie(event, '__sanity_preview', 'true', {
+  setCookie(event, 'sanity-preview-id', '1', {
     httpOnly: true,
+    secure: true,
     sameSite: 'none',
-    secure: process.env.NODE_ENV === 'production',
     path: '/',
-    maxAge: 60 * 30
-  })
+    maxAge: 60 * 60 * 8
+  });
 
-  return sendRedirect(event, redirectTo, 307)
+  return sendRedirect(event, redirectTo, 307);
 });

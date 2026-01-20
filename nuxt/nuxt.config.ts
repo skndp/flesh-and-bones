@@ -21,11 +21,11 @@ export default defineNuxtConfig({
   // Runtime config
   //
   runtimeConfig: {
-    sanityProjectId: process.env.SANITY_STUDIO_PROJECT_ID,
-    sanityDataset: process.env.SANITY_STUDIO_DATASET,
-    sanityApiVersion: process.env.SANITY_STUDIO_API_VERSION,
     sanityPreviewToken: process.env.SANITY_STUDIO_PREVIEW_TOKEN,
     public: {
+      sanityProjectId: process.env.SANITY_STUDIO_PROJECT_ID,
+      sanityDataset: process.env.SANITY_STUDIO_DATASET,
+      sanityApiVersion: process.env.SANITY_STUDIO_API_VERSION,
       isDev: process.env.NODE_ENV === 'development'
     }
   },

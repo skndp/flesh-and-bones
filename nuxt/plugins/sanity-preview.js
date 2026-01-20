@@ -1,30 +1,23 @@
 export default defineNuxtPlugin((nuxtApp) => {
-  const sanity = useSanity();
-  const cfg = useRuntimeConfig();
+  const previewEnabled = useState('sanityPreviewEnabled', () => false);
 
-  const hasPreviewCookie = () => {
-    // SSR
-    if (process.server) {
-      const req = nuxtApp.ssrContext?.event?.node?.req;
-      const cookieHeader = req?.headers?.cookie || '';
-      return cookieHeader.includes('sanity-preview-id=');
+  if (process.server) {
+    const req = nuxtApp.ssrContext?.event?.node?.req;
+    const cookieHeader = req?.headers?.cookie || '';
+    if (cookieHeader.includes('sanity-preview-id=')) {
+      previewEnabled.value = true;
     }
-
-    // Client
-    return document.cookie.includes('sanity-preview-id=');
   }
 
-  // Only enable preview once
-  if (!hasPreviewCookie()) return;
+  if (!previewEnabled.value) return;
 
-  const previewClient = sanity.client.withConfig({
-    token: cfg.sanityPreviewToken,
-    perspective: 'previewDrafts',
-    useCdn: false
-  })
-
-  // Permanently override fetch for this app lifecycle
-  sanity.fetch = (query, params, options) => {
-    return previewClient.fetch(query, params, options)
+  if (process.client) {
+    const sanity = useSanity();
+    sanity.fetch = (query, params, options) => {
+      return $fetch('/api/sanity/preview-fetch', {
+        method: 'POST',
+        body: { query, params, options }
+      });
+    };
   }
 });
