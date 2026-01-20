@@ -11,9 +11,10 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   if (!previewEnabled.value) return;
 
+  const injected = nuxtApp.$sanity || useSanity();
+
   if (process.client) {
-    const sanity = useSanity();
-    sanity.fetch = (query, params, options) => {
+    injected.fetch = (query, params, options) => {
       return $fetch('/api/sanity/preview-fetch', {
         method: 'POST',
         body: { query, params, options }
