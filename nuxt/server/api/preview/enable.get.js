@@ -24,9 +24,9 @@ export default defineEventHandler(async (event) => {
   // Cookie indicates "preview enabled" for this browser session
   setCookie(event, '__sanity_preview', 'true', {
     httpOnly: true,
-    sameSite: 'lax',
+    sameSite: 'None',
     path: '/',
-    secure: process.env.NODE_ENV === 'production',
+    secure: true,
     maxAge: 60 * 30 // 30 minutes
   });
 
