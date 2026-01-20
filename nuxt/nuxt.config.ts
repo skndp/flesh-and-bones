@@ -3,7 +3,7 @@ const site_description = 'We are Flesh and Bones, a digital creative agency.';
 const site_url = 'https://www.wearefleshandbones.com'
 
 const nitroPreset = process.env.NITRO_PRESET || 'netlify-static';
-const previewHost = 'flesh-and-bones-preview.netlify.app';
+const previewHost = 'https://flesh-and-bones-preview.netlify.app';
 const enableVisualEditing =
   nitroPreset === 'netlify' &&
   process.env.NODE_ENV === 'production' &&
