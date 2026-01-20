@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
     apiVersion: cfg.public.sanityApiVersion,
     token: cfg.sanityPreviewToken,
     perspective: 'drafts',
-    useCdn: false,
+    useCdn: false
   })
 
   return client.fetch(query, params || {}, options);

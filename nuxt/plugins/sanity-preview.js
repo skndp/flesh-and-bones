@@ -11,10 +11,22 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   if (!previewEnabled.value) return;
 
-  const injected = nuxtApp.$sanity || useSanity();
+  if(process.server) {
+    const sanity = useSanity();
+    const previewClient = sanity.client.withConfig({
+      token: cfg.sanityPreviewToken,
+      perspective: 'drafts',
+      useCdn: false
+    });
+
+    sanity.fetch = (query, params) => {
+      return previewClient.fetch(query, params);
+    }
+  }
 
   if (process.client) {
-    injected.fetch = (query, params, options) => {
+    const sanity = useSanity();
+    sanity.fetch = (query, params, options) => {
       return $fetch('/api/sanity/preview-fetch', {
         method: 'POST',
         body: { query, params, options }
