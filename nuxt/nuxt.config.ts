@@ -136,7 +136,7 @@ export default defineNuxtConfig({
       ? {
           token: process.env.SANITY_STUDIO_PREVIEW_TOKEN,
           studioUrl: process.env.SANITY_STUDIO_URL,
-          stega: false,
+          stega: true,
           mode: 'visual-editing',
           previewMode: {
             enable: '/api/preview/enable',
