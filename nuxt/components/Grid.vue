@@ -374,8 +374,6 @@ section.grid {
               grid-template-columns: 1fr 2fr;
 
               .item {
-                min-width: 0px;
-
                 &:first-child {
                   aspect-ratio: auto;
                 }
@@ -392,8 +390,6 @@ section.grid {
               grid-template-columns: 2fr 1fr;
 
               .item {
-                min-width: 0px;
-
                 &:first-child {
                   aspect-ratio: 16/9;
                 }

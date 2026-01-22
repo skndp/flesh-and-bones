@@ -63,6 +63,7 @@ function onItemHover(e) {
 <style lang='scss'>
 .item.article {
   position: relative;
+  min-width: 0;
   aspect-ratio: 1/1;
   display: flex;
   flex-direction: column;

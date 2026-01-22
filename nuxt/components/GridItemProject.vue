@@ -118,6 +118,7 @@ function reflow() {
 .item.project {
   position: relative;
   aspect-ratio: 1/1;
+  min-width: 0;
   cursor: pointer;
 
   &:not(:has(.item-image)) {
