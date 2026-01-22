@@ -1,5 +1,5 @@
 <template>
-  <section class="grid pad-b">
+  <section class="grid">
     <span v-if="sketchnoteLeft" class="sketchnote manic md" inert :data-label="sketchnoteLeft"></span>
     <span v-if="sketchnoteRight" class="sketchnote right bone manic-alt-1" inert :data-label="sketchnoteRight"></span>
     <div class="gutter">
@@ -22,7 +22,7 @@
         </li>
       </ul>
       <Transition name="grid-switch" mode="out-in" :duration="333">
-        <div class="grid-rows" :key="selectedFilterId">
+        <div class="grid-wrapper" :key="selectedFilterId">
           <template v-if="filters && selectedFilterId !== 'all'">
             <div :class="[ 'filter-items', filterLayout ]">
               <GridItemProject
@@ -205,26 +205,28 @@ section.grid {
       }
     }
 
-    .filter-items {
-      width: 100%;
-    }
+    .grid-wrapper {
+      margin-bottom: span(-1);
 
-    .rows {
-      width: 100%;
-      display: block;
-
-      .row {
+      .filter-items {
         width: 100%;
-        display: flex;
-        flex-direction: column;
-
-        &:not(:last-child) {
-          margin-bottom: span(1);
-        }
 
         .item {
-          &:nth-child(2) {
-            margin-top: span(1);
+          margin-bottom: span(1);
+        }
+      }
+
+      .rows {
+        width: 100%;
+        display: block;
+
+        .row {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+
+          .item {
+            margin-bottom: span(1);
           }
         }
       }
@@ -262,46 +264,9 @@ section.grid {
     }
   }
 
-  @include respond-to($small-tablet) {
-    .gutter {
-      .filter-items {
-        &.square {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: span(1);
-        }
-      }
-
-      .rows {
-        .row {
-          display: grid;
-          flex-direction: unset;
-          grid-template-columns: repeat(2, 1fr);
-          gap: span(1);
-
-          &:has(.item:only-child) {
-            grid-template-columns: 1fr;
-          }
-
-          &:has(.item.square:only-child) {
-            .item {
-              width: calc(50% - span(0.5));
-              margin-left: auto;
-              margin-right: auto;
-            }
-          }
-
-          .item {
-            &:nth-child(2) {
-              margin-top: 0px;
-            }
-          }
-        }
-      }
-    }
-  }
-
   @include respond-to($tablet) {
+    padding-bottom: span(0.5);
+
     .sketchnote {
       position: absolute;
       top: 0px;
@@ -334,30 +299,42 @@ section.grid {
     }
 
     .gutter {
-      .filter-items {
-        &.square {
-          gap: span(0.75);
-        }
+      .grid-wrapper {
+        margin-bottom: span(-0.75);
 
-        .item {
-          &:not(:last-child) {
+        .filter-items {
+          &.square {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            column-gap: span(0.75);
+          }
+
+          .item {
             margin-bottom: span(0.75);
           }
         }
-      }
 
-      .rows {
-        .row {
-          gap: span(0.75);
-
-          &:not(:last-child) {
-            margin-bottom: span(0.75);
-          }
-
-          &:has(.item.square:only-child),
-          &:has(.item.square:only-child) {
+        .rows {
+          .row {
+            display: grid;
+            flex-direction: unset;
+            grid-template-columns: repeat(2, 1fr);
+            column-gap: span(0.75);
+  
+            &:has(.item:only-child) {
+              grid-template-columns: 1fr;
+            }
+  
+            &:has(.item.square:only-child) {
+              .item {
+                width: calc(50% - span(0.375));
+                margin-left: auto;
+                margin-right: auto;
+              }
+            }
+  
             .item {
-              width: calc(50% - span(0.375));
+              margin-bottom: span(0.75);
             }
           }
         }
@@ -367,35 +344,37 @@ section.grid {
 
   @include respond-to($average-desktop) {
     .gutter {
-      .rows {
-        .row {
-          &.one-third-two-third {
-            &:not(:has(.item.article)) {
-              grid-template-columns: 1fr 2fr;
+      .grid-wrapper {
+        .rows {
+          .row {
+            &.one-third-two-third {
+              &:not(:has(.item.article)) {
+                grid-template-columns: 1fr 2fr;
 
-              .item {
-                &:first-child {
-                  aspect-ratio: auto;
-                }
+                .item {
+                  &:first-child {
+                    aspect-ratio: auto;
+                  }
 
-                &:last-child {
-                  aspect-ratio: 16/9;
+                  &:last-child {
+                    aspect-ratio: 16/9;
+                  }
                 }
               }
             }
-          }
 
-          &.two-third-one-third {
-            &:not(:has(.item.article)) {
-              grid-template-columns: 2fr 1fr;
+            &.two-third-one-third {
+              &:not(:has(.item.article)) {
+                grid-template-columns: 2fr 1fr;
 
-              .item {
-                &:first-child {
-                  aspect-ratio: 16/9;
-                }
+                .item {
+                  &:first-child {
+                    aspect-ratio: 16/9;
+                  }
 
-                &:last-child {
-                  aspect-ratio: auto;
+                  &:last-child {
+                    aspect-ratio: auto;
+                  }
                 }
               }
             }
@@ -407,29 +386,31 @@ section.grid {
 
   @include respond-to($macbook) {
     .gutter {
-      .filter-items {
-        &.square {
-          gap: span(0.5);
-        }
+      .grid-wrapper {
+        margin-bottom: span(-0.5);
 
-        .item {
-          &:not(:last-child) {
+        .filter-items {
+          &.square {
+            column-gap: span(0.5);
+          }
+
+          .item {
             margin-bottom: span(0.5);
           }
         }
-      }
 
-      .rows {
-        .row {
-          gap: span(0.5);
-
-          &:not(:last-child) {
-            margin-bottom: span(0.5);
-          }
-
-          &:has(.item.square:only-child) {
+        .rows {
+          .row {
+            column-gap: span(0.5);
+  
+            &:has(.item.square:only-child) {
+              .item {
+                width: calc(50% - span(0.25));
+              }
+            }
+  
             .item {
-              width: calc(50% - span(0.25));
+              margin-bottom: span(0.5);
             }
           }
         }

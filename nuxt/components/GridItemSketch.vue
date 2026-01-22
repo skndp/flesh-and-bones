@@ -28,7 +28,7 @@ const props = defineProps({
     @include abs-fill;
   }
 
-  @include respond-to($small-tablet) {
+  @include respond-to($tablet) {
     aspect-ratio: auto;
 
     &:only-child {
