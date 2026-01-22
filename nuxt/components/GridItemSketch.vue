@@ -19,6 +19,7 @@ const props = defineProps({
 <style lang='scss'>
 .item.sketch {
   position: relative;
+  min-width: 0;
   aspect-ratio: 1/1;
   display: flex;
   flex-direction: column;
@@ -27,7 +28,7 @@ const props = defineProps({
     @include abs-fill;
   }
 
-  @include respond-to($small-tablet) {
+  @include respond-to($tablet) {
     aspect-ratio: auto;
 
     &:only-child {

@@ -66,7 +66,7 @@ onBeforeUnmount(() => {
 
 // Functions
 function onResize() {
-  isSmallScreen.value = window.innerWidth < 540;
+  isSmallScreen.value = window.innerWidth < 768;
 
   if (window.innerWidth === lastWidth) return;
 
@@ -118,6 +118,7 @@ function reflow() {
 .item.project {
   position: relative;
   aspect-ratio: 1/1;
+  min-width: 0;
   cursor: pointer;
 
   &:not(:has(.item-image)) {
@@ -221,15 +222,11 @@ function reflow() {
     }
   }
 
-  @include respond-to($small-tablet) {
-    aspect-ratio: 1/1;
-
+  @include respond-to($tablet) {
     &.landscape {
       aspect-ratio: 2/1;
     }
-  }
 
-  @include respond-to($tablet) {
     .item-info {
       padding: $space-16;
       width: calc(100% - $space-32);

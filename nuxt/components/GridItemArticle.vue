@@ -31,7 +31,7 @@ const props = defineProps({
 
 // Mounted
 onMounted(() => {
-  mqMobile = window.matchMedia('(max-width: 540px) and (hover: none)');
+  mqMobile = window.matchMedia('(max-width: 767px) and (hover: none)');
   mqMobile.addEventListener('change', handleMqMobile);
 
   handleMqMobile(mqMobile);
@@ -63,6 +63,7 @@ function onItemHover(e) {
 <style lang='scss'>
 .item.article {
   position: relative;
+  min-width: 0;
   aspect-ratio: 1/1;
   display: flex;
   flex-direction: column;
@@ -103,7 +104,7 @@ function onItemHover(e) {
     }
   }
 
-  @include respond-to($small-tablet) {
+  @include respond-to($tablet) {
     aspect-ratio: auto;
 
     .item-image {
