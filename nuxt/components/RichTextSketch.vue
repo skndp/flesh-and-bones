@@ -47,6 +47,12 @@ const copyHtml = customCopyHtml.replace(/<br\/>/gi, '<br\/> ');
     display: none;
   }
 
+  p {
+    &:empty {
+      height: 2em;
+    }
+  }
+
   .sketch-underline {
     position: relative;
     padding-bottom: 0.2em;
