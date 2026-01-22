@@ -156,21 +156,21 @@ strong {
 
 .h3 {
   font-family: $graphik-black;
-  @include fluid-type($min, $max, 30px, 48px);
+  @include fluid-type($min, $max, 26px, 44px);
   line-height: 1em;
   text-transform: uppercase;
 }
 
 .h4 {
   font-family: $graphik-black;
-  @include fluid-type($min, $max, 24px, 36px);
+  @include fluid-type($min, $max, 22px, 36px);
   line-height: 1em;
   text-transform: uppercase;
 }
 
 .h5 {
   font-family: $graphik-black;
-  @include fluid-type($min, $max, 20px, 30px);
+  @include fluid-type($min, $max, 18px, 30px);
   line-height: 1em;
   text-transform: uppercase;
 
