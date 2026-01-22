@@ -176,8 +176,14 @@ function onDirectorsSwiperReady(swiper) {
 }
 
 function trySync() {
-  if (mainSwiper && titlesSwiper && directorsSwiper) {
-    mainSwiper.controller.control = [titlesSwiper, directorsSwiper];
+  if (store.modalShowDirectors) {
+    if (mainSwiper && titlesSwiper && directorsSwiper) {
+      mainSwiper.controller.control = [titlesSwiper, directorsSwiper];
+    }
+  } else {
+    if (mainSwiper && titlesSwiper) {
+      mainSwiper.controller.control = [titlesSwiper];
+    }
   }
 }
 
