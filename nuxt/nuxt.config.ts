@@ -67,7 +67,8 @@ export default defineNuxtConfig({
         { hid: 'og:description', property: 'og:description', content: site_description },
         { hid: 'og:url', property: 'og:url', content: site_url },
         { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'apple-mobile-web-app-title', content: site_name }
+        { name: 'apple-mobile-web-app-title', content: site_name },
+        { name: 'robots', content: enableVisualEditing ? 'noindex, nofollow' : 'index, follow' }
       ],
       link: [
         { rel: 'icon', type: 'image/png', sizes: '96x96', href: '/favicon-96x96.png' },

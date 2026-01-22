@@ -131,7 +131,7 @@ function setMasks() {
 
   &.loading-enter-active,
   &.loading-leave-active {
-    transition: opacity 4100ms linear;
+    transition: opacity 2100ms linear;
 
     .loader-layer {
       transition: transform 1s cubic-bezier(0.95, 0.05, 0.795, 0.035) 1s;

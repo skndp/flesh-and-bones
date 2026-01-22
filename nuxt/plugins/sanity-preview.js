@@ -33,5 +33,5 @@ export default defineNuxtPlugin((nuxtApp) => {
       body: { query, params, options }
     });
   }
-})
+});
 
