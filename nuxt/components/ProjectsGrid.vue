@@ -1,15 +1,17 @@
 <template>
   <section class="grid pad-b">
     <div class="gutter">
-      <div class="rows">
-        <div v-for="(row, rowIndex) in grid" class="row" :class="getLayout(row.layout, row.items.length)" :key="rowIndex">
-          <GridItemProject
-            v-for="(item, index) in row.items"
-            :layout="row.items.length > 1 ? 'square' : 'landscape'"
-            :item="item"
-            :key="index"
-            @click="onClickProjectItem(item)"
-          />
+      <div class="grid-wrapper">
+        <div class="rows">
+          <div v-for="(row, rowIndex) in grid" class="row" :class="getLayout(row.layout, row.items.length)" :key="rowIndex">
+            <GridItemProject
+              v-for="(item, index) in row.items"
+              :layout="row.items.length > 1 ? 'square' : 'landscape'"
+              :item="item"
+              :key="index"
+              @click="onClickProjectItem(item)"
+            />
+          </div>
         </div>
       </div>
     </div>
