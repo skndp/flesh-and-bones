@@ -65,7 +65,6 @@
 <script setup>
 import { useSiteStore } from '~/stores/store';
 
-const route = useRoute();
 const store = useSiteStore();
 
 // Props

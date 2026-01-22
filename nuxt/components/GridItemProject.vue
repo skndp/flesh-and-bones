@@ -50,13 +50,8 @@ const props = defineProps({
 
 // Lifecycle
 onMounted(() => {
-  lastWidth = window.innerWidth;
   window.addEventListener('resize', onResize);
   onResize();
-
-  nextTick(() => {
-    reflow();
-  });
 });
 
 onBeforeUnmount(() => {
