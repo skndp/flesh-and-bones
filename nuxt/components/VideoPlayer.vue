@@ -168,15 +168,13 @@ function onEnded() {
 }
 
 function playPlayer() {
-  if (sdkPlayer.value) {
-    sdkPlayer.value.play().catch(() => {});
-  }
+  if (!sdkPlayer.value) return;
+  sdkPlayer.value.play().catch(() => {});
 }
 
 function pausePlayer() {
-  if (sdkPlayer.value) {
-    sdkPlayer.value.pause().catch(() => {});
-  }
+  if (!sdkPlayer.value) return;
+  sdkPlayer.value.pause().catch(() => {});
 }
 
 function resetPlayer() {

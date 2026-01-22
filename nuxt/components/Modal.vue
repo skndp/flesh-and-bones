@@ -19,6 +19,7 @@
                 :grab-cursor="false"
                 :allow-touch-move="false"
                 :loop="store.modalProjects.length > 1 ? true : false"
+                :initial-slide="store.modalIndex"
                 @swiper="onTitlesSwiperReady"
               >
                 <SwiperSlide v-for="(item, index) in store.modalProjects" class="swiper-slide" :key="index">
@@ -30,11 +31,12 @@
               <Swiper
                 class="directors-swiper brush xs"
                 direction="vertical"
-                slides-per-view="auto"
+                slides-per-view="1"
                 :modules="[Controller]"
                 :grab-cursor="false"
                 :allow-touch-move="false"
                 :loop="store.modalProjects.length > 1 ? true : false"
+                :initial-slide="store.modalIndex"
                 @swiper="onDirectorsSwiperReady"
               >
                 <SwiperSlide v-for="(item, index) in store.modalProjects" class="swiper-slide" :key="index">
@@ -50,11 +52,13 @@
                 <div class="main-swiper-box">
                   <Swiper
                     class="main-swiper"
-                    slides-per-view="auto"
+                    slides-per-view="1"
+                    :spaceBetween="8"
                     :modules="[Controller]"
                     :grab-cursor="store.modalProjects.length > 1"
                     :allow-touch-move="store.modalProjects.length > 1"
                     :loop="store.modalProjects.length > 1 ? true : false"
+                    :initial-slide="store.modalIndex"
                     @swiper="onMainSwiperReady"
                   >
                     <SwiperSlide v-for="(item, index) in store.modalProjects" class="swiper-slide" :key="index">
@@ -173,13 +177,7 @@ function onDirectorsSwiperReady(swiper) {
 
 function trySync() {
   if (mainSwiper && titlesSwiper && directorsSwiper) {
-    const index = store.modalIndex || 0;
-    const duration = 0;
-
     mainSwiper.controller.control = [titlesSwiper, directorsSwiper];
-    mainSwiper.slideToLoop(index, duration);
-    titlesSwiper.slideToLoop(index, duration);
-    directorsSwiper.slideToLoop(index, duration);
   }
 }
 
@@ -201,8 +199,10 @@ function closeModal() {
       vid.pausePlayer();
     }
   });
-
-  store.setModalClose(false);
+  
+  setTimeout(() => {
+    store.setModalClose(false);
+  }, 27);
 }
 
 // Watchers
@@ -424,7 +424,6 @@ watch(route, () => {
             position: relative;
             width: 100%;
             height: 100%;
-            margin-right: $space-8;
             overflow: hidden;
 
             .video-holder {
