@@ -54,7 +54,6 @@ const goHome = () => {
 }
 
 onMounted(() => {
-  console.log(props.error);
   mediaQueryList = window.matchMedia('(min-width: 1024px)');
   mediaQueryList.addEventListener('change', handleMediaChange);
   handleMediaChange(mediaQueryList);

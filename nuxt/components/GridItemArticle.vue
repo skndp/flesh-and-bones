@@ -1,7 +1,7 @@
 <template>
   <NuxtLink :to="item.slug" class="item article square flesh" @mouseenter="onItemHover" @mouseleave="onItemHover">
     <div class="item-image">
-      <template v-if="item.ctaCardImages.squareImage">
+      <template v-if="item.ctaCardImages && item.ctaCardImages.squareImage">
         <ResponsiveImage v-bind="item.ctaCardImages.squareImage.image" />
       </template>
       <div class="item-hover">
