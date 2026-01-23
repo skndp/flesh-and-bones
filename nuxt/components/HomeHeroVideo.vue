@@ -18,11 +18,15 @@
         <span class="h3 flesh rough-edges-light">LOADING</span>
       </div>
     </Transition>
+    <Transition name="hint">
+      <button v-if="scrollHint" class="scroll-hint" @click="clickScrollHint"></button>
+    </Transition>
   </section>
 </template>
 
 <script setup>
 import { bgBoogie } from '~/utils/bg-boogie';
+import { smoothScrollTo } from '~/utils/smooth-scroll-to';
 
 const store = useSiteStore();
 
@@ -36,10 +40,11 @@ const props = defineProps({
 
 const heroVideoRef = ref(null);
 const videoPlayerRef = ref(null);
+const inner = ref(null);
+
 const playerReady = ref(false);
 const siteLoaded = ref(false);
-const inner = ref(null);
-bgBoogie(inner, 0.27);
+const scrollHint = ref(true);
 
 let readyDelayTimer = null;
 let fallbackTimer = null;
@@ -47,7 +52,9 @@ let resizeTo = 0;
 
 onMounted(() => {
   window.addEventListener('resize', onResize);
+
   setMask();
+  bgBoogie(inner, 0.27);
 
   fallbackTimer = setTimeout(() => {
     triggerSiteLoaded();
@@ -70,6 +77,8 @@ function onResize() {
 }
 
 function setMask() {
+  if (!heroVideoRef.value) return;
+
   const b = heroVideoRef.value.getBoundingClientRect();
   const mask = createTornEdge({
     width: b.width,
@@ -106,6 +115,14 @@ function triggerSiteLoaded() {
     videoPlayerRef.value.playPlayer();
   }
 }
+
+function clickScrollHint() {
+  if (!heroVideoRef.value) return;
+
+  const destination = heroVideoRef.value.getBoundingClientRect().height;
+  smoothScrollTo(destination);
+  scrollHint.value = false;
+}
 </script>
 
 <style lang='scss'>
@@ -118,10 +135,6 @@ section.home-hero-video {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  &.passed {
-    visibility: hidden;
-  }
 
   &.init {
     .home-hero-video-inner {
@@ -189,6 +202,37 @@ section.home-hero-video {
     &.loading-enter-from,
     &.loading-leave-to {
       opacity: 0;
+    }
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 120px;
+    left: 50%;
+    width: 40px;
+    aspect-ratio: 1/1;
+    background-image: url('/images/middle-finger.png');
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: contain;
+    transform: translateX(-50%) scaleY(-1);
+    cursor: pointer;
+
+    &.hint-enter-active,
+    &.hint-leave-active {
+      transition: opacity $speed-666 linear;
+    }
+
+    &.hint-enter-from,
+    &.hint-leave-to {
+      opacity: 0;
+    }
+  }
+
+  @include respond-to($tablet) {
+    .scroll-hint {
+      width: 60px;
+      bottom: 140px;
     }
   }
 }
