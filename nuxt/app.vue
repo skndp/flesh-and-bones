@@ -1,5 +1,6 @@
 <template>
   <div>
+    <PreviewBadge v-if="previewOrigin" />
     <Transition name="loading">
       <Loader v-if="store.loading" />
     </Transition>
@@ -29,6 +30,9 @@ const nuxtApp = useNuxtApp();
 const router = useRouter();
 const route = useRoute();
 const store = useSiteStore();
+
+const previewOrigin = ref(false);
+const targetOrigin = 'https://flesh-and-bones-preview.netlify.app';
 
 const pageMask = ref(null);
 const pageToPageLoader = ref(false);
@@ -95,6 +99,10 @@ useSeoMeta({
 // Mounted
 onMounted(() => {
   console.log(`Made with ☠️ by Seek and Deploy. https://seekanddeploy.com`);
+
+  if (window.location.origin === targetOrigin) {
+    previewOrigin.value = true;
+  }
 
   setTimeout(() => {
     // If not home page, go ahead and set loader complete

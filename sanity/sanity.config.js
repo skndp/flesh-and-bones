@@ -2,6 +2,7 @@ import { defineConfig } from 'sanity';
 import { structureTool } from 'sanity/structure';
 import { schemaTypes } from './schemas';
 import { presentationTool } from 'sanity/presentation';
+import { netlifyTool } from 'sanity-plugin-netlify';
 
 import { media } from 'sanity-plugin-media';
 import { simplerColorInput } from 'sanity-plugin-simpler-color-input';
@@ -89,6 +90,7 @@ export default defineConfig({
       })
     ] : []),
     media(),
+    netlifyTool(),
     simplerColorInput(),
     vimeoField({
       accessToken: process.env.SANITY_STUDIO_VIMEO_ACCESS_TOKEN

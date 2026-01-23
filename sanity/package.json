@@ -22,6 +22,7 @@
     "react-dom": "^18.3.1",
     "sanity": "^3.94.2",
     "sanity-plugin-media": "^4.0.0",
+    "sanity-plugin-netlify": "^1.4.0",
     "sanity-plugin-prefixed-slug": "^2.0.0",
     "sanity-plugin-simpler-color-input": "^3.1.1",
     "sanity-plugin-vimeo-field": "^1.0.1",

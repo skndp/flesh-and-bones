@@ -59,11 +59,10 @@ export const useSiteStore = defineStore('site', {
       this.modalPaginationLabel = '';
     },
     setSettings(settings) {
-      this.siteName = settings.siteName,
+      this.siteName = settings.siteName;
       this.siteDescription = settings.seoSocial?.description || '';
-      this.ogImage = settings.seoSocial?.image?.src || '';
-      // this.ogUrl = 'https://www.wearefleshandbones.com';
-      this.ogUrl = 'https://flesh-and-bones.netlify.app';
+      this.ogImage = settings.seoSocial?.image?.src ? settings.seoSocial.image.src.replace(/\?.*/, '') + '?q=95&w=1200' : '';
+      this.ogUrl = 'https://www.wearefleshandbones.com';
       this.locations = settings.locations;
       this.socials = settings.socials;
       this.lightPaper = settings.lightPaper?.src || '';
