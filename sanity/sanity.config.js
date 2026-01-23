@@ -78,6 +78,7 @@ export default defineConfig({
           ]);
       }
     }),
+    media(),
     ...(enablePresentation ? [
       presentationTool({
         previewUrl: {
@@ -89,7 +90,6 @@ export default defineConfig({
         }
       })
     ] : []),
-    media(),
     netlifyTool(),
     simplerColorInput(),
     vimeoField({
