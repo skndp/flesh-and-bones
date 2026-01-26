@@ -3,12 +3,12 @@
     <div
       class="video-holder"
       :aria-label="poster ? poster.alt : ''"
-      :class="{'--show': hoverToPlay || playingMode, '--cover': cover}"
+      :class="{'--show': showVideo, '--cover': cover }"
       :style="[cover && {'width': `${playerWidth}px`, 'height': `${playerHeight}px`}]"
     >
       <ClientOnly>
         <vueVimeoPlayer
-          v-if="hasVideo"
+          v-if="hasVideo && shouldLoadPlayer"
           ref="player"
           :video-id="vimeo.id"
           :options="playerOptions"
@@ -20,7 +20,7 @@
         />
       </ClientOnly>
     </div>
-    <div v-if="controls" class="video-poster" :class="{ '--show': !playingMode }" @click="clickToPlay">
+    <div v-if="controls" class="video-poster" :class="{ '--show': showPoster }" @click="clickToPlay">
       <ResponsiveImage v-if="poster" v-bind="poster" />
       <span class="play-btn"><span class="rough-edges-light"></span></span>
     </div>
@@ -68,6 +68,8 @@ defineExpose({
 const emit = defineEmits(['ready']);
 const wrapperRef = ref(null);
 const sdkPlayer = shallowRef(null);
+const shouldLoadPlayer = ref(false);
+const hasEnded = ref(false);
 
 const playerWidth = ref(0);
 const playerHeight = ref(0);
@@ -89,10 +91,24 @@ const hasVideo = computed(() => {
   return props.vimeo && props.vimeo.id;
 });
 
+const showPoster = computed(() => {
+  // Show poster before first click OR after video ends
+  return !shouldLoadPlayer.value || hasEnded.value;
+});
+
+const showVideo = computed(() => {
+  // Show video once user has requested it (or hover autoplay)
+  return shouldLoadPlayer.value || props.hoverToPlay.value;
+});
+
 // Mounted
 onMounted(async () => {
   await nextTick();
   window.addEventListener('resize', onResize);
+
+  if (!props.controls) {
+    shouldLoadPlayer.value = true;
+  }
 });
 
 // Before Unmount
@@ -141,30 +157,42 @@ async function onLoaded(evt, vimeoPlayer) {
   // Call ready in parent component
   emit('ready');
 
-  // Now 'autoplay' for looping autoplay videos...
-  if (!props.controls && !props.manualPlay) {
+  if (
+    (!props.controls && !props.manualPlay) ||
+    (props.controls && playingMode.value)
+  ) {
     playPlayer();
   }
 }
 
 function clickToPlay() {
-  if (sdkPlayer.value) {
+  if (!props.controls) return;
+
+  hasEnded.value = false;
+
+  if (!shouldLoadPlayer.value) {
+    shouldLoadPlayer.value = true;
+    playingMode.value = true;
+    return;
+  }
+
+  if (hasEnded.value && sdkPlayer.value) {
+    sdkPlayer.value.setCurrentTime(0).catch(() => {});
     sdkPlayer.value.play().catch(() => {});
     playingMode.value = true;
   }
 }
 
 function isPlaying() {
-  if (sdkPlayer.value) {
-    playingMode.value = true;
-  }
+  playingMode.value = true;
+  hasEnded.value = false;
 }
 
 function onEnded() {
-  if (props.controls && sdkPlayer.value) {
-    sdkPlayer.value.pause().catch(() => {});
-    playingMode.value = false;
-  }
+  if (!props.controls || !sdkPlayer.value) return;
+
+  playingMode.value = false;
+  hasEnded.value = true;
 }
 
 function playPlayer() {
