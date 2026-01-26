@@ -1,5 +1,10 @@
 <template>
   <div ref="wrapperRef" class="video-player-wrapper" :class="{'--no-controls': !controls}">
+    <Transition name="loading">
+      <div v-if="controls && isLoading" class="video-loader">
+        <span class="spinner"></span>
+      </div>
+    </Transition>
     <div
       class="video-holder"
       :aria-label="poster ? poster.alt : ''"
@@ -70,6 +75,7 @@ const wrapperRef = ref(null);
 const sdkPlayer = shallowRef(null);
 const shouldLoadPlayer = ref(false);
 const hasEnded = ref(false);
+const isLoading = ref(false);
 
 const playerWidth = ref(0);
 const playerHeight = ref(0);
@@ -168,14 +174,18 @@ async function onLoaded(evt, vimeoPlayer) {
 function clickToPlay() {
   if (!props.controls) return;
 
+  // Clear ended state and show loader
   hasEnded.value = false;
+  isLoading.value = true;
 
+  // First time clicking → mount the player
   if (!shouldLoadPlayer.value) {
     shouldLoadPlayer.value = true;
     playingMode.value = true;
     return;
   }
 
+  // Subsequent click after video ended → restart
   if (hasEnded.value && sdkPlayer.value) {
     sdkPlayer.value.setCurrentTime(0).catch(() => {});
     sdkPlayer.value.play().catch(() => {});
@@ -186,13 +196,15 @@ function clickToPlay() {
 function isPlaying() {
   playingMode.value = true;
   hasEnded.value = false;
+  isLoading.value = false;
 }
 
 function onEnded() {
-  if (!props.controls || !sdkPlayer.value) return;
+  if (!props.controls) return;
 
   playingMode.value = false;
   hasEnded.value = true;
+  isLoading.value = false;
 }
 
 function playPlayer() {
@@ -246,6 +258,7 @@ function resetPlayer() {
 
     &.--show {
       opacity: 1;
+      transition: opacity $speed-666 $ease-out $speed-666;
     }
 
     img,
@@ -253,6 +266,44 @@ function resetPlayer() {
       @include abs-fill;
       object-fit: cover;
       object-position: 50% 50%;
+    }
+  }
+
+  .video-loader {
+    @include abs-fill;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    transition: opacity $speed-666 $ease-out $speed-333;
+
+    &.loading-leave-active {
+      transition: opacity $speed-666 $ease-out;
+    }
+
+    &.loading-leave-to {
+      opacity: 0;
+    }
+
+    .spinner {
+      position: relative;
+      width: $space-56;
+      height: $space-56;
+      border-radius: 50%;
+      display: flex;
+      animation: spinner 1.3s linear infinite;
+
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        border: 8px solid $flesh;
+        border-top: 8px solid transparent;
+        border-radius: 50%;
+      }
     }
   }
 
