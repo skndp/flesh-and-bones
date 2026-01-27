@@ -76,7 +76,10 @@ export default defineType({
               name: 'backgroundVideo',
               title: 'Video',
               description: 'Fullscreen, background looping video (best at 5-15 seconds)',
-              type: 'videoPlayer'
+              type: 'videoPlayer',
+              validation: [
+                Rule => Rule.required()
+              ]
             }
           ],
           preview: {
