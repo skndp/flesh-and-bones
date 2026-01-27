@@ -182,14 +182,6 @@ function clickToPlay() {
   if (!shouldLoadPlayer.value) {
     shouldLoadPlayer.value = true;
     playingMode.value = true;
-    return;
-  }
-
-  // Subsequent click after video ended → restart
-  if (hasEnded.value && sdkPlayer.value) {
-    sdkPlayer.value.setCurrentTime(0).catch(() => {});
-    sdkPlayer.value.play().catch(() => {});
-    playingMode.value = true;
   }
 }
 
@@ -205,6 +197,7 @@ function onEnded() {
   playingMode.value = false;
   hasEnded.value = true;
   isLoading.value = false;
+  shouldLoadPlayer.value = false;
 }
 
 function playPlayer() {
@@ -221,7 +214,8 @@ function resetPlayer() {
   if (!sdkPlayer.value) return;
 
   if (!props.hoverToPlay) {
-    playingMode.value = false;
+    onEnded();
+    return;
   }
 
   sdkPlayer.value.pause().catch(() => {});
