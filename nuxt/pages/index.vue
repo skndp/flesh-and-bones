@@ -11,9 +11,10 @@
         :copy="page.heroCopy"
       />
       <Grid
-        :grid="page.featuredGrid"
         :sketchnoteLeft="page.sketchnoteLeft"
         :sketchnoteRight="page.sketchnoteRight"
+        :modalLabel="page.modalPaginationLabel"
+        :grid="page.featuredGrid"
       />
       <BigCta
         path="/work"
@@ -49,6 +50,7 @@ const homeQuery = groq`*[(_type == "home")][0]{
   heroCopy,
   sketchnoteLeft,
   sketchnoteRight,
+  modalPaginationLabel,
   featuredGrid[] {
     layout,
     items[] {
@@ -61,6 +63,7 @@ const homeQuery = groq`*[(_type == "home")][0]{
               title,
               slug
             },
+            directorName,
             projectVideo,
             ctaCardImages {
               landscapeImage {

@@ -2,6 +2,13 @@
   display: none;
 }
 
+/* VALIDATION ERROR BUTTON */
+button[data-ui="StatusButton"][aria-label="Validation"] {
+  svg[data-sanity-icon="error-outline"] {
+    color: var(--card-badge-critical-dot-color);
+  }
+}
+
 /* SIDE-BY-SIDE */
 [data-testid="Media"]:has(> .media-items) {
   width: auto;

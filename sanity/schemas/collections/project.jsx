@@ -17,6 +17,15 @@ export default defineType({
       title: 'CTA CARD'
     }
   ],
+  validation: [
+    Rule => Rule.custom(doc => {
+      if (!doc?.director && !doc?.directorName) {
+        return 'Please include either a Director (Reference) or Director (Write-In)';
+      }
+
+      return true;
+    })
+  ],
   fields: [
     defineField({
       fieldset: 'hero',
@@ -45,12 +54,15 @@ export default defineType({
     defineField({
       fieldset: 'hero',
       name: 'director',
-      title: 'Director',
+      title: 'Director (Reference)',
       type: 'reference',
-      to: [{ type: 'director' }],
-      validation: [
-        Rule => Rule.required()
-      ]
+      to: [{ type: 'director' }]
+    }),
+    defineField({
+      fieldset: 'hero',
+      name: 'directorName',
+      title: 'Director (Write-In)',
+      type: 'string'
     }),
     defineField({
       fieldset: 'hero',

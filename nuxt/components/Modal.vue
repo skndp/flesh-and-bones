@@ -5,6 +5,8 @@
         <div v-if="store.modalPaper" id="modal-paper" :style="{ 'background-image': `url('${store.modalPaper}')` }"></div>
         <div id="btn-container">
           <button id="close-modal-btn" @click="closeModal">
+            <span v-if="store.menuSticker" class="bg" :style="{ 'background-image': `url('${store.menuSticker}')` }"></span>
+            <span v-else class="bg bg-flesh rough-edges-light"></span>
             <span class="x"></span>
           </button>
         </div>
@@ -41,7 +43,8 @@
               >
                 <SwiperSlide v-for="(item, index) in store.modalProjects" class="swiper-slide" :key="index">
                   <span>Director</span>
-                  <NuxtLink :to="`/directors/${item.director.slug.current}`" class="flesh">{{ item.director.title }}<span class="bg-flesh rough-edges-light"></span></NuxtLink>
+                  <NuxtLink v-if="!item.directorName && item.director && item.director.title" :to="`/directors/${item.director.slug.current}`" class="flesh">{{ item.director.title }}<span class="bg-flesh rough-edges-light"></span></NuxtLink>
+                  <p v-if="!item.director && item.directorName" class="flesh">{{ item.directorName }}</p>
                 </SwiperSlide>
               </Swiper>
             </div>
@@ -263,8 +266,19 @@ watch(route, () => {
         height: $space-48;
         margin-right: -6px;
         border-radius: 50%;
-        background-color: $flesh;
         cursor: pointer;
+
+        .bg {
+          @include abs-fill;
+          background-repeat: no-repeat;
+          background-position: 50% 50%;
+          background-size: contain;
+          transition: opacity $speed-666 $ease-out;
+
+          &.bg-flesh {
+            border-radius: 50%;
+          }
+        }
 
         span.x {
           @include abs-fill;

@@ -65,6 +65,7 @@ const workQuery = groq`*[(_type == "work")][0]{
               title,
               slug
             },
+            directorName,
             projectVideo,
             ctaCardImages {
               landscapeImage {
