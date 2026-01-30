@@ -8,7 +8,6 @@
     />
     <Grid
       :filters="page.filters"
-      :grid="page.projects"
     />
     <Footer />
   </div>
@@ -47,39 +46,38 @@ const workQuery = groq`*[(_type == "work")][0]{
   filters[]->{
     filter,
     id,
-    filterLayout
-  },
-  projects[] {
-    layout,
-    items[] {
-      type[] {
-        _type == 'projectItem' => {
-          'type': _type,
-          project->{
-            title,
-            filters[]->{
-              filter,
-              id
-            },
-            director->{
+    projects[] {
+      layout,
+      items[] {
+        type[] {
+          _type == 'projectItem' => {
+            'type': _type,
+            project->{
               title,
-              slug
-            },
-            directorName,
-            projectVideo,
-            ctaCardImages {
-              landscapeImage {
-                image ${imageProps}
+              filters[]->{
+                filter,
+                id
               },
-              squareImage {
-                image ${imageProps}
+              director->{
+                title,
+                slug
+              },
+              directorName,
+              projectVideo,
+              ctaCardImages {
+                landscapeImage {
+                  image ${imageProps}
+                },
+                squareImage {
+                  image ${imageProps}
+                }
               }
             }
+          },
+          _type == 'sketchItem' => {
+            'type': _type,
+            image ${imageProps}
           }
-        },
-        _type == 'sketchItem' => {
-          'type': _type,
-          image ${imageProps}
         }
       }
     }

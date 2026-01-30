@@ -3,59 +3,52 @@
     <span v-if="sketchnoteLeft" class="sketchnote manic md" inert :data-label="sketchnoteLeft"></span>
     <span v-if="sketchnoteRight" class="sketchnote right bone manic-alt-1" inert :data-label="sketchnoteRight"></span>
     <div class="gutter">
-      <ul v-if="filters" class="filters pad-b brush sm">
-        <li class="flesh" :class="{ 'selected': selectedFilterId === 'all' }" @click="onClickFilter('all', 'All')" @mouseenter="onItemHover" @mouseleave="onItemHover">
-          <span class="rough-edges-light bg"></span>
-          <span>All</span>
-        </li>
+      <ul v-if="hasFilters" class="filters pad-b brush sm">
         <li
           v-for="(item, index) in filters"
+          :key="item.id.current"
           class="flesh"
-          :class="{ 'selected': selectedFilterId === item.id.current }"
-          @click="onClickFilter(item.id.current, item.filter, item.filterLayout)"
+          :class="{ selected: selectedFilterIndex === index }"
+          @click="onClickFilter(index)"
           @mouseenter="onItemHover"
           @mouseleave="onItemHover"
-          :key="index"
         >
           <span class="rough-edges-light bg"></span>
           <span>{{ item.filter }}</span>
         </li>
       </ul>
-      <Transition name="grid-switch" mode="out-in" :duration="333">
-        <div class="grid-wrapper" :key="selectedFilterId">
-          <template v-if="filters && selectedFilterId !== 'all'">
-            <div :class="[ 'filter-items', filterLayout ]">
-              <GridItemProject
-                v-for="(projectItem, index) in filteredProjects"
-                :layout="filterLayout"
-                :item="projectItem.project"
-                :key="index"
-                @click="onClickProjectItem(projectItem)"
-              />
+      <Transition
+        v-if="activeGrid.length"
+        name="grid-switch"
+        mode="out-in"
+        :duration="333"
+      >
+        <div class="grid-wrapper" :key="selectedFilterIndex">
+          <div class="rows">
+            <div
+              v-for="(row, rowIndex) in activeGrid"
+              :key="rowIndex"
+              class="row"
+              :class="getLayout(row.layout, row.items.length)"
+            >
+              <template v-for="(item, index) in row.items" :key="index">
+                <GridItemProject
+                  v-if="item.type[0].type === 'projectItem'"
+                  :layout="row.items.length > 1 ? 'square' : 'landscape'"
+                  :item="item.type[0].project"
+                  @click="onClickProjectItem(item.type[0])"
+                />
+                <GridItemArticle
+                  v-if="item.type[0].type === 'articleItem'"
+                  :item="item.type[0].article"
+                />
+                <GridItemSketch
+                  v-if="item.type[0].type === 'sketchItem'"
+                  :image="item.type[0].image"
+                />
+              </template>
             </div>
-          </template>
-          <template v-else>
-            <div class="rows">
-              <div v-for="(row, rowIndex) in grid" class="row" :class="getLayout(row.layout, row.items.length)" :key="rowIndex">
-                <template v-for="(item, index) in row.items" :key="index">
-                  <GridItemProject
-                    v-if="item.type[0].type === 'projectItem'"
-                    :layout="row.items.length > 1 ? 'square' : 'landscape'"
-                    :item="item.type[0].project"
-                    @click="onClickProjectItem(item.type[0])"
-                  />
-                  <GridItemArticle
-                    v-if="item.type[0].type === 'articleItem'"
-                    :item="item.type[0].article"
-                  />
-                  <GridItemSketch
-                    v-if="item.type[0].type === 'sketchItem'"
-                    :image="item.type[0].image"
-                  />
-                </template>
-              </div>
-            </div>
-          </template>
+          </div>
         </div>
       </Transition>
     </div>
@@ -83,69 +76,68 @@ const props = defineProps({
   },
   filters: {
     type: Array,
-    required: false
+    required: false,
+    default: () => []
   },
   grid: {
     type: Array,
-    required: true
+    required: false,
+    default: () => []
   }
 });
 
-const selectedFilterId = ref('all');
-const selectedFilterLabel = ref('All');
-const filterLayout = ref('landscape');
+// State
+const selectedFilterIndex = ref(0);
 
-const projectItems = computed(() => {
-  return props.grid
-    .flatMap(row => row.items)
-    .map(item => item.type[0])
-    .filter(t => t.type === 'projectItem')
+// Computed
+const hasFilters = computed(() => {
+  return props.filters.length > 0;
 });
 
-const filteredProjects = computed(() => {
-  if (selectedFilterId.value === 'all') {
-    return [];
+const activeFilter = computed(() => {
+  if (!hasFilters.value) return null;
+  return props.filters[selectedFilterIndex.value];
+});
+
+const activeGrid = computed(() => {
+  if (hasFilters.value) {
+    return activeFilter.value?.projects || [];
   }
 
-  return projectItems.value.filter(item => {
-    const filters = item.project?.filters || [];
-
-    return filters.some(f => {
-      return f.id.current === selectedFilterId.value;
-    });
-  });
+  return props.grid || [];
 });
 
+// Methods
 function getLayout(layout, total) {
-  return total === 2 ? layout ? layout : '' : '';
+  return total === 2 ? layout || '' : '';
+}
+
+function onClickFilter(index) {
+  selectedFilterIndex.value = index;
 }
 
 function onClickProjectItem(item) {
   const directors = true;
-  const label = props.filters ? selectedFilterLabel.value : props.modalLabel ? props.modalLabel : 'Work';
+  const label = hasFilters.value ? activeFilter.value.filter : props.modalLabel || 'Work';
 
-  if (props.filters && selectedFilterId.value !== 'all') {
-    const index = filteredProjects.value.indexOf(item);
-    const flatFilteredProjects = filteredProjects.value.map(item => item.project);
-    store.setModalOpen(flatFilteredProjects, index, directors, label);
-  } else {
-    const index = projectItems.value.indexOf(item);
-    const flatProjects = projectItems.value.map(item => item.project);
-    store.setModalOpen(flatProjects, index, directors, label);
-  }
-};
+  const flatProjects = activeGrid.value
+    .flatMap(row => row.items)
+    .map(item => item.type[0])
+    .filter(t => t.type === 'projectItem')
+    .map(t => t.project)
 
-function onClickFilter(id, label, layout) {
-  selectedFilterId.value = id === 'all' ? 'all' : id;
-  selectedFilterLabel.value = label === 'All' ? 'All' : label;
-  filterLayout.value = layout ? layout : 'landscape';
+  const index = flatProjects.findIndex(
+    project => project === item.project
+  );
+
+  store.setModalOpen(flatProjects, index, directors, label);
 }
 
 function onItemHover(e) {
-  const t = e.currentTarget,
-        bg = t.querySelector('.bg');
+  const t = e.currentTarget;
+  const bg = t.querySelector('.bg');
 
-  if(e.type === 'mouseenter') {
+  if (e.type === 'mouseenter') {
     bg.style.maskComposite = 'unset';
     bg.style.maskImage = `url('${store.getRipMask()}')`;
   } else {
