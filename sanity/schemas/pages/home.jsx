@@ -93,6 +93,15 @@ export default defineType({
     }),
     defineField({
       fieldset: 'featured',
+      name: 'modalPaginationLabel',
+      title: 'Modal Pagination Label',
+      type: 'string',
+      validation: [
+        Rule => Rule.required()
+      ]
+    }),
+    defineField({
+      fieldset: 'featured',
       name: 'featuredGrid',
       title: 'Projects & Articles',
       type: 'array',

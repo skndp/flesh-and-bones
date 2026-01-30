@@ -69,14 +69,6 @@ const store = useSiteStore();
 
 // Props
 const props = defineProps({
-  filters: {
-    type: Array,
-    required: false
-  },
-  grid: {
-    type: Array,
-    required: true
-  },
   sketchnoteLeft: {
     type: String,
     required: false
@@ -84,6 +76,18 @@ const props = defineProps({
   sketchnoteRight: {
     type: String,
     required: false
+  },
+  modalLabel: {
+    type: String,
+    required: false
+  },
+  filters: {
+    type: Array,
+    required: false
+  },
+  grid: {
+    type: Array,
+    required: true
   }
 });
 
@@ -118,7 +122,7 @@ function getLayout(layout, total) {
 
 function onClickProjectItem(item) {
   const directors = true;
-  const label = props.filters ? selectedFilterLabel.value : 'Featured';
+  const label = props.filters ? selectedFilterLabel.value : props.modalLabel ? props.modalLabel : 'Work';
 
   if (props.filters && selectedFilterId.value !== 'all') {
     const index = filteredProjects.value.indexOf(item);
@@ -132,7 +136,7 @@ function onClickProjectItem(item) {
 };
 
 function onClickFilter(id, label, layout) {
-  selectedFilterId.value = id === 'all' ? 'all' : id;;
+  selectedFilterId.value = id === 'all' ? 'all' : id;
   selectedFilterLabel.value = label === 'All' ? 'All' : label;
   filterLayout.value = layout ? layout : 'landscape';
 }
