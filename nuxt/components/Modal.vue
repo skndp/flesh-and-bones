@@ -41,10 +41,10 @@
                 :initial-slide="store.modalIndex"
                 @swiper="onDirectorsSwiperReady"
               >
-                <SwiperSlide v-for="(item, index) in store.modalProjects" class="swiper-slide" :key="index">
+                <SwiperSlide v-for="(item, index) in store.modalProjects" class="swiper-slide bone" :key="index">
                   <span>Director</span>
-                  <NuxtLink v-if="!item.directorName && item.director && item.director.title" :to="`/directors/${item.director.slug.current}`" class="flesh">{{ item.director.title }}<span class="bg-flesh rough-edges-light"></span></NuxtLink>
-                  <p v-if="!item.director && item.directorName" class="flesh">{{ item.directorName }}</p>
+                  <NuxtLink v-if="!item.directorName && item.director && item.director.title" :to="`/directors/${item.director.slug.current}`">{{ item.director.title }}<span class="bg-flesh rough-edges-light"></span></NuxtLink>
+                  <span v-if="!item.director && item.directorName">{{ item.directorName }}</span>
                 </SwiperSlide>
               </Swiper>
             </div>
@@ -364,7 +364,7 @@ watch(route, () => {
           justify-content: center;
 
           .directors-swiper {
-            height: 1.5em;
+            height: 22px;
             display: inline-flex;
             justify-content: center;
 
@@ -376,7 +376,8 @@ watch(route, () => {
               align-items: center;
               justify-content: center;
 
-              span {
+              > span {
+                margin-top: -3px;
                 display: inline-flex;
 
                 &:after {
@@ -388,13 +389,15 @@ watch(route, () => {
 
               a {
                 position: relative;
+                margin-top: -3px;
                 display: inline-flex;
 
                 span {
                   position: absolute;
-                  bottom: 0px;
+                  bottom: -1px;
                   width: 100%;
                   height: 2px;
+                  margin-top: 0px;
                   background-color: $flesh;
                 }
               }
@@ -597,17 +600,6 @@ watch(route, () => {
         .title-block {
           .directors-row {
             margin-top: -1.6em;
-
-            .directors-swiper {
-              height: 1.2em;
-
-              .swiper-slide {
-                span,
-                a {
-                  margin-top: -0.1em;
-                }
-              }
-            }
           }
         }
 
