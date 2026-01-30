@@ -219,7 +219,10 @@ export default defineType({
               type: 'image',
               validation: [
                 Rule => Rule.required()
-              ]
+              ],
+              options: {
+                hotspot: false
+              }
             },
             {
               name: 'name',

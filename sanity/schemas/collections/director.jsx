@@ -80,7 +80,10 @@ export default defineType({
       type: 'image',
       validation: [
         Rule => Rule.required()
-      ]
+      ],
+      options: {
+        hotspot: false
+      }
     }),
     defineField({
       fieldset: 'reel',
@@ -92,7 +95,10 @@ export default defineType({
       fieldset: 'reel',
       name: 'reelPosterImage',
       title: 'Poster Image',
-      type: 'image'
+      type: 'image',
+      options: {
+        hotspot: false
+      }
     }),
     defineField({
       fieldset: 'anatomy',

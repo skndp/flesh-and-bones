@@ -18,7 +18,9 @@ export const useSiteStore = defineStore('site', {
     locations: [],
     socials: [],
     lightPaper: null,
-    modalPaper: null
+    modalPaper: null,
+    playButton: null,
+    menuSticker: null
   }),
   actions: {
     setRipMask(blob) {
@@ -67,6 +69,8 @@ export const useSiteStore = defineStore('site', {
       this.socials = settings.socials;
       this.lightPaper = settings.lightPaper?.src || '';
       this.modalPaper = settings.modalPaper?.src || '';
+      this.playButton = settings.playButton?.src || '';
+      this.menuSticker = settings.menuSticker?.src || '';
     }
   }
 });

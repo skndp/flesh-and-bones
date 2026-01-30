@@ -27,13 +27,17 @@
     </div>
     <div v-if="controls" class="video-poster" :class="{ '--show': showPoster }" @click="clickToPlay">
       <ResponsiveImage v-if="poster" v-bind="poster" />
-      <span class="play-btn"><span class="rough-edges-light"></span></span>
+      <span v-if="store.playButton" class="play-btn" :style="{ 'background-image': `url('${store.playButton}')` }"></span>
+      <span v-else class="play-btn"><span class="bg-midnight rough-edges"></span></span>
     </div>
   </div>
 </template>
 
 <script setup>
 import { vueVimeoPlayer } from 'vue-vimeo-player';
+import { useSiteStore } from '~/stores/store';
+
+const store = useSiteStore();
 
 const props = defineProps({
   vimeo: {
@@ -321,7 +325,6 @@ function resetPlayer() {
       position: relative;
       width: 100px;
       height: 100px;
-      background-image: url('/images/play-sticker.png');
       background-repeat: no-repeat;
       background-position: 50% 50%;
       background-size: contain;
@@ -330,16 +333,22 @@ function resetPlayer() {
       justify-content: center;
       cursor: pointer;
 
-      span {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 0px;
-        height: 0px;
-        border-left: 30px solid $bone;
-        border-top: 18px solid transparent;
-        border-bottom: 18px solid transparent;
-        transform: translateX(-34%) translateY(-50%);
+      .bg-midnight {
+        @include abs-fill;
+        border-radius: 50%;
+
+        &:after {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 0px;
+          height: 0px;
+          border-left: 30px solid $bone;
+          border-top: 18px solid transparent;
+          border-bottom: 18px solid transparent;
+          transform: translateX(-34%) translateY(-50%);
+        }
       }
     }
   }
@@ -350,11 +359,13 @@ function resetPlayer() {
         width: 150px;
         height: 150px;
 
-        span {
-          border-left: 50px solid $bone;
-          border-top: 30px solid transparent;
-          border-bottom: 30px solid transparent;
-          transform: translateX(-34%) translateY(-50%);
+        .bg-midnight {
+          &:after {
+            border-left: 50px solid $bone;
+            border-top: 30px solid transparent;
+            border-bottom: 30px solid transparent;
+            transform: translateX(-34%) translateY(-50%);
+          }
         }
       }
     }
@@ -366,11 +377,13 @@ function resetPlayer() {
         width: 200px;
         height: 200px;
 
-        span {
-          border-left: 50px solid $bone;
-          border-top: 30px solid transparent;
-          border-bottom: 30px solid transparent;
-          transform: translateX(-34%) translateY(-50%);
+        .bg-midnight {
+          &:after {
+            border-left: 50px solid $bone;
+            border-top: 30px solid transparent;
+            border-bottom: 30px solid transparent;
+            transform: translateX(-34%) translateY(-50%);
+          }
         }
       }
     }

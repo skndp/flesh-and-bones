@@ -3,6 +3,8 @@
     <nav class="nav">
       <NuxtLink class="logo" to="/" @click="onClickLogo">Flesh and Bones</NuxtLink>
       <button id="menu-btn" aria-label="Menu" @click="toggleMenu">
+        <span v-if="store.menuSticker" class="menu-btn__bg" :style="{ 'background-image': `url('${store.menuSticker}')` }"></span>
+        <span v-else class="menu-btn__bg bg-flesh rough-edges-light"></span>
         <span class="menu-btn__close"></span>
         <span class="menu-btn__open">
           <span @transitionend="onMenuOpenEnd"></span>
@@ -180,7 +182,9 @@ watch(() => route.fullPath, () => {
       }
 
       #menu-btn {
-        background-color: transparent;
+        .menu-btn__bg {
+          opacity: 0;
+        }
 
         .menu-btn__open {
           span, &:before, &:after {
@@ -273,14 +277,24 @@ watch(() => route.fullPath, () => {
       right: span(1);
       width: $space-48;
       height: $space-48;
-      margin-right: -6px;
-      background-color: $flesh;
       border-radius: 50%;
+      margin-right: -6px;
       overflow: hidden;
       flex-shrink: 0;
       cursor: pointer;
       transform: translateY(-50%);
-      transition: background-color $speed-666 $ease-out;
+
+      .menu-btn__bg {
+        @include abs-fill;
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        background-size: contain;
+        transition: opacity $speed-666 $ease-out;
+
+        &.bg-flesh {
+          border-radius: 50%;
+        }
+      }
 
       .menu-btn__open, .menu-btn__close {
         display: block;

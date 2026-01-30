@@ -68,12 +68,34 @@ export default defineType({
       name: 'lightPaper',
       title: 'LIGHT PAPER',
       description: 'Base paper used in menu, footer, and cutouts',
-      type: 'image'
+      type: 'image',
+      options: {
+        hotspot: false
+      }
     }),
     defineField({
       name: 'modalPaper',
       title: 'MODAL PAPER',
-      type: 'image'
+      type: 'image',
+      options: {
+        hotspot: false
+      }
+    }),
+    defineField({
+      name: 'playButton',
+      title: 'PLAY',
+      type: 'image',
+      options: {
+        hotspot: false
+      }
+    }),
+    defineField({
+      name: 'menuSticker',
+      title: 'MENU (and MODAL)',
+      type: 'image',
+      options: {
+        hotspot: false
+      }
     })
   ]
 });

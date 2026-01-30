@@ -37,7 +37,10 @@ export default defineType({
           const maxSize = 1.2 * 1024 * 1024;
           return asset?.size <= maxSize ? true : 'Image must be under 1.2MB';
         })
-      ]
+      ],
+      options: {
+        hotspot: false
+      }
     })
   ]
 });

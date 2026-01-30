@@ -77,7 +77,9 @@ const settingsQuery = groq`*[(_type == "settings")][0]{
   locations[],
   socials[],
   lightPaper ${imageProps},
-  modalPaper ${imageProps}
+  modalPaper ${imageProps},
+  playButton ${imageProps},
+  menuSticker ${imageProps}
 }`;
 
 const { data } = await useAsyncData('settings', () => useSanity().fetch(settingsQuery));
