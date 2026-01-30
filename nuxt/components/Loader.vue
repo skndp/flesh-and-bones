@@ -94,6 +94,13 @@ function preload() {
       store.setRipMask(blob);
     });
 
+  // Fill mask
+  fetch('/images/fill-mask.png')
+    .then(res => res.blob())
+    .then(blob => {
+      store.setFillMask(blob);
+    });
+
   // Page mask
   fetch('/images/page-mask.png')
     .then(res => res.blob())

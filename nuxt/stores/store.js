@@ -3,6 +3,7 @@ import { defineStore } from 'pinia';
 export const useSiteStore = defineStore('site', {
   state: () => ({
     ripMask: '',
+    fillMask: '',
     pageMask: '',
     loading: true,
     menuOpen: false,
@@ -28,6 +29,12 @@ export const useSiteStore = defineStore('site', {
     },
     getRipMask() {
       return URL.createObjectURL(this.ripMask);
+    },
+    setFillMask(blob) {
+      this.fillMask = blob;
+    },
+    getFillMask() {
+      return URL.createObjectURL(this.fillMask);
     },
     setPageMask(blob) {
       this.pageMask = blob;

@@ -7,7 +7,7 @@
     <DevOnly>
       <GridOverlay />
     </DevOnly>
-    <Transition name="modal" @after-leave="modalCleanup">
+    <Transition name="modal" @after-leave="modalCleanup" :duration="1000">
       <Modal v-if="store.modalOpen" />
     </Transition>
     <Header />
@@ -100,7 +100,7 @@ useSeoMeta({
 
 // Mounted
 onMounted(() => {
-  console.log(`Made with ☠️ by Seek and Deploy. https://seekanddeploy.com`);
+  console.log(`☠️ Seek and Deploy was here. https://seekanddeploy.com`);
 
   if (window.location.origin === targetOrigin) {
     previewOrigin.value = true;

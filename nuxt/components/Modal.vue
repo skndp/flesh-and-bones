@@ -135,6 +135,9 @@ let directorsSwiper = null;
 onMounted(() => {
   if (modalRef.value) {
     disableBodyScroll(modalRef.value);
+
+    modalRef.value.style.maskComposite = 'unset';
+    modalRef.value.style.maskImage = `url('${store.getFillMask()}')`;
   }
 });
 
@@ -142,6 +145,9 @@ onMounted(() => {
 onBeforeUnmount(() => {
   if (modalRef.value) {
     enableBodyScroll(modalRef.value);
+
+    modalRef.value.style.maskComposite = 'exclude';
+    modalRef.value.style.maskImage = `url('${store.getFillMask()}'), linear-gradient(#000 0 0)`;
   }
 });
 
@@ -229,16 +235,9 @@ watch(route, () => {
   height: 100%;
   overflow: hidden;
   z-index: 237;
-
-  &.modal-enter-active,
-  &.modal-leave-active {
-    transition: opacity $speed-666 $evil-ease;
-  }
-
-  &.modal-enter-from,
-  &.modal-leave-to {
-    opacity: 0;
-  }
+  mask-size: cover;
+  mask-composite: exclude;
+  mask-image: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
 
   #modal-inner {
     @include abs-fill;
