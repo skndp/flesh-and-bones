@@ -3,7 +3,8 @@
     <div ref="infoRef" class="item-info">
       <h3 class="h3 rough-edges-light">{{ item.title }}</h3>
       <div class="meta">
-        <p class="brush xs"><strong>Director - {{ item.director.title }}</strong></p>
+        <p v-if="!item.directorName && item.director && item.director.title" class="brush xs"><strong>Director - {{ item.director.title }}</strong></p>
+        <p v-if="!item.director && item.directorName" class="brush xs"><strong>Director - {{ item.directorName }}</strong></p>
       </div>
     </div>
     <div v-if="item.ctaCardImages" class="item-image" @mouseenter="onItemHover" @mouseleave="onItemHover">
