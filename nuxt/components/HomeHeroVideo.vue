@@ -18,15 +18,11 @@
         <span class="h3 flesh rough-edges-light">LOADING</span>
       </div>
     </Transition>
-    <Transition name="hint">
-      <button v-if="scrollHint" class="scroll-hint" @click="clickScrollHint"></button>
-    </Transition>
   </section>
 </template>
 
 <script setup>
 import { bgBoogie } from '~/utils/bg-boogie';
-import { smoothScrollTo } from '~/utils/smooth-scroll-to';
 
 const store = useSiteStore();
 
@@ -44,7 +40,6 @@ const inner = ref(null);
 
 const playerReady = ref(false);
 const siteLoaded = ref(false);
-const scrollHint = ref(true);
 
 let readyDelayTimer = null;
 let fallbackTimer = null;
@@ -114,14 +109,6 @@ function triggerSiteLoaded() {
   if (videoPlayerRef.value) {
     videoPlayerRef.value.playPlayer();
   }
-}
-
-function clickScrollHint() {
-  if (!heroVideoRef.value) return;
-
-  const destination = heroVideoRef.value.getBoundingClientRect().height;
-  smoothScrollTo(destination);
-  scrollHint.value = false;
 }
 </script>
 
@@ -202,37 +189,6 @@ section.home-hero-video {
     &.loading-enter-from,
     &.loading-leave-to {
       opacity: 0;
-    }
-  }
-
-  .scroll-hint {
-    position: absolute;
-    bottom: 120px;
-    left: 50%;
-    width: 40px;
-    aspect-ratio: 1/1;
-    background-image: url('/images/middle-finger.png');
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
-    background-size: contain;
-    transform: translateX(-50%) scaleY(-1);
-    cursor: pointer;
-
-    &.hint-enter-active,
-    &.hint-leave-active {
-      transition: opacity $speed-666 linear;
-    }
-
-    &.hint-enter-from,
-    &.hint-leave-to {
-      opacity: 0;
-    }
-  }
-
-  @include respond-to($tablet) {
-    .scroll-hint {
-      width: 60px;
-      bottom: 140px;
     }
   }
 }
