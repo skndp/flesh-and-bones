@@ -91,7 +91,7 @@ export default defineType({
     }),
     defineField({
       name: 'menuSticker',
-      title: 'MENU (and MODAL)',
+      title: 'MENU',
       type: 'image',
       options: {
         hotspot: false
