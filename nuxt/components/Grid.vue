@@ -157,13 +157,14 @@ section.grid {
 
   .gutter {
     ul.filters {
+      margin: 0 -0.5em;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
 
       li {
         position: relative;
-        margin: 0 0.5em;
+        margin: 0.25em 0.5em;
         padding: 0.1em 0.3em 0.3em;
         cursor: pointer;
 

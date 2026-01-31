@@ -44,9 +44,6 @@ export default defineType({
       name: 'filterLayout',
       title: 'Filter Layout (This will be removed...)',
       type: 'string',
-      validation: [
-        Rule => Rule.required()
-      ],
       options: {
         list: [
           { title: 'Landscape', value: 'landscape' },

@@ -13,6 +13,10 @@ export default defineType({
       title: 'HERO'
     },
     {
+      name: 'modal',
+      title: 'MODAL'
+    },
+    {
       name: 'cta-card',
       title: 'CTA CARD'
     }
@@ -65,10 +69,17 @@ export default defineType({
       type: 'string'
     }),
     defineField({
-      fieldset: 'hero',
+      fieldset: 'modal',
       name: 'projectVideo',
       title: 'Video (Player w/ Controls)',
       type: 'videoPlayer'
+    }),
+    defineField({
+      fieldset: 'modal',
+      name: 'modalPortrait',
+      title: 'Portrait Layout',
+      description: 'Enable this to display as portrait (9:16) in modal slide',
+      type: 'boolean'
     }),
     defineField({
       fieldset: 'cta-card',

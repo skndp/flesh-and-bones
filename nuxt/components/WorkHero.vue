@@ -46,8 +46,18 @@ section.work-hero {
     p {
       position: relative;
       width: 100%;
-      margin: 0 auto 2em;
+      margin: 0 auto 0.5em;
       transform: rotate(-1.8deg);
+    }
+  }
+
+  @include respond-to($tablet) {
+    .gutter {
+      p {
+        position: relative;
+        width: 100%;
+        margin: 0 auto 2em;
+      }
     }
   }
 }

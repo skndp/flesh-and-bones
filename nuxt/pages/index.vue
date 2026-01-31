@@ -65,6 +65,7 @@ const homeQuery = groq`*[(_type == "home")][0]{
             },
             directorName,
             projectVideo,
+            modalPortrait,
             ctaCardImages {
               landscapeImage {
                 image ${imageProps}

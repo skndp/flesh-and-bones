@@ -150,7 +150,7 @@ strong {
   text-transform: uppercase;
 
   &.sm {
-    @include fluid-type($min, $max, 24px, 48px);
+    @include fluid-type($min, $max, 18px, 48px);
   }
 }
 
