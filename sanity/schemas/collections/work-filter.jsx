@@ -41,19 +41,6 @@ export default defineType({
       ]
     }),
     defineField({
-      name: 'filterLayout',
-      title: 'Filter Layout (This will be removed...)',
-      type: 'string',
-      options: {
-        list: [
-          { title: 'Landscape', value: 'landscape' },
-          { title: 'Square', value: 'square' }
-        ],
-        layout: 'radio'
-      },
-      initialValue: 'landscape'
-    }),
-    defineField({
       name: 'projects',
       title: 'PROJECTS',
       type: 'array',

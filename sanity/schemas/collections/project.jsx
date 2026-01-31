@@ -42,21 +42,6 @@ export default defineType({
     }),
     defineField({
       fieldset: 'hero',
-      name: 'filters',
-      title: 'Work Filter(s)',
-      type: 'array',
-      validation: [
-        Rule => Rule.unique()
-      ],
-      of: [
-        {
-          type: 'reference',
-          to: [{ type: 'workFilter' }]
-        }
-      ]
-    }),
-    defineField({
-      fieldset: 'hero',
       name: 'director',
       title: 'Director (Reference)',
       type: 'reference',
