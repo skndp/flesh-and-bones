@@ -48,7 +48,7 @@
                 class="swiper-slide"
                 :key="index"
               >
-                <div class="slide-containment" :class="{ 'portrait': item.modalPortrait }">
+                <div class="slide-containment" :class="{ 'portrait': item.modalPortrait, 'square': item.modalSquare }">
                   <div class="slide-flex-containment">
                     <div class="slide-box">
                       <VideoPlayer
@@ -358,6 +358,7 @@ watch(route, () => {
               position: relative;
               width: 100%;
               height: 100%;
+              background-color: $flesh;
               container-name: containment;
               container-type: size;
 
@@ -397,6 +398,25 @@ watch(route, () => {
 
                 .slide-box {
                   aspect-ratio: 9/16;
+                }
+              }
+
+              // Square override
+              &.square {
+                .slide-flex-containment {
+                  flex-direction: column;
+
+                  @container containment (aspect-ratio < 16/9) {
+                    flex-direction: column;
+                  }
+
+                  @container containment (aspect-ratio < 1/1) {
+                    flex-direction: row;
+                  }
+                }
+
+                .slide-box {
+                  aspect-ratio: 1/1;
                 }
               }
             }

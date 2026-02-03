@@ -65,6 +65,7 @@ const workQuery = groq`*[(_type == "work")][0]{
               directorName,
               projectVideo,
               modalPortrait,
+              modalSquare,
               ctaCardImages {
                 landscapeImage {
                   image ${imageProps}

@@ -63,7 +63,14 @@ export default defineType({
       fieldset: 'modal',
       name: 'modalPortrait',
       title: 'Portrait Layout',
-      description: 'Enable this to display as portrait (9:16) in modal slide',
+      description: 'Enable this to display as portrait (9/16) in modal slide',
+      type: 'boolean'
+    }),
+    defineField({
+      fieldset: 'modal',
+      name: 'modalSquare',
+      title: 'Square Layout',
+      description: 'Enable this to display as square (1/1) in modal slide',
       type: 'boolean'
     }),
     defineField({
