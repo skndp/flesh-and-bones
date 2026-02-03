@@ -358,7 +358,6 @@ watch(route, () => {
               position: relative;
               width: 100%;
               height: 100%;
-              background-color: $flesh;
               container-name: containment;
               container-type: size;
 
