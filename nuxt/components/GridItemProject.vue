@@ -8,16 +8,15 @@
       </div>
     </div>
     <div v-if="item.ctaCardImages" class="item-image" @mouseenter="onItemHover" @mouseleave="onItemHover">
-      <template v-if="(layout === 'square' || isSmallScreen) && item.ctaCardImages.squareImage">
-        <div class="item-image-paper" :style="{'background-color': item.ctaCardImages.squareImage.image.palette.muted.background}" ref="paper"></div>
-        <ResponsiveImage v-bind="item.ctaCardImages.squareImage.image" ref="imgTop" />
-        <ResponsiveImage v-bind="item.ctaCardImages.squareImage.image" class="item-hover-image" />
-      </template>
-      <template v-else>
-        <div class="item-image-paper" :style="{'background-color': item.ctaCardImages.landscapeImage.image.palette.muted.background}" ref="paper"></div>
-        <ResponsiveImage v-bind="item.ctaCardImages.landscapeImage.image" ref="imgTop" />
-        <ResponsiveImage v-bind="item.ctaCardImages.landscapeImage.image" class="item-hover-image" />
-      </template>
+      <div class="item-image-paper" ref="paper"></div>
+      <ResponsiveImage
+        ref="imgTop"
+        v-bind="useSquareImage ? item.ctaCardImages.squareImage.image : item.ctaCardImages.landscapeImage.image"
+      />
+      <ResponsiveImage
+        class="item-hover-image"
+        v-bind="useSquareImage ? item.ctaCardImages.squareImage.image : item.ctaCardImages.landscapeImage.image"
+      />
     </div>
   </div>
 </template>
@@ -33,7 +32,9 @@ const tearY = ref(0.8);
 const paper = ref(null);
 const imgTop = ref(null);
 const isSmallScreen = ref(false);
+const landscapeSwap = ref(false);
 
+let mediaQuery = null;
 let resizeTo = 0;
 let lastWidth = 0;
 
@@ -46,21 +47,51 @@ const props = defineProps({
   layout: {
     type: String,
     required: true
+  },
+  rowLayout: {
+    type: String,
+    required: true
+  },
+  nthChild: {
+    type: Number,
+    required: true
   }
+});
+
+const useSquareImage = computed(() => {
+  const shouldUseSquare = (props.layout === 'square' || isSmallScreen) && !landscapeSwap.value;
+  return shouldUseSquare && props.item.ctaCardImages.squareImage;
 });
 
 // Lifecycle
 onMounted(() => {
   window.addEventListener('resize', onResize);
   onResize();
+
+  mediaQuery = window.matchMedia('(min-width: 1440px)');
+  handleMediaChange(mediaQuery);
+  mediaQuery.addEventListener('change', handleMediaChange);
 });
 
 onBeforeUnmount(() => {
   clearTimeout(resizeTo);
   window.removeEventListener('resize', onResize);
+
+  if (mediaQuery) {
+    mediaQuery.removeEventListener('change', handleMediaChange);
+  }
 });
 
 // Functions
+function handleMediaChange(e) {
+  landscapeSwap.value =
+    e.matches &&
+    (
+      (props.rowLayout === 'two-third-one-third' && props.nthChild === 1) ||
+      (props.rowLayout === 'one-third-two-third' && props.nthChild === 2)
+    );
+}
+
 function onResize() {
   isSmallScreen.value = window.innerWidth < 768;
 
