@@ -59,7 +59,7 @@ const props = defineProps({
 });
 
 const useSquareImage = computed(() => {
-  const shouldUseSquare = (props.layout === 'square' || isSmallScreen) && !landscapeSwap.value;
+  const shouldUseSquare = (props.layout === 'square' || isSmallScreen.value) && !landscapeSwap.value;
   return shouldUseSquare && props.item.ctaCardImages.squareImage;
 });
 
