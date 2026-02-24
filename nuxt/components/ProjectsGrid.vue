@@ -7,7 +7,7 @@
             <GridItemProject
               v-for="(item, index) in row.items"
               :layout="row.items.length > 1 ? 'square' : 'landscape'"
-              :rowLayout="row.layout"
+              :rowLayout="row.layout ? row.layout : ''"
               :nthChild="index + 1"
               :item="item"
               :key="index"
