@@ -9,18 +9,29 @@
       :richText="page.content.content"
     />
     <BigCta
-      path="/zine"
-      label="Back to Zine"
+      path="javascript:void(0)"
+      label="Back"
+      @click="handleBack"
     />
     <Footer />
   </div>
 </template>
 
 <script setup>
+import { useRouter, useRoute } from 'vue-router';
 import { useSiteStore } from '~/stores/store';
 
-const route = useRoute();
 const store = useSiteStore();
+const router = useRouter();
+const route = useRoute();
+
+function handleBack() {
+  if (store.initialRoute) {
+    router.push('/zine');
+  } else {
+    router.back();
+  }
+}
 
 const params = { slug: route.params.slug };
 const articleQuery = groq`*[_type == 'article' && slug.current == $slug][0]{

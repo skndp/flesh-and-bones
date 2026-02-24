@@ -6,6 +6,7 @@ export const useSiteStore = defineStore('site', {
     fillMask: '',
     pageMask: '',
     loading: true,
+    initialRoute: true,
     menuOpen: false,
     modalOpen: false,
     modalProjects: [],

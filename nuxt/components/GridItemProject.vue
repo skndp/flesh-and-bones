@@ -1,5 +1,5 @@
 <template>
-  <div ref="itemRef" class="item project flesh" :class="[ layout ]">
+  <div ref="itemRef" class="item project flesh" :class="[ layout ]" @mouseenter="onItemHover" @mouseleave="onItemHover">
     <div ref="infoRef" class="item-info">
       <h3 class="h3 rough-edges-light">{{ item.title }}</h3>
       <div class="meta">
@@ -7,8 +7,7 @@
         <p v-if="!item.director && item.directorName" class="brush xs"><strong>Director - {{ item.directorName }}</strong></p>
       </div>
     </div>
-    <div v-if="item.ctaCardImages" class="item-image" @mouseenter="onItemHover" @mouseleave="onItemHover">
-      <div class="item-image-paper" ref="paper"></div>
+    <div v-if="item.ctaCardImages" class="item-image">
       <ResponsiveImage
         ref="imgTop"
         v-bind="useSquareImage ? item.ctaCardImages.squareImage.image : item.ctaCardImages.landscapeImage.image"
@@ -29,7 +28,6 @@ const itemRef = ref(null);
 const infoRef = ref(null);
 const tearY = ref(0.8);
 
-const paper = ref(null);
 const imgTop = ref(null);
 const isSmallScreen = ref(false);
 const landscapeSwap = ref(false);
@@ -106,19 +104,26 @@ function onResize() {
 
 function onItemHover(e) {
   const t = e.currentTarget,
-        i = t.querySelector('.item-hover-image');
+        img = t.querySelector('.item-hover-image'),
+        info = t.querySelector('.item-info');
 
   if(e.type === 'mouseenter') {
-    i.style.maskComposite = 'exclude';
-    i.style.maskImage = `url('${store.getRipMask()}'), linear-gradient(#000 0 0)`;
+    img.style.maskComposite = 'exclude';
+    img.style.maskImage = `url('${store.getRipMask()}'), linear-gradient(#000 0 0)`;
+
+    info.style.maskComposite = 'unset';
+    info.style.maskImage = `url('${store.getRipMask()}')`;
   } else {
-    i.style.maskComposite = 'unset';
-    i.style.maskImage = `url('${store.getRipMask()}')`;
+    img.style.maskComposite = 'unset';
+    img.style.maskImage = `url('${store.getRipMask()}')`;
+
+    info.style.maskComposite = 'exclude';
+    info.style.maskImage = `url('${store.getRipMask()}'), linear-gradient(#000 0 0)`;
   }
 }
 
 function reflow() {
-  if(paper.value && imgTop.value) {
+  if(imgTop.value) {
     const b = imgTop.value.$el.getBoundingClientRect(),
           w = b.width,
           h = b.height;
@@ -135,7 +140,6 @@ function reflow() {
       edgeRoughness: 4
     });
 
-    paper.value.style.maskImage = `url(${dataURL})`;
     imgTop.value.$el.style.maskImage = `url(${dataURL})`;
   }
 }
@@ -148,30 +152,11 @@ function reflow() {
   min-width: 0;
   cursor: pointer;
 
-  &:not(:has(.item-image)) {
-    background-color: goldenrod;
-
-    .item-info {
-      transition: visibility 0ms linear;
-      visibility: visible;
-    }
-  }
-
   @include can-hover {
     &:hover {
-      .item-info {
-        transition: visibility 0ms linear;
-        visibility: visible;
-      }
-
       .item-image {
-        .item-image-paper {
-          transition: visibility 0ms linear;
-          visibility: visible;
-        }
-
         .responsive-image-wrapper {
-          &:nth-child(2) {
+          &:nth-child(1) {
             transition: visibility 0ms linear;
             visibility: visible;
           }
@@ -186,11 +171,9 @@ function reflow() {
     left: 0px;
     padding: $space-8;
     width: calc(100% - $space-16);
-
-    @include can-hover {
-      transition: visibility 0ms linear 350ms;
-      visibility: hidden;
-    }
+    mask-size: cover;
+    mask-composite: exclude;
+    mask-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDI1NiAyNTYiIj48cGF0aCBkPSJNMTI4IDAgQTEyOCAxMjggMCAxIDEgMCAxMjggMTI4IDEyOCAwIDEgMSAxMjggMCIgZmlsbD0iI2ZmZiIvPjwvc3ZnPg==');
 
     .meta {
       margin: 4px 0 0;
@@ -202,22 +185,6 @@ function reflow() {
     width: 100%;
     height: 100%;
 
-    .item-image-paper {
-      position: absolute;
-      top: 0px;
-      left: 0.5px; // pixel rounding patch
-      width: calc(100% - 1px); // pixel rounding patch
-      height: 100%;
-      mask-size: cover;
-      transform: translate(0px, 2px);
-      opacity: 0.5;
-
-      @include can-hover {
-        transition: visibility 0ms linear 350ms;
-        visibility: hidden;
-      }
-    }
-
     .responsive-image-wrapper {
       position: absolute;
       top: 0px;
@@ -226,17 +193,17 @@ function reflow() {
       height: 100%;
       mask-size: cover;
 
-      &:nth-child(3) {
+      &:nth-child(2) {
         display: none;
       }
 
       @include can-hover {
-        &:nth-child(2) {
+        &:nth-child(1) {
           transition: visibility 0ms linear 350ms;
           visibility: hidden;
         }
 
-        &:nth-child(3) {
+        &:nth-child(2) {
           display: block;
           mask-size: 101% 50%;
           mask-position: bottom -1px right -1px;

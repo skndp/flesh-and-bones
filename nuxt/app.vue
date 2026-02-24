@@ -53,6 +53,8 @@ router.beforeResolve((to, from, next) => {
   pageToPageLoaderTimeout = setTimeout(() => {
     pageToPageLoader.value = true;
   }, 350); // only show loader if page takes > 350ms
+
+  store.initialRoute = false;
 });
 
 nuxtApp.hook('page:finish', () => {
