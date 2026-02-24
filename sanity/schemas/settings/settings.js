@@ -65,6 +65,33 @@ export default defineType({
       ]
     }),
     defineField({
+      name: 'backgroundTexture',
+      title: 'BACKGROUND TEXTURE',
+      description: 'Background tile (best as JPG at 1600 x 1600)',
+      type: 'image',
+      options: {
+        hotspot: false
+      }
+    }),
+    defineField({
+      name: 'leftEdgeDistress',
+      title: 'LEFT EDGE DISTRESS',
+      description: 'Background tile (best as PNG at 20px wide, really tall)',
+      type: 'image',
+      options: {
+        hotspot: false
+      }
+    }),
+    defineField({
+      name: 'rightEdgeDistress',
+      title: 'RIGHT EDGE DISTRESS',
+      description: 'Background tile (best as PNG at 20px wide, really tall)',
+      type: 'image',
+      options: {
+        hotspot: false
+      }
+    }),
+    defineField({
       name: 'lightPaper',
       title: 'LIGHT PAPER',
       description: 'Base paper used in menu, footer, and cutouts',
