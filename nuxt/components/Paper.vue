@@ -1,16 +1,26 @@
 <template>
   <div class="paper" :class="{ 'offset': offset }">
-    <div v-if="edges" class="edge left">
-      <span class="distress"></span>
-      <span class="tear"></span>
-    </div>
-    <div v-if="edges" class="edge right">
-      <span class="tear"></span>
-    </div>
+    <div
+      v-if="store.backgroundTexture"
+      class="background"
+      :style="{ 'background-image': `url('${store.backgroundTexture}')` }"
+    ></div>
+    <div
+      v-if="edges && store.leftEdgeDistress" class="edge left"
+      :style="{ 'mask-image': `url('${store.leftEdgeDistress}')` }"
+    ></div>
+    <div
+      v-if="edges && store.rightEdgeDistress" class="edge right"
+      :style="{ 'mask-image': `url('${store.rightEdgeDistress}')` }"
+    ></div>
   </div>
 </template>
 
 <script setup>
+import { useSiteStore } from '~/stores/store';
+
+const store = useSiteStore();
+
 // Props
 const props = defineProps({
   offset: {
@@ -31,106 +41,37 @@ const props = defineProps({
   overflow: hidden;
   pointer-events: none;
 
-  &:before,
-  &:after {
-    content: '';
+  .background {
     @include abs-fill;
-    background-image: url('/images/noise.png');
-    background-repeat: repeat;
+    background-repeat: repeat-y;
     background-position: 50% 0%;
     background-size: 100% auto;
-    mix-blend-mode: screen;
-    opacity: 0.13;
-  }
-
-  &:after {
-    background-image: url('/images/specks.png');
-    opacity: 0.18;
   }
 
   .edge {
     position: absolute;
     top: 0px;
+    bottom: 0px;
     width: span(0.5);
-    max-width: 32px;
-    height: 100%;
-
-    span {
-      position: absolute;
-      left: 0px;
-      width: 100%;
-      background-color: $bone;
-      mask-repeat: no-repeat;
-      mask-size: cover;
-      mix-blend-mode: screen;
-    }
+    max-width: 16px;
+    background-color: $bone;
+    mask-repeat: repeat-y;
+    mask-size: 100% auto;
 
     &.left {
       left: 0px;
-
-      span.distress {
-        top: 0px;
-        max-width: 16px;
-        height: 100%;
-        mask-image: url('/images/left-edge-distress.png');
-        mask-size: 100% auto;
-      }
-
-      span.tear {
-        top: 15%;
-        aspect-ratio: 73/1688;
-        mask-image: url('/images/left-edge-tear.png');
-      }
+      mask-image: url('/images/left-edge-distress.png');
     }
 
     &.right {
       right: 0px;
-
-      span.tear {
-        bottom: 20%;
-        aspect-ratio: 49/874;
-        mask-image: url('/images/right-edge-tear.png');
-      }
+      mask-image: url('/images/right-edge-distress.png');
     }
   }
 
   &.offset {
     .edge {
-      &.left {
-        span.distress {
-          top: 100svh;
-        }
-
-        span.tear {
-          top: calc(100svh + 15%);
-        }
-      }
-
-      &.right {
-        span.tear {
-          bottom: calc(100svh + 20%);
-        }
-      }
-    }
-  }
-
-  @include respond-to($tablet) {
-    .edge {
-      &.left {
-        span.tear {
-          top: 66%;
-        }
-      }
-    }
-
-    &.offset {
-      .edge {
-        &.left {
-          span.tear {
-            top: calc(100svh + 66%);
-          }
-        }
-      }
+      top: 100svh;
     }
   }
 }

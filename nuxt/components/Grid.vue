@@ -35,7 +35,7 @@
                 <GridItemProject
                   v-if="item.type[0].type === 'projectItem'"
                   :layout="row.items.length > 1 ? 'square' : 'landscape'"
-                  :rowLayout="row.layout"
+                  :rowLayout="row.layout ? row.layout : ''"
                   :nthChild="index + 1"
                   :item="item.type[0].project"
                   @click="onClickProjectItem(item.type[0])"
