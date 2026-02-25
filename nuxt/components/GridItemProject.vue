@@ -171,9 +171,12 @@ function reflow() {
     left: 0px;
     padding: $space-8;
     width: calc(100% - $space-16);
-    mask-size: cover;
-    mask-composite: exclude;
-    mask-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDI1NiAyNTYiIj48cGF0aCBkPSJNMTI4IDAgQTEyOCAxMjggMCAxIDEgMCAxMjggMTI4IDEyOCAwIDEgMSAxMjggMCIgZmlsbD0iI2ZmZiIvPjwvc3ZnPg==');
+
+    @include can-hover {
+      mask-size: cover;
+      mask-composite: exclude;
+      mask-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDI1NiAyNTYiIj48cGF0aCBkPSJNMTI4IDAgQTEyOCAxMjggMCAxIDEgMCAxMjggMTI4IDEyOCAwIDEgMSAxMjggMCIgZmlsbD0iI2ZmZiIvPjwvc3ZnPg==');
+    }
 
     .meta {
       margin: 4px 0 0;
