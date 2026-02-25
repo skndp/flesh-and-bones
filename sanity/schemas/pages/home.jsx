@@ -230,6 +230,14 @@ export default defineType({
                               };
                             }
                           }
+                        },
+                        {
+                          name: 'sketchItem',
+                          title: 'Sketch',
+                          type: 'singleImage',
+                          validation: [
+                            Rule => Rule.required()
+                          ]
                         }
                       ]
                     }
@@ -243,7 +251,9 @@ export default defineType({
                       articleTitle: 'type.0.article.title',
                       articleSlug: 'type.0.article.slug.current',
                       articleImgLandscape: 'type.0.article.ctaCardImages.landscapeImage.image.asset',
-                      articleImgSquare: 'type.0.article.ctaCardImages.squareImage.image.asset'
+                      articleImgSquare: 'type.0.article.ctaCardImages.squareImage.image.asset',
+                      sketchTitle: 'type.0.image.asset.originalFilename',
+                      sketchImg: 'type.0.image.asset'
                     },
                     prepare({
                       type0,
@@ -253,10 +263,13 @@ export default defineType({
                       articleTitle,
                       articleSlug,
                       articleImgLandscape,
-                      articleImgSquare
+                      articleImgSquare,
+                      sketchTitle,
+                      sketchImg
                     }) {
                       let projectImage = projectImgLandscape ? projectImgLandscape : projectImgSquare ? projectImgSquare : null;
                       let articleImage = articleImgLandscape ? articleImgLandscape : articleImgSquare ? articleImgSquare : null;
+                      let sketchImage = sketchImg ? sketchImg : null;
                       let title = 'No items selected';
                       let subtitle = '';
                       let media = null;
@@ -270,6 +283,10 @@ export default defineType({
                           title = articleTitle || 'Untitled';
                           subtitle = `/zine/${articleSlug || 'untitled'}`;
                           media = articleImage ? articleImage : ImageIcon;
+                          break;
+                        case 'sketchItem':
+                          title = sketchTitle || 'Untitled';
+                          media = sketchImg ? sketchImg : ImageIcon;
                           break;
                       }
 
@@ -294,6 +311,8 @@ export default defineType({
               articleTitle1: 'items.0.type.0.article.title',
               articleImgLandscape1: 'items.0.type.0.article.ctaCardImages.landscapeImage.image.asset',
               articleImgSquare1: 'items.0.type.0.article.ctaCardImages.squareImage.image.asset',
+              sketchTitle1: 'items.0.type.0.image.asset.originalFilename',
+              sketchImage1: 'items.0.type.0.image.asset',
               // Item 2
               type2: 'items.1.type.0._type',
               projectTitle2: 'items.1.type.0.project.title',
@@ -301,7 +320,9 @@ export default defineType({
               projectImgSquare2: 'items.1.type.0.project.ctaCardImages.squareImage.image.asset',
               articleTitle2: 'items.1.type.0.article.title',
               articleImgLandscape2: 'items.1.type.0.article.ctaCardImages.landscapeImage.image.asset',
-              articleImgSquare2: 'items.1.type.0.article.ctaCardImages.squareImage.image.asset'
+              articleImgSquare2: 'items.1.type.0.article.ctaCardImages.squareImage.image.asset',
+              sketchTitle2: 'items.1.type.0.image.asset.originalFilename',
+              sketchImage2: 'items.1.type.0.image.asset'
             },
             prepare(selection) {
               const parseItem = (type, data) => {
@@ -318,6 +339,10 @@ export default defineType({
                   case 'articleItem':
                     title = data.articleTitle ? `[Article] ${data.articleTitle}` : 'Article';
                     media = data.articleImage || null;
+                    break;
+                  case 'sketchItem':
+                    title = data.sketchTitle ? `[Sketch] ${data.sketchTitle}` : 'Sketch';
+                    media = data.sketchImage || null;
                     break;
                 }
 
@@ -339,7 +364,9 @@ export default defineType({
                     ? selection.articleImgLandscape1
                     : selection.articleImgSquare1
                     ? selection.articleImgSquare1
-                    : null
+                    : null,
+                  sketchTitle: selection.sketchTitle1,
+                  sketchImage: selection.sketchImage1 ? selection.sketchImage1 : null
                 });
                 if (item1) items.push(item1);
               }
@@ -358,12 +385,15 @@ export default defineType({
                     ? selection.articleImgLandscape2
                     : selection.articleImgSquare2
                     ? selection.articleImgSquare2
-                    : null
+                    : null,
+                  sketchTitle: selection.sketchTitle2,
+                  sketchImage: selection.sketchImage2 ? selection.sketchImage2 : null
                 });
                 if (item2) items.push(item2);
               }
 
               const rowTitle = items.length === 2 ? `${items[0].title} • ${items[1].title}` : items[0]?.title || 'No item selected';
+              
               const mediaItems = (
                 <div className="media-items">
                   {items.map((item, index) =>

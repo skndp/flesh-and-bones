@@ -142,7 +142,7 @@ export default defineType({
                       projectImgLandscape: 'type.0.project.ctaCardImages.landscapeImage.image.asset',
                       projectImgSquare: 'type.0.project.ctaCardImages.squareImage.image.asset',
                       sketchTitle: 'type.0.image.asset.originalFilename',
-                      sketchImage: 'type.0.image.asset',
+                      sketchImage: 'type.0.image.asset'
                     },
                     prepare({
                       type0,

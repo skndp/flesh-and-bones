@@ -117,6 +117,12 @@ function onItemHover(e) {
         aspect-ratio: 1/1;
       }
     }
+
+    &:has(~ .item.sketch) {
+      .item-image {
+        aspect-ratio: 1/1;
+      }
+    }
   }
 
   @include respond-to($desktop) {

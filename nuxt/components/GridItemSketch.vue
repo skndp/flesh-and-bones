@@ -34,6 +34,12 @@ const props = defineProps({
     &:only-child {
       aspect-ratio: 1/1;
     }
+
+    & ~ .item.sketch,
+    &:has(~ .item.sketch),
+    &:has(~ .item.article) {
+      aspect-ratio: 1/1;
+    }
   }
 }
 </style>

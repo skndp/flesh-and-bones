@@ -53,23 +53,31 @@ const directorQuery = groq`*[_type == 'director' && slug.current == $slug][0]{
   },
   projects[] {
     layout,
-    items[]->{
-      title,
-      director->{
+    items[] {
+      _type == 'projectItem' => @->{
+        'type': _type,
+        'id': _id,
         title,
-        slug
-      },
-      directorName,
-      projectVideo,
-      modalPortrait,
-      modalSquare,
-      ctaCardImages {
-        landscapeImage {
-          image ${imageProps}
+        director->{
+          title,
+          slug
         },
-        squareImage {
-          image ${imageProps}
+        directorName,
+        projectVideo,
+        modalPortrait,
+        modalSquare,
+        ctaCardImages {
+          landscapeImage {
+            image ${imageProps}
+          },
+          squareImage {
+            image ${imageProps}
+          }
         }
+      },
+      _type == 'sketchItem' => {
+        'type': _type,
+        image ${imageProps}
       }
     }
   }

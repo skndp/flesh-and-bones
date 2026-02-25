@@ -90,6 +90,10 @@ const homeQuery = groq`*[(_type == "home")][0]{
             ctaCardLabel,
             ctaCardSummary
           }
+        },
+        _type == 'sketchItem' => {
+          'type': _type,
+          image ${imageProps}
         }
       }
     }

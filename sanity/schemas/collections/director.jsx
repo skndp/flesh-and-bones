@@ -220,6 +220,14 @@ export default defineType({
                       };
                     }
                   }
+                },
+                {
+                  name: 'sketchItem',
+                  title: 'Sketch',
+                  type: 'singleImage',
+                  validation: [
+                    Rule => Rule.required()
+                  ]
                 }
               ]
             }
@@ -230,21 +238,53 @@ export default defineType({
               title1: 'items.0.title',
               landscapeImg1: 'items.0.ctaCardImages.landscapeImage.image.asset',
               squareImg1: 'items.0.ctaCardImages.squareImage.image.asset',
+              sketchImg1: 'items.0.image.asset',
+              sketchFilename1: 'items.0.image.asset.originalFilename',
               // Item 2
               title2: 'items.1.title',
               landscapeImg2: 'items.1.ctaCardImages.landscapeImage.image.asset',
-              squareImg2: 'items.1.ctaCardImages.squareImage.image.asset'
+              squareImg2: 'items.1.ctaCardImages.squareImage.image.asset',
+              sketchImg2: 'items.1.image.asset',
+              sketchFilename2: 'items.1.image.asset.originalFilename'
             },
-
-            prepare({ title1, landscapeImg1, squareImg1, title2, landscapeImg2, squareImg2 }) {
+            prepare({
+              title1,
+              landscapeImg1,
+              squareImg1,
+              sketchImg1,
+              sketchFilename1,
+              title2,
+              landscapeImg2,
+              squareImg2,
+              sketchImg2,
+              sketchFilename2
+            }) {
               const items = [];
-              let img1 = landscapeImg1 ? landscapeImg1 : squareImg1 ? squareImg1 : null;
-              let img2 = landscapeImg2 ? landscapeImg2 : squareImg2 ? squareImg2 : null;
 
-              if (title1) items.push({ title: title1, media: img1 || ImageIcon });
-              if (title2) items.push({ title: title2, media: img2 || ImageIcon });
+              // ITEM 1
+              let img1 = landscapeImg1 ? landscapeImg1 : squareImg1 ? squareImg1 : sketchImg1 ? sketchImg1 : null;
+              let finalTitle1 = title1 ? title1 : sketchFilename1 ? sketchFilename1 : null;
+
+              if (img1 || finalTitle1) {
+                items.push({
+                  title: finalTitle1 || 'Untitled',
+                  media: img1 || ImageIcon
+                });
+              }
+
+              // ITEM 2
+              let img2 = landscapeImg2 ? landscapeImg2 : squareImg2 ? squareImg2 : sketchImg2 ? sketchImg2 : null;
+              let finalTitle2 = title2 ? title2 : sketchFilename2 ? sketchFilename2 : null;
+
+              if (img2 || finalTitle2) {
+                items.push({
+                  title: finalTitle2 || 'Untitled',
+                  media: img2 || ImageIcon
+                });
+              }
 
               const rowTitle = items.length === 2 ? `${items[0].title} • ${items[1].title}` : items[0]?.title || 'No item selected';
+
               const mediaItems = (
                 <div className="media-items">
                   {items.map((item, index) =>
@@ -266,7 +306,6 @@ export default defineType({
 
               return {
                 title: rowTitle,
-                subtitle: '',
                 media: mediaItems
               };
             }
