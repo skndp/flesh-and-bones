@@ -51,6 +51,7 @@ const copyHtml = toHTML(props.richText, {components: customCopy});
 
 <style lang='scss'>
 .rich-text-content {
+  position: relative;
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
