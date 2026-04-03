@@ -118,10 +118,10 @@ function onItemHover(e) {
       }
     }
 
-    &:has(~ .item.sketch) {
-      .item-image {
-        aspect-ratio: 1/1;
-      }
+    & ~ .item.article,
+    &:has(~ .item.sketch),
+    &:has(~ .item.article) {
+      aspect-ratio: 1/1;
     }
   }
 
