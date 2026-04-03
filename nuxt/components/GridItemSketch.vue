@@ -41,5 +41,19 @@ const props = defineProps({
       aspect-ratio: 1/1;
     }
   }
+
+  @include respond-to($macbook) {
+    aspect-ratio: 4/3;
+
+    &:only-child {
+      aspect-ratio: 4/3;
+    }
+
+    & ~ .item.sketch,
+    &:has(~ .item.sketch),
+    &:has(~ .item.article) {
+      aspect-ratio: 4/3;
+    }
+  }
 }
 </style>

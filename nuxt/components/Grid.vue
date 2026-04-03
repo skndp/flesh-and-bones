@@ -330,16 +330,6 @@ section.grid {
                 margin-right: auto;
               }
             }
-
-            &:has(.item.article + .item.article) {
-              .item.article {
-                aspect-ratio: auto;
-                
-                .item-image {
-                  aspect-ratio: 1/1;
-                }
-              }
-            }
   
             .item {
               margin-bottom: span(0.75);

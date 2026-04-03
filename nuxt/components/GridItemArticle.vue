@@ -108,19 +108,6 @@ function onItemHover(e) {
     aspect-ratio: auto;
 
     .item-image {
-      aspect-ratio: auto;
-      flex-grow: 1;
-    }
-
-    &:only-child {
-      .item-image {
-        aspect-ratio: 1/1;
-      }
-    }
-
-    & ~ .item.article,
-    &:has(~ .item.sketch),
-    &:has(~ .item.article) {
       aspect-ratio: 1/1;
     }
   }
