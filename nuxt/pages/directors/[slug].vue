@@ -87,6 +87,13 @@ const directorQuery = groq`*[_type == 'director' && slug.current == $slug][0]{
 const { data } = await useSanityQuery(directorQuery, { slug: params.slug });
 const page = data.value;
 
+if (!page) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Director not found'
+  });
+}
+
 useSeoMeta({
   title: `${page.title} | ${store.siteName}`,
   description: page.seoSocial?.description ? page.seoSocial.description : page.tagline ? page.tagline : store.siteDescription,

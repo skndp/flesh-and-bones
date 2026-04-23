@@ -76,6 +76,9 @@ export default defineNuxtConfig({
         { rel: 'shortcut icon', href: '/favicon.ico' },
         { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
         { rel: 'manifest', href: '/site.webmanifest' },
+        // Initial visual bumper asset. Preload it because the loader is shown on first render
+        // and CSS mask images are otherwise discovered later in the critical path.
+        { rel: 'preload', href: '/images/loader.webp', as: 'image', type: 'image/webp', fetchpriority: 'high' },
         // Self-hosted
         { rel: 'preload', href: '/fonts/Graphik-Semibold-Web.woff2', as: 'font', type: 'font/woff2', crossorigin: 'anonymous' },
         { rel: 'preload', href: '/fonts/Graphik-Black-Web.woff2', as: 'font', type: 'font/woff2', crossorigin: 'anonymous' },

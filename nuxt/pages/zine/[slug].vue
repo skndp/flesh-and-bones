@@ -60,6 +60,13 @@ const articleQuery = groq`*[_type == 'article' && slug.current == $slug][0]{
 const { data } = await useSanityQuery(articleQuery, { slug: params.slug });
 const page = data.value;
 
+if (!page) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Article not found'
+  });
+}
+
 useSeoMeta({
   title: `${page.title} | ${store.siteName}`,
   description: page.seoSocial?.description ? page.seoSocial.description : store.siteDescription,

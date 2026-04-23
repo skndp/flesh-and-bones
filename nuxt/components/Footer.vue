@@ -25,10 +25,10 @@
             <span class="rough-edges"></span>
             <span>Manifesto</span></NuxtLink>
           </li>
-          <li><NuxtLink to="/zine" @click.native="onClickNavLink" @mouseenter="onItemHover" @mouseleave="onItemHover">
+          <!-- <li><NuxtLink to="/zine" @click.native="onClickNavLink" @mouseenter="onItemHover" @mouseleave="onItemHover">
             <span class="rough-edges"></span>
             <span>Zine</span></NuxtLink>
-          </li>
+          </li> -->
           <li><NuxtLink to="/contact" @click.native="onClickNavLink" @mouseenter="onItemHover" @mouseleave="onItemHover">
             <span class="rough-edges"></span>
             <span>Contact</span></NuxtLink>

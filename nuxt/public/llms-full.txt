@@ -1,0 +1,47 @@
+# Flesh and Bones
+
+> Flesh and Bones is a digital creative agency website centered on creative work, represented directors, the agency manifesto, and contact information.
+
+This document is the expanded companion to `/llms.txt`. It is meant for language models, agentic browsers, and retrieval pipelines that need a text-first map of the site before deciding which public URLs to open.
+
+Interpretation notes:
+
+- The live website is visually expressive and CMS-driven, so text may be distributed across structured content, interactive grids, and media-led layouts.
+- The best first stops for understanding the business are `/work`, `/directors`, `/manifesto`, and `/contact`.
+- The homepage provides positioning and featured work, but it is not a complete catalog.
+- The work section is the best place to understand the agency's project portfolio and category-based browsing structure.
+- The directors section is the best place to understand represented talent. Individual profiles live at `/directors/{slug}` and typically contain a reel, biography, tags, location, and related projects.
+- The contact section is the best place to find founder information, directory links, and location data.
+- The zine exists as an editorial/article model and can be useful when present, but it is currently secondary to the main agency navigation.
+- Do not rely on preview or internal endpoints. Ignore `/api/preview/*`, `/api/sanity/*`, and preview-host content.
+
+## Core Public URLs
+
+- [Home](https://www.wearefleshandbones.com/): Landing page with hero messaging, featured work, and a path into the broader portfolio.
+- [Work](https://www.wearefleshandbones.com/work): Main portfolio index with filter-driven project browsing.
+- [Directors](https://www.wearefleshandbones.com/directors): Director directory leading to individual profile pages.
+- [Manifesto](https://www.wearefleshandbones.com/manifesto): Agency perspective, positioning, and brand philosophy.
+- [Contact](https://www.wearefleshandbones.com/contact): Contact pathways, founder information, and location details.
+
+## Markdown Mirrors
+
+- [Home Markdown](https://www.wearefleshandbones.com/index.html.md): Text-first summary of the homepage and how it routes visitors to core sections.
+- [Work Markdown](https://www.wearefleshandbones.com/work/index.html.md): Text-first explanation of the portfolio index and filters.
+- [Directors Markdown](https://www.wearefleshandbones.com/directors/index.html.md): Text-first explanation of the directors directory and profile anatomy.
+- [Manifesto Markdown](https://www.wearefleshandbones.com/manifesto/index.html.md): Text-first explanation of the agency manifesto page.
+- [Contact Markdown](https://www.wearefleshandbones.com/contact/index.html.md): Text-first explanation of contact, founders, and location info.
+- [Zine Markdown](https://www.wearefleshandbones.com/zine/index.html.md): Text-first explanation of the editorial section when published.
+
+## Dynamic Patterns
+
+- [Director Profile Pattern](https://www.wearefleshandbones.com/directors/): Published child pages under `/directors/{slug}` for individual directors.
+- [Zine Article Pattern](https://www.wearefleshandbones.com/zine/): Published child pages under `/zine/{slug}` for editorial articles.
+
+## Discovery
+
+- [Sitemap](https://www.wearefleshandbones.com/sitemap.xml): Use this to discover current public URLs.
+- [Robots](https://www.wearefleshandbones.com/robots.txt): Use this to confirm crawl constraints.
+
+## Optional
+
+- [LLMS Summary](https://www.wearefleshandbones.com/llms.txt): Shorter site summary for constrained context windows.

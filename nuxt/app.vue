@@ -25,11 +25,13 @@
 import { useNuxtApp } from '#app';
 import { useRouter } from 'vue-router';
 import { useSiteStore } from '~/stores/store';
+import { buildGlobalSchema } from '~/utils/schema';
 
 const nuxtApp = useNuxtApp();
 const router = useRouter();
 const route = useRoute();
 const store = useSiteStore();
+const siteUrl = 'https://www.wearefleshandbones.com';
 
 const previewOrigin = ref(false);
 const targetOrigin = 'https://flesh-and-bones-preview.netlify.app';
@@ -103,6 +105,28 @@ useSeoMeta({
   ogUrl: store.ogUrl
 })
 
+useHead(() => ({
+  link: [
+    {
+      rel: 'canonical',
+      href: `${siteUrl}${normalizeCanonicalPath(route.fullPath)}`
+    }
+  ],
+  script: [
+    {
+      key: 'global-jsonld',
+      type: 'application/ld+json',
+      children: JSON.stringify(buildGlobalSchema({
+        name: store.siteName,
+        description: store.siteDescription,
+        image: store.ogImage,
+        socials: store.socials,
+        locations: store.locations
+      }))
+    }
+  ]
+}))
+
 // Mounted
 onMounted(() => {
   console.log(`☠️ Seek and Deploy was here. https://seekanddeploy.com`);
@@ -123,5 +147,13 @@ onMounted(() => {
 // Methods
 function modalCleanup() {
   store.setModalCleanup();
+}
+
+function normalizeCanonicalPath(path = '/') {
+  const cleanPath = path.split('#')[0].split('?')[0] || '/';
+
+  if (cleanPath === '/') return cleanPath;
+
+  return cleanPath.replace(/\/+$/, '') || '/';
 }
 </script>

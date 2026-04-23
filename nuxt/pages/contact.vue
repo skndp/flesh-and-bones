@@ -19,6 +19,7 @@
 
 <script setup>
 import { useSiteStore } from '~/stores/store';
+import { buildContactPageSchema } from '~/utils/schema';
 
 const store = useSiteStore();
 
@@ -87,4 +88,19 @@ useSeoMeta({
   ogImage: page.seoSocial?.image?.src ? page.seoSocial.image.src : store.ogImage,
   ogUrl: `${store.ogUrl}/contact`
 })
+
+useHead(() => ({
+  script: [
+    {
+      key: 'contact-jsonld',
+      type: 'application/ld+json',
+      children: JSON.stringify(buildContactPageSchema({
+        title: `Contact | ${store.siteName}`,
+        description: page.seoSocial?.description || store.siteDescription,
+        image: page.seoSocial?.image?.src || store.ogImage,
+        founders: page.founders || []
+      }))
+    }
+  ]
+}))
 </script>
