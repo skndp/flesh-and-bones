@@ -49,7 +49,7 @@ router.beforeEach((to, from, next) => {
 router.beforeResolve((to, from, next) => {
   setTimeout(() => {
     next();
-  }, 360); // allow time for fade (333ms + arbitrary 27ms)
+  }, 333); // allow time for fade (333ms + arbitrary 27ms)
 
   pageToPageLoaderTimeout = setTimeout(() => {
     pageToPageLoader.value = true;
