@@ -50,10 +50,10 @@ router.beforeEach((to, from, next) => {
   }
 
   if (pageMask.value) {
-    pageMask.value.style.maskImage = 'none';
+    pageMask.value.style.maskImage = 'linear-gradient(#000 0 0)';
     pageMask.value.style.visibility = 'visible';
     pageMask.value.style.opacity = 1;
-    pageMask.value.offsetHeight;
+    pageMask.value.getBoundingClientRect();
   }
 
   next();

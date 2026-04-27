@@ -14,7 +14,7 @@ html, body {
 
 body {
   color: $bone;
-  background-color: $flesh;
+  background-color: $midnight;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   -moz-osx-font-smoothing: grayscale;
@@ -74,9 +74,13 @@ body {
   mask-size: cover;
   mask-position: 50% 50%;
   mask-composite: exclude;
-  pointer-events: none;
-  transition: opacity $speed-333 linear;
   opacity: 0;
+  pointer-events: none;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  transition: opacity $speed-333 linear;
+  will-change: transform, opacity;
+  contain: paint;
 }
 
 // --------------------------------------------
