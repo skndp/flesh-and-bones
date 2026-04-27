@@ -202,6 +202,7 @@ watch(route, () => {
   mask-size: cover;
   mask-composite: exclude;
   mask-image: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+  mask-position: 50% 50%;
 
   #modal-inner {
     @include abs-fill;
