@@ -53,16 +53,23 @@ router.beforeEach((to, from, next) => {
     pageMask.value.style.maskImage = 'linear-gradient(#000 0 0)';
     pageMask.value.style.visibility = 'visible';
     pageMask.value.style.opacity = 1;
-    pageMask.value.getBoundingClientRect();
-  }
 
-  next();
+    // force layout
+    pageMask.value.getBoundingClientRect();
+
+    // wait double frame so Frame 1, styles applied and Frame 2, mask is ACTUALLY painted
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        next();
+      });
+    });
+  } else {
+    next();
+  }
 });
 
 router.beforeResolve((to, from, next) => {
-  setTimeout(() => {
-    next();
-  }, 333);
+  next();
 
   pageToPageLoaderTimeout = setTimeout(() => {
     pageToPageLoader.value = true;
