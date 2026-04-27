@@ -57,7 +57,9 @@ router.beforeResolve((to, from, next) => {
     // Hide incoming page BEFORE it renders
     pageHidden.value = true;
 
-    next();
+    requestAnimationFrame(() => {
+      next();
+    });
   }, 333);
 
   // Only show loader if page takes > 500ms
