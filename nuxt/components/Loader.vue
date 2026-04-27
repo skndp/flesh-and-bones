@@ -98,7 +98,7 @@ function setMasks() {
 
   &.loading-enter-active,
   &.loading-leave-active {
-    transition: opacity 2100ms linear;
+    // NOTE: 2100ms duration is assigned to the <Transition> in app.vue
 
     .loader-layer {
       transition: transform 1s cubic-bezier(0.95, 0.05, 0.795, 0.035) 1s;
@@ -111,8 +111,6 @@ function setMasks() {
 
   &.loading-enter-from,
   &.loading-leave-to {
-    opacity: 0.999;
-
     .loader-layer {
       &:nth-child(1) {
         transform: translate(0%, -100%);

@@ -103,9 +103,16 @@ function onResize() {
 }
 
 function onItemHover(e) {
+  if (!canUseHover(e)) {
+    resetHoverState(e.currentTarget);
+    return;
+  }
+
   const t = e.currentTarget,
         img = t.querySelector('.item-hover-image'),
         info = t.querySelector('.item-info');
+
+  if (!img || !info || !store.ripMask) return;
 
   if(e.type === 'mouseenter') {
     img.style.maskComposite = 'exclude';
@@ -119,6 +126,25 @@ function onItemHover(e) {
 
     info.style.maskComposite = 'exclude';
     info.style.maskImage = `url('${store.getRipMask()}'), linear-gradient(#000 0 0)`;
+  }
+}
+
+function canUseHover() {
+  return window.matchMedia('(hover: hover)').matches;
+}
+
+function resetHoverState(target) {
+  const img = target?.querySelector('.item-hover-image');
+  const info = target?.querySelector('.item-info');
+
+  if (img) {
+    img.style.removeProperty('mask-composite');
+    img.style.removeProperty('mask-image');
+  }
+
+  if (info) {
+    info.style.removeProperty('mask-composite');
+    info.style.removeProperty('mask-image');
   }
 }
 

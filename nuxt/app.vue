@@ -1,7 +1,7 @@
 <template>
   <div>
     <PreviewBadge v-if="previewOrigin" />
-    <Transition name="loading">
+    <Transition name="loading" :duration="2100">
       <Loader v-if="store.loading" />
     </Transition>
     <DevOnly>
