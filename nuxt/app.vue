@@ -41,19 +41,23 @@ const pageToPageLoader = ref(false);
 let pageToPageLoaderTimeout = null;
 
 router.beforeEach((to, from, next) => {
+  pageMask.value.style.backgroundImage = '';
+  pageMask.value.style.backgroundColor = '#1a1a1a';
   pageMask.value.style.visibility = 'visible';
   pageMask.value.style.opacity = 1;
+
+  pageMask.value.offsetHeight;
   next();
 });
 
 router.beforeResolve((to, from, next) => {
   setTimeout(() => {
     next();
-  }, 333); // allow time for fade (333ms + arbitrary 27ms)
+  }, 333);
 
   pageToPageLoaderTimeout = setTimeout(() => {
     pageToPageLoader.value = true;
-  }, 500); // only show loader if page takes > 500ms
+  }, 500); // only show p2p spinner if page takes > 500ms
 
   store.initialRoute = false;
 });
@@ -61,15 +65,19 @@ router.beforeResolve((to, from, next) => {
 nuxtApp.hook('page:finish', () => {
   clearTimeout(pageToPageLoaderTimeout);
   pageToPageLoader.value = false;
+
+  console.log('FINISH')
   
   if (store.pageMask !== '') {
-    pageMask.value.style.maskImage = `url('${store.getPageMask()}'), linear-gradient(#000 0 0)`;
+    pageMask.value.style.backgroundColor = 'transparent';
+    pageMask.value.style.backgroundImage = `url('${store.getPageMask()}')`;
   }
 
   setTimeout(() => {
     pageMask.value.style.visibility = 'hidden';
     pageMask.value.style.opacity = 0;
-    pageMask.value.style.maskImage = `unset`;
+    pageMask.value.style.backgroundImage = '';
+    pageMask.value.style.backgroundColor = 'transparent';
   }, 1000);
 });
 
