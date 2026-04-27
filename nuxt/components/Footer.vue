@@ -78,9 +78,10 @@ onBeforeUnmount(() => {
 
 // Methods
 function onClickNavLink(e) {
-  let path = new URL(e.currentTarget.href).pathname;
+  let path = new URL(e.currentTarget.href).pathname,
+      route_path = route.path.replace(/\/$/, '');  
 
-  if (route.path === path) {
+  if (route_path === path) {
     smoothScrollTo(0);
   }
 }
