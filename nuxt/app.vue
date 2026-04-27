@@ -41,6 +41,7 @@ const pageToPageLoader = ref(false);
 let pageToPageLoaderTimeout = null;
 
 router.beforeEach((to, from, next) => {
+  pageMask.value.style.maskImage = 'none';
   pageMask.value.style.visibility = 'visible';
   pageMask.value.style.opacity = 1;
   next();
@@ -61,7 +62,7 @@ router.beforeResolve((to, from, next) => {
 nuxtApp.hook('page:finish', () => {
   clearTimeout(pageToPageLoaderTimeout);
   pageToPageLoader.value = false;
-  
+
   if (store.pageMask !== '') {
     pageMask.value.style.maskImage = `url('${store.getPageMask()}'), linear-gradient(#000 0 0)`;
   }
@@ -69,7 +70,7 @@ nuxtApp.hook('page:finish', () => {
   setTimeout(() => {
     pageMask.value.style.visibility = 'hidden';
     pageMask.value.style.opacity = 0;
-    pageMask.value.style.maskImage = `unset`;
+    pageMask.value.style.maskImage = 'none';
   }, 1000);
 });
 
