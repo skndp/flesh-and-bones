@@ -13,7 +13,7 @@
     <Header />
     <Menu />
     <SvgFilters />
-    <NuxtPage :class="{ hidden: pageHidden }" />
+    <NuxtPage />
     <div id="page-mask" ref="pageMask" inert></div>
     <Transition name="p2p-loading">
       <PageToPageLoader v-if="pageToPageLoader" />
@@ -38,34 +38,22 @@ const targetOrigin = 'https://flesh-and-bones-preview.netlify.app';
 
 const pageMask = ref(null);
 const pageToPageLoader = ref(false);
-const pageHidden = ref(false);
 let pageToPageLoaderTimeout = null;
 
 router.beforeEach((to, from, next) => {
   pageMask.value.style.visibility = 'visible';
   pageMask.value.style.opacity = 1;
-
-  // Optional but reliable on mobile (help avoid flicker on mobile)
-  pageMask.value.offsetHeight;
-
   next();
 });
 
 router.beforeResolve((to, from, next) => {
-  // Allow time for fade
   setTimeout(() => {
-    // Hide incoming page BEFORE it renders
-    pageHidden.value = true;
+    next();
+  }, 360); // allow time for fade (333ms + arbitrary 27ms)
 
-    requestAnimationFrame(() => {
-      next();
-    });
-  }, 333);
-
-  // Only show loader if page takes > 500ms
   pageToPageLoaderTimeout = setTimeout(() => {
     pageToPageLoader.value = true;
-  }, 500);
+  }, 500); // only show loader if page takes > 500ms
 
   store.initialRoute = false;
 });
@@ -73,17 +61,10 @@ router.beforeResolve((to, from, next) => {
 nuxtApp.hook('page:finish', () => {
   clearTimeout(pageToPageLoaderTimeout);
   pageToPageLoader.value = false;
-  if(store.pageMask !== '') pageMask.value.style.maskImage = `url('${store.getPageMask()}'), linear-gradient(#000 0 0)`;
-
-  // Double-frame it to ensure mobile won't flicker:
-  // Frame 1 → mask styles applied
-  // Frame 2 → browser paints
-  // THEN reveal page
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      pageHidden.value = false;
-    });
-  });
+  
+  if (store.pageMask !== '') {
+    pageMask.value.style.maskImage = `url('${store.getPageMask()}'), linear-gradient(#000 0 0)`;
+  }
 
   setTimeout(() => {
     pageMask.value.style.visibility = 'hidden';

@@ -44,7 +44,7 @@ body {
   flex-direction: column;
 
   &.fade-out {
-    transition: opacity $speed-333 $evil-ease;
+    transition: opacity $speed-333 linear;
     pointer-events: none;
     opacity: 0;
   }
