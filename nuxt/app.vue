@@ -41,12 +41,8 @@ const pageToPageLoader = ref(false);
 let pageToPageLoaderTimeout = null;
 
 router.beforeEach((to, from, next) => {
-  pageMask.value.style.backgroundImage = '';
-  pageMask.value.style.backgroundColor = '#1a1a1a';
   pageMask.value.style.visibility = 'visible';
   pageMask.value.style.opacity = 1;
-
-  pageMask.value.offsetHeight;
   next();
 });
 
@@ -65,19 +61,15 @@ router.beforeResolve((to, from, next) => {
 nuxtApp.hook('page:finish', () => {
   clearTimeout(pageToPageLoaderTimeout);
   pageToPageLoader.value = false;
-
-  console.log('FINISH')
   
   if (store.pageMask !== '') {
-    pageMask.value.style.backgroundColor = 'transparent';
-    pageMask.value.style.backgroundImage = `url('${store.getPageMask()}')`;
+    pageMask.value.style.maskImage = `url('${store.getPageMask()}'), linear-gradient(#000 0 0)`;
   }
 
   setTimeout(() => {
     pageMask.value.style.visibility = 'hidden';
     pageMask.value.style.opacity = 0;
-    // pageMask.value.style.backgroundImage = '';
-    // pageMask.value.style.backgroundColor = 'transparent';
+    pageMask.value.style.maskImage = `unset`;
   }, 1000);
 });
 
