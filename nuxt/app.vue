@@ -22,6 +22,7 @@
 </template>
 
 <script setup>
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { useNuxtApp } from '#app';
 import { useRouter } from 'vue-router';
 import { useSiteStore } from '~/stores/store';
@@ -38,12 +39,23 @@ const targetOrigin = 'https://flesh-and-bones-preview.netlify.app';
 
 const pageMask = ref(null);
 const pageToPageLoader = ref(false);
+
 let pageToPageLoaderTimeout = null;
+let scrollLocked = false;
 
 router.beforeEach((to, from, next) => {
-  pageMask.value.style.maskImage = 'none';
-  pageMask.value.style.visibility = 'visible';
-  pageMask.value.style.opacity = 1;
+  if (!scrollLocked) {
+    disableBodyScroll(document.body, { reserveScrollBarGap: true });
+    scrollLocked = true;
+  }
+
+  if (pageMask.value) {
+    pageMask.value.style.maskImage = 'none';
+    pageMask.value.style.visibility = 'visible';
+    pageMask.value.style.opacity = 1;
+    pageMask.value.offsetHeight;
+  }
+
   next();
 });
 
@@ -63,14 +75,21 @@ nuxtApp.hook('page:finish', () => {
   clearTimeout(pageToPageLoaderTimeout);
   pageToPageLoader.value = false;
 
-  if (store.pageMask !== '') {
+  if (pageMask.value && store.pageMask !== '') {
     pageMask.value.style.maskImage = `url('${store.getPageMask()}'), linear-gradient(#000 0 0)`;
   }
 
   setTimeout(() => {
-    pageMask.value.style.visibility = 'hidden';
-    pageMask.value.style.opacity = 0;
-    pageMask.value.style.maskImage = 'none';
+    if (pageMask.value) {
+      pageMask.value.style.visibility = 'hidden';
+      pageMask.value.style.opacity = 0;
+      pageMask.value.style.maskImage = 'none';
+    }
+
+    if (scrollLocked) {
+      enableBodyScroll(document.body);
+      scrollLocked = false;
+    }
   }, 1000);
 });
 
