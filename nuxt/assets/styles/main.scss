@@ -76,6 +76,7 @@ body {
   pointer-events: none;
   transition: opacity $speed-333 linear;
   opacity: 0;
+  z-index: 9;
 }
 
 // --------------------------------------------
