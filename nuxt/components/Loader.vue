@@ -62,7 +62,7 @@ function preload() {
     });
 
   // Page mask
-  fetch('/images/page-mask-reverse.png')
+  fetch('/images/page-mask.png')
     .then(res => res.blob())
     .then(blob => {
       store.setPageMask(blob);
