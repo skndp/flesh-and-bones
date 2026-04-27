@@ -72,6 +72,8 @@ body {
   height: 100%;
   // mask-size: cover;
   // mask-composite: exclude;
+  background-position: 50% 50%;
+  background-size: cover;
   pointer-events: none;
   transition: opacity $speed-333 linear;
   visibility: hidden;

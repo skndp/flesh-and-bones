@@ -76,8 +76,8 @@ nuxtApp.hook('page:finish', () => {
   setTimeout(() => {
     pageMask.value.style.visibility = 'hidden';
     pageMask.value.style.opacity = 0;
-    pageMask.value.style.backgroundImage = '';
-    pageMask.value.style.backgroundColor = 'transparent';
+    // pageMask.value.style.backgroundImage = '';
+    // pageMask.value.style.backgroundColor = 'transparent';
   }, 1000);
 });
 
