@@ -42,22 +42,28 @@ const pageHidden = ref(false);
 let pageToPageLoaderTimeout = null;
 
 router.beforeEach((to, from, next) => {
-  pageHidden.value = false;
   pageMask.value.style.visibility = 'visible';
   pageMask.value.style.opacity = 1;
+
+  // Optional but reliable on mobile (help avoid flicker on mobile)
+  pageMask.value.offsetHeight;
+
   next();
 });
 
 router.beforeResolve((to, from, next) => {
+  // Allow time for fade
   setTimeout(() => {
-    // setTimeout(() => next(), 1000); for testing
+    // Hide incoming page BEFORE it renders
     pageHidden.value = true;
-    next();
-  }, 333); // allow time for fade
 
+    next();
+  }, 333);
+
+  // Only show loader if page takes > 500ms
   pageToPageLoaderTimeout = setTimeout(() => {
     pageToPageLoader.value = true;
-  }, 350); // only show loader if page takes > 350ms
+  }, 500);
 
   store.initialRoute = false;
 });
@@ -67,8 +73,14 @@ nuxtApp.hook('page:finish', () => {
   pageToPageLoader.value = false;
   if(store.pageMask !== '') pageMask.value.style.maskImage = `url('${store.getPageMask()}'), linear-gradient(#000 0 0)`;
 
+  // Double-frame it to ensure mobile won't flicker:
+  // Frame 1 → mask styles applied
+  // Frame 2 → browser paints
+  // THEN reveal page
   requestAnimationFrame(() => {
-    pageHidden.value = false;
+    requestAnimationFrame(() => {
+      pageHidden.value = false;
+    });
   });
 
   setTimeout(() => {
