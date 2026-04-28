@@ -14,7 +14,9 @@
     <Menu />
     <SvgFilters />
     <NuxtPage />
-    <div id="page-mask" ref="pageMask" inert></div>
+    <div id="page-mask-wrapper" ref="pageMaskWrapper" inert>
+      <div id="page-mask" ref="pageMask"></div>
+    </div>    
     <Transition name="p2p-loading">
       <PageToPageLoader v-if="pageToPageLoader" />
     </Transition>
@@ -37,6 +39,7 @@ const siteUrl = 'https://www.wearefleshandbones.com';
 const previewOrigin = ref(false);
 const targetOrigin = 'https://flesh-and-bones-preview.netlify.app';
 
+const pageMaskWrapper = ref(null);
 const pageMask = ref(null);
 const pageToPageLoader = ref(false);
 
@@ -49,19 +52,17 @@ router.beforeEach((to, from, next) => {
     scrollLocked = true;
   }
 
-  if (pageMask.value) {
+  if (pageMaskWrapper.value && pageMask.value) {
+    pageMaskWrapper.value.style.visibility = 'visible';
+    pageMaskWrapper.value.style.opacity = 1;
     pageMask.value.style.maskImage = 'none';
-    pageMask.value.style.visibility = 'visible';
-    pageMask.value.style.opacity = 1;
 
     // force layout
     pageMask.value.getBoundingClientRect();
 
     // wait double frame so Frame 1, styles applied and Frame 2, mask is ACTUALLY painted
     requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        next();
-      });
+      next();
     });
   } else {
     next();
@@ -84,14 +85,14 @@ nuxtApp.hook('page:finish', () => {
   clearTimeout(pageToPageLoaderTimeout);
   pageToPageLoader.value = false;
 
-  if (pageMask.value && store.pageMask !== '') {
+  if (pageMaskWrapper.value && pageMask.value && store.pageMask !== '') {
     pageMask.value.style.maskImage = `url('${store.getPageMask()}'), linear-gradient(#000 0 0)`;
   }
 
   setTimeout(() => {
-    if (pageMask.value) {
-      pageMask.value.style.visibility = 'hidden';
-      pageMask.value.style.opacity = 0;
+    if (pageMaskWrapper.value && pageMask.value) {
+      pageMaskWrapper.value.style.visibility = 'hidden';
+      pageMaskWrapper.value.style.opacity = 0;
       pageMask.value.style.maskImage = 'none';
     }
 
