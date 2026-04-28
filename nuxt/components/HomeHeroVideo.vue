@@ -4,14 +4,18 @@
     class="home-hero-video"
     :class="{ 'init': playerReady }"
   >
-    <div class="home-hero-video-inner" ref="inner">
-      <VideoPlayer
-        ref="videoPlayerRef"
-        :vimeo="video"
-        :cover="true"
-        :manualPlay="true"
-        @ready="onPlayerReady"
-      />
+    <div class="home-hero-video-parallax">
+      <div class="home-hero-video-frame" ref="parallaxFrame">
+        <div class="home-hero-video-inner">
+          <VideoPlayer
+            ref="videoPlayerRef"
+            :vimeo="video"
+            :cover="true"
+            :manualPlay="true"
+            @ready="onPlayerReady"
+          />
+        </div>
+      </div>
     </div>
     <Transition name="loading">
       <div v-if="!playerReady" class="loading-label">
@@ -22,8 +26,6 @@
 </template>
 
 <script setup>
-import { bgBoogie } from '~/utils/bg-boogie';
-
 const store = useSiteStore();
 
 // Props
@@ -36,7 +38,7 @@ const props = defineProps({
 
 const heroVideoRef = ref(null);
 const videoPlayerRef = ref(null);
-const inner = ref(null);
+const parallaxFrame = ref(null);
 
 const playerReady = ref(false);
 const siteLoaded = ref(false);
@@ -44,12 +46,14 @@ const siteLoaded = ref(false);
 let readyDelayTimer = null;
 let fallbackTimer = null;
 let resizeTo = 0;
+let parallaxTicking = false;
 
 onMounted(() => {
   window.addEventListener('resize', onResize);
+  window.addEventListener('scroll', onScroll, { passive: true });
 
   setMask();
-  bgBoogie(inner, 0.27);
+  updateParallax();
 
   fallbackTimer = setTimeout(() => {
     triggerSiteLoaded();
@@ -59,6 +63,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   clearTimeout(resizeTo);
   window.removeEventListener('resize', onResize);
+  window.removeEventListener('scroll', onScroll);
 
   clearTimeout(readyDelayTimer);
   clearTimeout(fallbackTimer);
@@ -68,7 +73,25 @@ function onResize() {
   clearTimeout(resizeTo);
   resizeTo = setTimeout(() => {
     setMask();
+    updateParallax();
   }, 250);
+}
+
+function onScroll() {
+  if (parallaxTicking) return;
+
+  parallaxTicking = true;
+  requestAnimationFrame(() => {
+    updateParallax();
+    parallaxTicking = false;
+  });
+}
+
+function updateParallax() {
+  if (!parallaxFrame.value) return;
+
+  const offset = window.scrollY * 0.5;
+  parallaxFrame.value.style.setProperty('--parallax-y', `${offset}px`);
 }
 
 function setMask() {
@@ -122,6 +145,25 @@ section.home-hero-video {
   display: flex;
   align-items: center;
   justify-content: center;
+  pointer-events: none;
+
+  .home-hero-video-parallax {
+    position: absolute;
+    top: -25%;
+    left: 0px;
+    width: 100%;
+    height: 150%;
+  }
+
+  .home-hero-video-frame {
+    position: absolute;
+    top: 50%;
+    left: 0px;
+    width: 100%;
+    height: calc(100% / 1.5);
+    overflow: hidden;
+    transform: translateY(calc(-50% + var(--parallax-y, 0px)));
+  }
 
   &.init {
     .home-hero-video-inner {
