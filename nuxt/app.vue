@@ -24,7 +24,6 @@
 </template>
 
 <script setup>
-import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { useNuxtApp } from '#app';
 import { useRouter } from 'vue-router';
 import { useSiteStore } from '~/stores/store';
@@ -44,14 +43,8 @@ const pageMask = ref(null);
 const pageToPageLoader = ref(false);
 
 let pageToPageLoaderTimeout = null;
-let scrollLocked = false;
 
 router.beforeEach((to, from, next) => {
-  if (!scrollLocked) {
-    disableBodyScroll(document.body, { reserveScrollBarGap: true });
-    scrollLocked = true;
-  }
-
   if (pageMaskWrapper.value && pageMask.value) {
     pageMaskWrapper.value.style.backgroundColor = '#1a1a1a';
     pageMaskWrapper.value.style.visibility = 'visible';
@@ -99,11 +92,6 @@ nuxtApp.hook('page:finish', () => {
       pageMaskWrapper.value.style.visibility = 'hidden';
       pageMaskWrapper.value.style.opacity = 0;
       pageMask.value.style.maskImage = 'none';
-    }
-
-    if (scrollLocked) {
-      enableBodyScroll(document.body);
-      scrollLocked = false;
     }
   }, 1000);
 });
