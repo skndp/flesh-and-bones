@@ -83,6 +83,10 @@ body {
     mask-size: cover;
     mask-position: 50% 50%;
     mask-composite: exclude;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    will-change: transform;
+    contain: paint;
   }
 }
 
