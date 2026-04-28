@@ -53,6 +53,7 @@ router.beforeEach((to, from, next) => {
   }
 
   if (pageMaskWrapper.value && pageMask.value) {
+    pageMaskWrapper.value.style.backgroundColor = '#1a1a1a';
     pageMaskWrapper.value.style.visibility = 'visible';
     pageMaskWrapper.value.style.opacity = 1;
     pageMask.value.style.maskImage = 'none';
@@ -87,6 +88,10 @@ nuxtApp.hook('page:finish', () => {
 
   if (pageMaskWrapper.value && pageMask.value && store.pageMask !== '') {
     pageMask.value.style.maskImage = `url('${store.getPageMask()}'), linear-gradient(#000 0 0)`;
+
+    // force layout
+    pageMask.value.getBoundingClientRect();
+    pageMaskWrapper.value.style.backgroundColor = 'transparent';
   }
 
   setTimeout(() => {

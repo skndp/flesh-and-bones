@@ -71,6 +71,7 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  background-color: $midnight;
   pointer-events: none;
   visibility: hidden;
   opacity: 0;
@@ -83,10 +84,10 @@ body {
     mask-size: cover;
     mask-position: 50% 50%;
     mask-composite: exclude;
-    backface-visibility: hidden;
-    transform: translateZ(0);
-    will-change: transform;
-    contain: paint;
+    // backface-visibility: hidden;
+    // transform: translateZ(0);
+    // will-change: transform;
+    // contain: paint;
   }
 }
 
