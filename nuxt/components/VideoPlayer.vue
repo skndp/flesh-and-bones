@@ -102,13 +102,14 @@ const hasVideo = computed(() => {
 });
 
 const showPoster = computed(() => {
-  // Show poster before first click OR after video ends
-  return !shouldLoadPlayer.value || hasEnded.value;
+  // Keep the poster visible while the preloaded player waits underneath.
+  return !playingMode.value || hasEnded.value;
 });
 
 const showVideo = computed(() => {
-  // Show video once user has requested it (or hover autoplay)
-  return shouldLoadPlayer.value || props.hoverToPlay.value;
+  return props.controls
+    ? playingMode.value && !hasEnded.value
+    : shouldLoadPlayer.value || props.hoverToPlay.value;
 });
 
 // Mounted
@@ -116,9 +117,7 @@ onMounted(async () => {
   await nextTick();
   window.addEventListener('resize', onResize);
 
-  if (!props.controls) {
-    shouldLoadPlayer.value = true;
-  }
+  shouldLoadPlayer.value = true;
 });
 
 // Before Unmount
@@ -181,11 +180,14 @@ function clickToPlay() {
   // Clear ended state and show loader
   hasEnded.value = false;
   isLoading.value = true;
+  playingMode.value = true;
 
-  // First time clicking → mount the player
   if (!shouldLoadPlayer.value) {
     shouldLoadPlayer.value = true;
-    playingMode.value = true;
+  }
+
+  if (sdkPlayer.value) {
+    playPlayer();
   }
 }
 
@@ -201,7 +203,11 @@ function onEnded() {
   playingMode.value = false;
   hasEnded.value = true;
   isLoading.value = false;
-  shouldLoadPlayer.value = false;
+
+  if (sdkPlayer.value) {
+    sdkPlayer.value.pause().catch(() => {});
+    sdkPlayer.value.setCurrentTime(0).catch(() => {});
+  }
 }
 
 function playPlayer() {
