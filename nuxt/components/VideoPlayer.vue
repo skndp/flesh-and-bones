@@ -87,12 +87,10 @@ const originalVideoWidth = ref(16);
 const originalVideoHeight = ref(9);
 
 const playingMode = ref(false);
-const userPlaybackVolume = 1;
 const playerOptions = {
   controls: props.controls,
   loop: !props.controls,
   muted: !props.controls,
-  volume: props.controls ? userPlaybackVolume : 0,
   autoplay: false,
   playsinline: true,
   autopause: false
@@ -206,33 +204,9 @@ function onEnded() {
   shouldLoadPlayer.value = false;
 }
 
-async function enableUserAudio() {
-  if (!props.controls || !sdkPlayer.value) return;
-
-  try {
-    await sdkPlayer.value.setMuted(false);
-  } catch (e) {
-    console.warn('Failed to unmute Vimeo player', e);
-  }
-
-  try {
-    await sdkPlayer.value.setVolume(userPlaybackVolume);
-  } catch (e) {
-    console.warn('Failed to set Vimeo player volume', e);
-  }
-}
-
-async function playPlayer() {
+function playPlayer() {
   if (!sdkPlayer.value) return;
-
-  await enableUserAudio();
-
-  try {
-    await sdkPlayer.value.play();
-  } catch (e) {
-    isLoading.value = false;
-    console.warn('Failed to play Vimeo player', e);
-  }
+  sdkPlayer.value.play().catch(() => {});
 }
 
 function pausePlayer() {
