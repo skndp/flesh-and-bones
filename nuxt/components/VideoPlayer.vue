@@ -19,7 +19,7 @@
           :options="playerOptions"
           :player-width="playerWidth"
           :player-height="playerHeight"
-          @loaded="onLoaded"
+          @ready="onReady"
           @playing="isPlaying"
           @ended="onEnded"
         />
@@ -147,7 +147,7 @@ function onResize() {
   playerHeight.value = Math.ceil(newHeight);
 }
 
-async function onLoaded(evt, vimeoPlayer) {
+async function onReady(vimeoPlayer) {
   sdkPlayer.value = vimeoPlayer;
 
   try {
